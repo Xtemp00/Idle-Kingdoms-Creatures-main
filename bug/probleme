@@ -1,0 +1,12 @@
+bois : 
+    amélioration scirie rétrécie lorsqu'on l'augmente de niveau
+    quand le bois est atteint un certain nombre ( un peu moins de 300) et tout les un peu moin de 300 il augmente de 1 le bois 
+    obtenu, sachant que c'est pas 300 de un seul bois si il y a 100 chêne 100 bouleau et 100 pin sa doublera le bois obtenu
+    barre d'expérience mais pas de niveau 
+    quand le bouleau atteint 52 ou 54 il passe en x2 au lieu de x1
+    rajouter le fait qu'on puisse clicker en plus de l'amélioration
+    décrire les améliorations comme dans la mine 
+    problème de temps pour le bambou et pour le bois divin 
+
+    mine : 
+    mettre les proba en % plutot que proba est de 0.05

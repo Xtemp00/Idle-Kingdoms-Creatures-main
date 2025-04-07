@@ -1,0 +1,205 @@
+/* Fichier CSS pour la page d'accueil */
+body {
+    padding-top: 60px; /* Ajustez cette valeur en fonction de la hauteur de game-menu */
+    margin: 0;
+    font-family: 'MedievalSharp', cursive;
+    height: auto; /* Hauteur auto pour permettre le défilement */
+    background-image: url('../assets/images/backgrounds/index_background.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alignement au début pour positionner wood-section en dessous */
+}
+
+/* Conteneur du menu */
+#menu-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* Titre */
+h1 {
+    margin: 0 0 30px 0;
+    color: #4a7c59;
+}
+
+/* Menu */
+.menu-options {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Bouton */
+.menu-button {
+    background-color: #8ab6d6;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+}
+
+/* Effet au survol */
+.menu-button:hover {
+    background-color: #659dbd;
+}
+
+/* Effet au clic */
+.menu-button:active {
+    background-color: #4a7c59;
+}
+
+/* Affichez le menue game-container seulemnt si le joueur a appuyer sur play */
+#game-container {
+    display: none;
+}
+
+#game-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #8ab6d6;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 100; /* S'assurer qu'elle reste au-dessus des autres éléments */
+    
+}
+
+/*citymap qui prend une grosse partie de l'ecran avec une grosse bordure*/
+#game-citymap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 50px;   
+    border: 10px solid #4a7c59;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../assets/images/backgrounds/CityMap.jpg');
+}
+
+/* Un bouton devant chaque bâtiment pour aller vers cette section*/
+#game-citymap {
+    width: 55vw;  /* 80% de la largeur de la fenêtre */
+    height: 80vh; /* 80% de la hauteur de la fenêtre */
+    border: 10px solid #4a7c59; /* Bordure épaisse */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../assets/images/backgrounds/CityMap.jpg');
+    /* Assure que l'image couvre toute la zone */
+    background-size: cover;
+    background-position: center; /* Centrer l'image de fond */
+    margin: auto; /* Centre le div si l'espace le permet */
+    position: relative; /* Pour positionner correctement les boutons à l'intérieur */
+}
+
+.button {
+    background-color: #8ab6d6;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #659dbd;
+}
+
+.button:active {
+    background-color: #4a7c59;
+}
+
+#wood-button {
+    position: fixed;
+    right: 70%;
+    bottom: 55%;
+}
+
+#fish-button {
+    position: fixed;
+    right: 50%;
+}
+
+#mine-button {
+    position: fixed;
+    top : 65%;
+}
+
+#farm-button {
+    position: fixed;
+    top : 35%;
+    right: 55%;
+}
+
+#combat-button {
+    position: fixed;
+    top : 45%;
+    right: 38%;
+}
+
+#egg-button {
+    position: fixed;
+    bottom: 14%;
+    right: 58%;
+}
+
+/* placer a gauche de la page */
+#player-info {
+    position: fixed;
+    top: 12%;
+    left: 10px;
+    padding: 10px;
+    background-color: #8ab6d6;
+    border-radius: 0 0 0 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 100; /* S'assurer qu'elle reste au-dessus des autres éléments */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+#player-info h2 {
+    margin: 0 0 20px 0;
+    color: #4a7c59;
+}
+
+#player-info p {
+    margin: 0 0 10px 0;
+    padding-left: auto;
+    padding-right: auto;
+    text-align: center;
+}
+
+.citymap-button {
+    background-color: #8ab6d6;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.citymap-button:hover {
+    background-color: #659dbd;
+}
+

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Idle Kingdoms & Creatures</title>
+    <link rel="icon" href="assets/images/backgrounds/Logo.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=MedievalSharp&display=swap"> <!-- Police personnalisée -->
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Idle Kingdoms & Creatures</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/wood.css">
+        <link rel="stylesheet" href="css/mine.css">
+        <link rel="stylesheet" href="css/egg.css">
+        <link rel="stylesheet" href="css/fish.css">
+    </head>
+    <body>
+        <div id="menu-container">
+            <h1>Idle Kingdoms & Creatures</h1>
+            <div class="menu-options">
+                <button id="play-button" class="menu-button">Jouer / Continuer</button>
+                <button class="menu-button">Nouvelle Partie</button>
+                <button class="menu-button">Charger Partie</button>
+                <button class="menu-button">Options</button>
+                <button id="wiki-button" class="menu-button">Wiki</button>
+                <button class="menu-button">Quitter</button>
+            </div>
+        </div>
+
+        <div id="game-container">
+            <div id="game-menu">
+                <button id="back-button" class="menu-button">Retour</button>
+                <button id="save-button" class="menu-button">Sauvegarder</button>
+                <button id="load-button" class="menu-button">Charger</button>
+                <button id="options-button" class="menu-button">Options</button>
+                <button id="quit-button" class="menu-button">Quitter</button>
+            </div>
+
+
+            <div id="game-citymap">
+                <div id="citymap-menu">
+                    <button id="wood-button" class="citymap-button">Bois</button>
+                    <button id="fish-button" class="citymap-button">Pêche</button>
+                    <button id="mine-button" class="citymap-button">Mine</button>
+                    <button id="farm-button" class="citymap-button">Ferme</button>
+                    <button id="combat-button" class="citymap-button">Combat</button>
+                    <button id="egg-button" class="citymap-button">Oeuf</button>
+                </div>
+            </div>
+
+            <div id="player-info">
+                <div id="player-info-container">
+                    <h2 id="player-name">Nom du joueur</h2>
+                    <p id="player-level">1</p>
+                    <p id="player-gold">0</p>
+                    <p id="player-wood">0</p>
+                    <p id="player-fish">0</p>
+                    <p id="player-ore">0</p>
+                    <p id="player-wheat">0</p>
+                </div>
+            </div>
+
+            <div id="global-fish">
+                <div id="fish-minimap" style="display: none;">
+                    <a href="#game-citymap" class="fish-minimap-link">
+                        <img src="assets/images/backgrounds/CityMap.jpg" alt="Map" class="minimap-button">
+                    </a>
+                </div>
+
+                <div id="fish-xp-progress-bar" style="display: none;">
+                    <div id="fish-xp-progress"></div>
+                </div>
+
+                <div id="game-part-fish" style="display: none;">
+                    <div id="fish-section">
+                        <div id="fish-grid">
+                            <div id="Tuna" class="fish-tile"></div>
+                                <h2>Thon</h2>
+                                <p id="tuna-amount">0</p>
+                                <button id="tuna-button" class="fish-button">Pêcher</button>
+                                <button id="tuna-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Tuna.jpg" alt="Thon">
+                                <div class="horizontal-progress-bar">
+                                    <div id="tuna-timer-progress" class="horizontal-progress"></div>
+                                </div>
+                            <div id="Salmon" class="fish-tile"></div>
+                                <h2 id="Salmon">Saumon</h2>
+                                <p id="salmon-amount">0</p>
+                                <button id="salmon-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="salmon-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Salmon.jpg" alt="Saumon">
+                                <div class="horizontal
+                                -progress-bar">
+                                    <div id="salmon-timer-progress" class="horizontal-progress"></div>
+                                </div>
+                            <div id="Sardine" class="fish-tile"></div>
+                                <h2>Sardine</h2>
+                                <p id="sardine-amount">0</p>
+                                <button id="sardine-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="sardine-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Sardine.jpg" alt="Sardine">
+                                <div class="horizontal
+                                -progress-bar">
+                                    <div id="sardine-timer-progress" class="horizontal
+                                -progress"></div>
+                                </div>
+                            <div id="Shark" class="fish-tile"></div>
+                                <h2>Requin</h2>
+                                <p id="shark-amount">0</p>
+                                <button id="shark-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="shark-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Shark.jpg" alt="Requin">
+                                <div class="horizontal-progress-bar">
+                                    <div id="shark-timer-progress" class="horizontal
+                                -progress"></div>
+                                </div>
+                            <div id="Swordfish" class="fish-tile"></div>
+                                <h2>Espadon</h2>
+                                <p id="swordfish-amount">0</p>
+                                <button id="swordfish-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="swordfish-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Swordfish.jpg" alt="Espadon">
+                                <div class="horizontal
+                                -progress-bar">
+                                    <div id="swordfish-timer-progress" class="horizontal
+                                -progress"></div>
+                                </div>
+                            <div id="Bass" class="fish-tile"></div>
+                                <h2>Bar</h2>
+                                <p id="bass-amount">0</p>
+                                <button id="bass-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="bass-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/Bass.jpg" alt="Bar">
+                                <div class="horizontal
+                                -progress-bar">
+                                    <div id="bass-timer-progress" class="horizontal
+                                -progress"></div>
+                                </div>
+                            <div id="DivineFish" class="fish-tile"></div>
+                                <h2>Poisson Divin</h2>
+                                <p id="divinefish-amount">0</p>
+                                <button id="divinefish-button" class="fish-button" style="display: none;">Pêcher</button>
+                                <button id="divinefish-unlock-button" class="unlock-fish-button">Bloquer</button>
+                                <img src="assets/images/fish/DivineFish.jpg" alt="Poisson Divin">
+                                <div class="horizontal
+                                -progress-bar">
+                                    <div id="divinefish-timer-progress" class="horizontal
+                                -progress"></div>
+                                </div>      
+                        </div>
+                        <div id="fish-message-area">
+                            <!-- Messages relatifs aux actions de pêche -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="global-egg">
+                <div id="egg-minimap" style="display: none;">
+                    <a href="#game-citymap" class="egg-minimap-link">
+                        <img src="assets/images/backgrounds/CityMap.jpg" alt="Map" class="minimap-button">
+                    </a>
+                </div>
+                <div id="game-part-egg" style="display: none;">
+                    <div id="egg-menu">
+                        
+                    </div>
+                    <div id="egg-section">
+                        <div id="normal-egg">
+                            <h1>Oeuf Normal</h1>
+                            <button id="normal-egg-button" class="egg-button">Oeuf Normal</button>
+                            <div id="normal-egg-section">
+                                
+                            </div>
+                            <div id="RNGBar">
+                                <div id="RNGBar-Progress"></div>
+                            </div>
+                            <div id="ButtonSection">
+                                
+                                <div id="x1Hatch">
+                                    <button id="x1Hatch-button" class="Hatch-button"></button>
+                                </div>
+                                <div id="x3Hatch">
+                                    <button id="x3Hatch-button" class="Hatch-button"></button>
+                                </div>
+                                <div id="autoHatch">
+                                    <button id="autoHatch-button" class="Hatch-button"></button>
+                                </div>
+                                <div id="instantHatch">
+                                    <button id="instantHatch-button" class="Hatch-button"></button>
+                                </div>
+                                <div id="egg-message-area">
+                                    <!-- Messages relatifs aux actions dans la mine -->
+                                </div>
+                            </div>  
+                            <div id="Return-Button">
+                                <button id="Return-Button-button" class="Return-button">Retour</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="global-mine">
+
+                <div id="mine-minimap" style="display: none;">
+                    <a href="#game-citymap" class="mine-minimap-link">
+                        <img src="assets/images/backgrounds/CityMap.jpg" alt="Map" class="minimap-button">
+                    </a>
+                </div>
+                <div id="game-part-mine" style="display: none;">
+                    <div id="mine-section">
+                        <h2 id="stage">Etage: 1</h2>
+                            <div id="mine-grid">
+                                <!-- La grille de la mine sera générée ici -->
+                            </div>
+                            <div id="mine-message-area">
+                                <!-- Messages relatifs aux actions dans la mine -->
+                            </div>
+                            
+                            <div id="Ore-Info-Section">
+
+                                <div id="CopperOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Cuivre</h2>
+                                    <p id="CopperOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="CopperOre">Probabilité d'apparition : 35%</p>
+                                </div>
+
+                                <div id="IronOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Fer</h2>
+                                    <p id="IronOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="IronOre">Probabilité d'apparition : 30%</p>
+                                </div>
+
+                                <div id="SilverOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Argent</h2>
+                                    <p id="SilverOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="SilverOre">Probabilité d'apparition : 20%</p>
+                                </div>  
+
+                                <div id="GoldOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Or</h2>
+                                    <p id="GoldOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="GoldOre">Probabilité d'apparition : 10%</p>
+                                </div>
+
+                                <div id="MithrilOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Mithril</h2>
+                                    <p id="MithrilOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="MithrilOre">Probabilité d'apparition : 5%</p>
+                                </div>
+
+                                <div id="DiamondOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Diamant</h2>
+                                    <p id="DiamondOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="DiamondOre">Probabilité d'apparition : 1%</p>
+                                </div>
+
+                                <div id="EmeraldOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Emeraude</h2>
+                                    <p id="EmeraldOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="EmeraldOre">Probabilité d'apparition : 2%</p>
+                                </div>
+
+                                <div id="PureGoldOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Or Pur</h2>
+                                    <p id="PureGoldOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="PureGoldOre">Probabilité d'apparition : 0.1%</p>
+                                </div>
+
+                                <div id="PureMithrilOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Mithril Pur</h2>
+                                    <p id="PureMithrilOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="PureMithrilOre">Probabilité d'apparition : 0.01%</p>
+                                </div>
+
+                                <div id="PureEmeraldOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Emeraude Pure</h2>
+                                    <p id="PureEmeraldOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="PureEmeraldOre">Probabilité d'apparition : 0.05%</p>
+                                </div>
+
+                                <div id="PureDiamondOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Diamant Pur</h2>
+                                    <p id="PureDiamondOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="PureDiamondOre">Probabilité d'apparition : 0.01%</p>
+                                </div>
+
+                                <div id="DivineOre-Info" class="OreInfo">
+                                    <h2 class="ItemOre">Minerai Divin</h2>
+                                    <p id="DivineOre-inventory" class="ItemOre">0</p>
+                                    <p class="ItemOre" id="DivineOre">Probabilité d'apparition : 0.0001%</p>
+                                </div>
+
+                        </div>  
+                        <!--On va afficher les amelioration et leur information-->
+                        <div id="mine-upgrade-menu">
+
+                            <div id="Miner-Info" class="Upgrade-Info">
+                                <h2>Miner</h2>
+                                <p id="Miner-lock">Se débloque au stage 5</p>
+                                <p id="Miner-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> Cette amélioration permet de miner une case au hazard toute les 0.1 seconde.</p>
+
+                            </div>
+                            <div id="Refinery-Info" class="Upgrade-Info">
+                                <h2>Refinery</h2>
+                                <p id="Refinery-lock">Se débloque au stage 10</p>
+                                <p id="Refinery-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> Cette amélioration permet de miner deux cases au hazard toute les 0.05 seconde.</p>
+
+                            </div>
+                            <div id="Quarry-Info" class="Upgrade-Info">
+                                <h2>Quarry</h2>
+                                <p id="Quarry-lock">Se débloque au stage 25</p>
+                                <p id="Quarry-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> Cette amélioration mine les cases une par une en partant de 0 toute les 0.1 seconde.</p>
+                            </div>
+                            <div id="ChemicalFactory-Info" class="Upgrade-Info">
+                                <h2>Chemical Factory</h2>
+                                <p id="ChemicalFactory-lock">Se débloque au stage 50</p>
+                                <p id="ChemicalFactory-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> cette amélioration mine toute la grille une fois toute les 30 secondes.</p>
+                            </div>
+                            <div id="Drill-Info" class="Upgrade-Info">
+                                <h2>Drill</h2>
+                                <p id="Drill-lock">Se débloque au stage 100</p>
+                                <p id="Drill-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> Cette amélioration améliore la pioche et de pouvoir miner en 3*3.</p>
+                            </div>
+                            <div id="NuclearQuarry-Info" class="Upgrade-Info">
+                                <h2>Nuclear Quarry</h2>
+                                <p id="NuclearQuarry-lock">Se débloque au stage 200</p>
+                                <p id="NuclearQuarry-unlock" style="display: none;">Est en cours d'utilisation</p>
+                                <p> Cette amélioration ajoute une case spécial dans chaque étage et si celui-ci est miné alors l'étage est completement miné.</p>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+            <div id="global-wood">
+                <div id="wood-minimap" style="display: none;">
+                    <a href="#game-citymap" class="wood-minimap-link">
+                        <img src="assets/images/backgrounds/CityMap.jpg" alt="Map" class="minimap-button">
+                    </a>
+                </div>
+                
+                <div id="wood-xp-progress-bar" style="display: none;">
+                    <div id="wood-xp-progress"></div>
+                </div>
+                
+                <!--Oak-Upgrade-menu-->
+                <div id="oak-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Oak-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-oak-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+                        <p id="Lumberjack-oak-level">Niveau: 0</p>
+                        <p id="Lumberjack-oak-cost">Coût en PO: 100</p>
+                        <p id="Lumberjack-oak-woodcost">Coût en Bois: 0</p>
+                        <button id="Lumberjack-oak-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-oak-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-oak-level">Niveau: 0</p>
+                        <p id="Sawmill-oak-cost">Coût en PO: 100</p>
+                        <p id="Sawmill-oak-woodcost">Coût en Bois: 0</p>
+                        
+                        <button id="Sawmill-oak-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-oak-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-oak-level">Niveau: 0</p>
+                        <p id="Factory-oak-cost">Coût en PO: 100</p>
+                        <p id="Factory-oak-woodcost">Coût en Bois: 0</p>
+                        <button id="Factory-oak-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-oak-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+                        <p id="Warehouse-oak-level">Niveau: 0</p>
+                        <p id="Warehouse-oak-cost">Coû en PO: 0</p>
+                        <p id="Warehouse-oak-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Warehouse-oak-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-oak-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-oak-level">Niveau: 0</p>
+                        <p id="Market-oak-cost">Coût en PO: 0</p>
+                        <p id="Market-oak-woodcost">Coût en Bois: 0</p>
+
+
+                        <button id="Market-oak-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Birch-Upgrade-menu-->
+                <div id="birch-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Birch-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-birch-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+
+                        <p id="Lumberjack-birch-level">Niveau: 0</p>
+                        <p id="Lumberjack-birch-cost">Coût en PO: 100</p>
+                        <p id="Lumberjack-birch-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Lumberjack-birch-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-birch-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-birch-level">Niveau: 0</p>
+                        <p id="Sawmill-birch-cost">Coût en PO: 100</p>
+                        <p id="Sawmill-birch-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Sawmill-birch-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-birch-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-birch-level">Niveau: 0</p>
+                        <p id="Factory-birch-cost">Coût en PO: 100</p>
+                        <p id="Factory-birch-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Factory-birch-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-birch-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+
+                        <p id="Warehouse-birch-level">Niveau: 0</p>
+                        <p id="Warehouse-birch-cost">Coût en PO: 0</p>
+                        <p id="Warehouse-birch-woodcost">Coût en Bois: 0</p>
+                        <button id="Warehouse-birch-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-birch-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-birch-level">Niveau: 0</p>
+                        <p id="Market-birch-cost">Coût en PO: 0</p>
+                        <p id="Market-birch-woodcost">Coût en Bois: 0</p>
+                        <button id="Market-birch-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Pin-Upgrade-menu-->
+                <div id="pine-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Pine-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-pine-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+
+                        <p id="Lumberjack-pine-level">Niveau: 0</p>
+                        <p id="Lumberjack-pine-cost">Coût en PO: 0</p>
+                        <p id="Lumberjack-pine-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Lumberjack-pine-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-pine-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-pine-level">Niveau: 0</p>
+                        <p id="Sawmill-pine-cost">Coût en PO: 0</p>
+                        <p id="Sawmill-pine-woodcost">Coût en Bois: 0</p>
+                        <button id="Sawmill-pine-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-pine-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-pine-level">Niveau: 0</p>
+                        <p id="Factory-pine-cost">Coût en PO: 0</p>
+                        <p id="Factory-pine-woodcost">Coût en Bois: 0</p>
+                        <button id="Factory-pine-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-pine-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+
+                        <p id="Warehouse-pine-level">Niveau: 0</p>
+                        <p id="Warehouse-pine-cost">Coût en PO: 0</p>
+                        <p id="Warehouse-pine-woodcost">Coût en Bois: 0</p>
+                        <button id="Warehouse-pine-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-pine-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-pine-level">Niveau: 0</p>
+                        <p id="Market-pine-cost">Coût en PO: 0</p>
+                        <p id="Market-pine-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Market-pine-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Maple-Upgrade-menu-->
+                <div id="maple-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Maple-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-maple-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+
+                        <p id="Lumberjack-maple-level">Niveau: 0</p>
+                        <p id="Lumberjack-maple-cost">Coût en PO: 0</p>
+                        <p id="Lumberjack-maple-woodcost">Coût en Bois: 0</p>
+                        <button id="Lumberjack-maple-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-maple-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-maple-level">Niveau: 0</p>
+                        <p id="Sawmill-maple-cost">Coût en PO: 0</p>
+                        <p id="Sawmill-maple-woodcost">Coût en Bois: 0</p>
+                        <button id="Sawmill-maple-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-maple-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-maple-level">Niveau: 0</p>
+                        <p id="Factory-maple-cost">Coût en PO: 0</p>
+                        <p id="Factory-maple-woodcost">Coût en Bois: 0</p>
+                        <button id="Factory-maple-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-maple-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+
+                        <p id="Warehouse-maple-level">Niveau: 0</p>
+                        <p id="Warehouse-maple-cost">Coût en PO: 0</p>
+                        <p id="Warehouse-maple-woodcost">Coût en Bois: 0</p>
+                        <button id="Warehouse-maple-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-maple-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-maple-level">Niveau: 0</p>
+                        <p id="Market-maple-cost">Coût en PO: 0</p>
+                        <p id="Market-maple-woodcost">Coût en Bois: 0</p>
+                        <button id="Market-maple-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Cherry-Upgrade-menu-->  
+                <div id="cherry-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Cherry-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-cherry-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+
+                        <p id="Lumberjack-cherry-level">Niveau: 0</p>
+                        <p id="Lumberjack-cherry-cost">Coût en PO: 0</p>
+                        <p id="Lumberjack-cherry-woodcost">Coût en Bois: 0</p>
+
+                        <button id="Lumberjack-cherry-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-cherry-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-cherry-level">Niveau: 0</p>
+                        <p id="Sawmill-cherry-cost">Coût en PO: 0</p>
+                        <p id="Sawmill-cherry-woodcost">Coût en Bois: 0</p>
+                        <button id="Sawmill-cherry-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-cherry-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-cherry-level">Niveau: 0</p>
+                        <p id="Factory-cherry-cost">Coût en PO: 0</p>
+                        <p id="Factory-cherry-woodcost">Coût en Bois: 0</p>
+                        <button id="Factory-cherry-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-cherry-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+
+                        <p id="Warehouse-cherry-level">Niveau: 0</p>
+                        <p id="Warehouse-cherry-cost">Coût en PO: 0</p>
+                        <p id="Warehouse-cherry-woodcost">Coût en Bois: 0</p>
+                        <button id="Warehouse-cherry-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-cherry-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-cherry-level">Niveau: 0</p>
+                        <p id="Market-cherry-cost">Coût en PO: 0</p>
+                        <p id="Market-cherry-woodcost">Coût en Bois: 0</p>
+                        <button id="Market-cherry-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Walnut-Upgrade-menu-->
+                <div id="walnut-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Walnut-upgrade-close-button" class="Upgrade-close"></button>
+
+                
+                    <!--LamberJack-->
+                    <div id="Lumberjack-walnut-upgrade" class="Lumberjack-upgrade">
+                        <h2>Bûcheron</h2>
+
+                        <p id="Lumberjack-walnut-level">Niveau: 0</p>
+                        <p id="Lumberjack-walnut-cost">Coût en PO: 0</p>
+                        <p id="Lumberjack-walnut-woodcost">Coût en Bois: 0</p>
+                        <button id="Lumberjack-walnut-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Sawmill-->
+                    <div id="Sawmill-walnut-upgrade" class="Sawmill-upgrade">
+                        <h2>Scierie</h2>
+
+                        <p id="Sawmill-walnut-level">Niveau: 0</p>
+                        <p id="Sawmill-walnut-cost">Coût en PO: 0</p>
+                        <p id="Sawmill-walnut-woodcost">Coût en Bois: 0</p>
+                        <button id="Sawmill-walnut-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Factory-->
+                    <div id="Factory-walnut-upgrade" class="Factory-upgrade">
+                        <h2>Usine</h2>
+
+                        <p id="Factory-walnut-level">Niveau: 0</p>
+                        <p id="Factory-walnut-cost">Coût en PO: 0</p>
+                        <p id="Factory-walnut-woodcost">Coût en Bois: 0</p>
+                        <button id="Factory-walnut-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Warehouse-->
+                    <div id="Warehouse-walnut-upgrade" class="Warehouse-upgrade">
+                        <h2>Entrepôt</h2>
+
+                        <p id="Warehouse-walnut-level">Niveau: 0</p>
+                        <p id="Warehouse-walnut-cost">Coût en PO: 0</p>
+                        <p id="Warehouse-walnut-woodcost">Coût en Bois: 0</p>
+                        <button id="Warehouse-walnut-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                    </div>
+
+                    <!--Market-->
+                    <div id="Market-walnut-upgrade" class="Market-upgrade">
+                        <h2>Marché</h2>
+
+                        <p id="Market-walnut-level">Niveau: 0</p>
+                        <p id="Market-walnut-cost">Coût en PO: 0</p>
+                        <p id="Market-walnut-woodcost">Coût en Bois: 0</p>
+                        <button id="Market-walnut-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                    </div>
+
+                </div>
+
+                <!--Mahogany-Upgrade-menu-->
+                <div id="mahogany-upgrade-menu" style="display: none;">
+
+                    <!--croix pour fermer le menu-->
+                    <button id="Mahogany-upgrade-close-button" class="Upgrade-close"></button>
+
+                                    
+                                        <!--Lumberjack-->
+                                        <div id="Lumberjack-mahogany-upgrade" class="Lumberjack-upgrade">
+                                            <h2>Bûcheron</h2>
+
+                                            <p id="Lumberjack-mahogany-level">Niveau: 0</p>
+                                            <p id="Lumberjack-mahogany-cost">Coût en PO: 0</p>
+                                            <p id="Lumberjack-mahogany-woodcost">Coût en Bois: 0</p>
+                                            <button id="Lumberjack-mahogany-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Sawmill-->
+                                        <div id="Sawmill-mahogany-upgrade" class="Sawmill-upgrade">
+                                            <h2>Scierie</h2>
+
+                                            <p id="Sawmill-mahogany-level">Niveau: 0</p>
+                                            <p id="Sawmill-mahogany-cost">Coût en PO: 0</p>
+                                            <p id="Sawmill-mahogany-woodcost">Coût en Bois: 0</p>
+                                            <button id="Sawmill-mahogany-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Factory-->
+                                        <div id="Factory-mahogany-upgrade" class="Factory-upgrade">
+                                            <h2>Usine</h2>
+
+                                            <p id="Factory-mahogany-level">Niveau: 0</p>
+                                            <p id="Factory-mahogany-cost">Coût en PO: 0</p>
+                                            <p id="Factory-mahogany-woodcost">Coût en Bois: 0</p>
+                                            <button id="Factory-mahogany-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Warehouse-->
+                                        <div id="Warehouse-mahogany-upgrade" class="Warehouse-upgrade">
+                                            <h2>Entrepôt</h2>
+
+                                            <p id="Warehouse-mahogany-level">Niveau: 0</p>
+                                            <p id="Warehouse-mahogany-cost">Coût en PO: 0</p>
+                                            <p id="Warehouse-mahogany-woodcost">Coût en Bois: 0</p>
+                                            <button id="Warehouse-mahogany-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Market-->
+                                        <div id="Market-mahogany-upgrade" class="Market-upgrade">
+                                            <h2>Marché</h2>
+
+                                            <p id="Market-mahogany-level">Niveau: 0</p>
+                                            <p id="Market-mahogany-cost">Coût en PO: 0</p>
+                                            <p id="Market-mahogany-woodcost">Coût en Bois: 0</p>
+                                            <button id="Market-mahogany-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Cedar-Upgrade-menu-->   
+                                    <div id="cedar-upgrade-menu" style="display: none;">
+
+                                        <!--croix pour fermer le menu-->
+                                        <button id="Cedar-upgrade-close-button" class="Upgrade-close"></button>
+
+                                    
+                                        <!--Lumberjack-->
+                                        <div id="Lumberjack-cedar-upgrade" class="Lumberjack-upgrade">
+                                            <h2>Bûcheron</h2>
+
+                                            <p id="Lumberjack-cedar-level">Niveau: 0</p>
+                                            <p id="Lumberjack-cedar-cost">Coût en PO: 0</p>
+                                            <p id="Lumberjack-cedar-woodcost">Coût en Bois: 0</p>
+                                            <button id="Lumberjack-cedar-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Sawmill-->
+                                        <div id="Sawmill-cedar-upgrade" class="Sawmill-upgrade">
+                                            <h2>Scierie</h2>
+
+                                            <p id="Sawmill-cedar-level">Niveau: 0</p>
+                                            <p id="Sawmill-cedar-cost">Coût en PO: 0</p>
+                                            <p id="Sawmill-cedar-woodcost">Coût en Bois: 0</p>
+                                            <button id="Sawmill-cedar-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Factory-->
+                                        <div id="Factory-cedar-upgrade" class="Factory-upgrade">
+                                            <h2>Usine</h2>
+
+                                            <p id="Factory-cedar-level">Niveau: 0</p>
+                                            <p id="Factory-cedar-cost">Coût en PO: 0</p>
+                                            <p id="Factory-cedar-woodcost">Coût en Bois: 0</p>
+                                            <button id="Factory-cedar-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Warehouse-->
+                                        <div id="Warehouse-cedar-upgrade" class="Warehouse-upgrade">
+                                            <h2>Entrepôt</h2>
+
+                                            <p id="Warehouse-cedar-level">Niveau: 0</p>
+                                            <p id="Warehouse-cedar-cost">Coût en PO: 0</p>
+                                            <p id="Warehouse-cedar-woodcost">Coût en Bois: 0</p>
+                                            <button id="Warehouse-cedar-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Market-->
+                                        <div id="Market-cedar-upgrade" class="Market-upgrade">
+                                            <h2>Marché</h2>
+
+                                            <p id="Market-cedar-level">Niveau: 0</p>
+                                            <p id="Market-cedar-cost">Coût en PO: 0</p>
+                                            <p id="Market-cedar-woodcost">Coût en Bois: 0</p>
+                                            <button id="Market-cedar-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Bamboo-Upgrade-menu-->
+                                    <div id="bamboo-upgrade-menu" style="display: none;">
+
+                                        <!--croix pour fermer le menu-->
+                                        <button id="Bamboo-upgrade-close-button" class="Upgrade-close"></button>
+
+                                    
+                                        <!--Lumberjack-->
+                                        <div id="Lumberjack-bamboo-upgrade" class="Lumberjack-upgrade">
+                                            <h2>Bûcheron</h2>
+
+                                            <p id="Lumberjack-bamboo-level">Niveau: 0</p>
+                                            <p id="Lumberjack-bamboo-cost">Coût en PO: 0</p>
+                                            <p id="Lumberjack-bamboo-woodcost">Coût en Bois: 0</p>
+                                            <button id="Lumberjack-bamboo-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Sawmill-->
+                                        <div id="Sawmill-bamboo-upgrade" class="Sawmill-upgrade">
+                                            <h2>Scierie</h2>
+
+                                            <p id="Sawmill-bamboo-level">Niveau: 0</p>
+                                            <p id="Sawmill-bamboo-cost">Coût en PO: 0</p>
+                                            <p id="Sawmill-bamboo-woodcost">Coût en Bois: 0</p>
+
+                                            <button id="Sawmill-bamboo-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Factory-->
+                                        <div id="Factory-bamboo-upgrade" class="Factory-upgrade">
+                                            <h2>Usine</h2>
+
+                                            <p id="Factory-bamboo-level">Niveau: 0</p>
+                                            <p id="Factory-bamboo-cost">Coût en PO: 0</p>
+                                            <p id="Factory-bamboo-woodcost">Coût en Bois: 0</p>
+                                            <button id="Factory-bamboo-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Warehouse-->
+                                        <div id="Warehouse-bamboo-upgrade" class="Warehouse-upgrade">
+                                            <h2>Entrepôt</h2>
+
+                                            <p id="Warehouse-bamboo-level">Niveau: 0</p>
+                                            <p id="Warehouse-bamboo-cost">Coût en PO: 0</p>
+                                            <p id="Warehouse-bamboo-woodcost">Coût en Bois: 0</p>
+                                            <button id="Warehouse-bamboo-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Market-->
+                                        <div id="Market-bamboo-upgrade" class="Market-upgrade">
+                                            <h2>Marché</h2>
+
+                                            <p id="Market-bamboo-level">Niveau: 0</p>
+                                            <p id="Market-bamboo-cost">Coût en PO: 0</p>
+                                            <p id="Market-bamboo-woodcost">Coût en Bois: 0</p>
+                                            <button id="Market-bamboo-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Divine-Upgrade-menu-->
+                                    <div id="divine-upgrade-menu" style="display: none;">
+
+                                        <!--croix pour fermer le menu-->
+                                        <button id="Divine-upgrade-close-button" class="Upgrade-close"></button>
+
+                                    
+                                        <!--Lumberjack-->
+                                        <div id="Lumberjack-divine-upgrade" class="Lumberjack-upgrade">
+                                            <h2>Bûcheron</h2>
+
+                                            <p id="Lumberjack-divine-level">Niveau: 0</p>
+                                            <p id="Lumberjack-divine-cost">Coût en PO: 0</p>
+                                            <p id="Lumberjack-divine-woodcost">Coût en Bois: 0</p>
+
+                                            <button id="Lumberjack-divine-upgrade-button" class="Lumberjack-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Sawmill-->
+                                        <div id="Sawmill-divine-upgrade" class="Sawmill-upgrade">
+                                            <h2>Scierie</h2>
+
+                                            <p id="Sawmill-divine-level">Niveau: 0</p>
+                                            <p id="Sawmill-divine-cost">Coût en PO: 0</p>
+                                            <p id="Sawmill-divine-woodcost">Coût en Bois: 0</p>
+                                            <button id="Sawmill-divine-upgrade-button" class="Sawmill-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Factory-->
+                                        <div id="Factory-divine-upgrade" class="Factory-upgrade">
+                                            <h2>Usine</h2>
+
+                                            <p id="Factory-divine-level">Niveau: 0</p>
+                                            <p id="Factory-divine-cost">Coût en PO: 0</p>
+                                            <p id="Factory-divine-woodcost">Coût en Bois: 0</p>
+                                            <button id="Factory-divine-upgrade-button" class="Factory-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Warehouse-->
+                                        <div id="Warehouse-divine-upgrade" class="Warehouse-upgrade">
+                                            <h2>Entrepôt</h2>
+
+                                            <p id="Warehouse-divine-level">Niveau: 0</p>
+                                            <p id="Warehouse-divine-cost">Coût en PO: 0</p>
+                                            <p id="Warehouse-divine-woodcost">Coût en Bois: 0</p>
+                                            <button id="Warehouse-divine-upgrade-button" class="Warehouse-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                        <!--Market-->
+                                        <div id="Market-divine-upgrade" class="Market-upgrade">
+                                            <h2>Marché</h2>
+
+                                            <p id="Market-divine-level">Niveau: 0</p>
+                                            <p id="Market-divine-cost">Coût en PO: 0</p>
+                                            <p id="Market-divine-woodcost">Coût en Bois: 0</p>
+                                            <button id="Market-divine-upgrade-button" class="Market-upgrade-button">Améliorer</button>
+                                        </div>
+
+                                    </div>
+
+                <div id="game-part-wood" style="display: none;">
+                    <div id="Oak" class="wood">
+                        <h2>Chêne</h2>
+                        <p id="oak-amount">0</p>
+                        <button id="oak-button" class="wood-button">Couper</button>
+                        <img src="assets/images/ressources/OakWood.jpg" alt="Chêne">
+                        <div class="horizontal-progress-bar">
+                            <div id="oak-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Oak-upgrade-button" class="Upgrade-button"></button>
+
+
+                        
+                    </div>
+                    <!--Oak-->
+                    <div id="Birch" class="wood">
+                        <h2>Bouleau</h2>
+                        <p id="birch-amount">0</p>
+                        <button id="birch-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="birch-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/BirchWood.jpg" alt="Bouleau">
+                        <div class="horizontal-progress-bar">
+                            <div id="birch-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Birch-upgrade-button" class="Upgrade-button"></button>
+
+                    </div>
+                    <!--Birch-->
+                    <div id="Pine" class="wood" >
+                        <h2>Pin</h2>
+                        <p id="pine-amount">0</p>
+                        <button id="pine-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="pine-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/PineWood.jpg" alt="Pin">
+                        <div class="horizontal-progress-bar">
+                            <div id="pine-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Pine-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Pine-->
+                    <div id="Maple" class="wood">
+                        <h2>Érable</h2>
+                        <p id="maple-amount">0</p>
+                        <button id="maple-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="maple-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/MapleWood.jpg" alt="Érable">
+                        <div class="horizontal-progress-bar">
+                            <div id="maple-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Maple-upgrade-button" class="Upgrade-button"></button>
+
+                    </div>
+                    <!--Maple-->
+                    <div id="Cherry" class="wood">
+                        <h2>Cerisier</h2>
+                        <p id="cherry-amount">0</p>
+                        <button id="cherry-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="cherry-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/CherryWood.jpg" alt="Cerisier">
+                        <div class="horizontal-progress-bar">
+                            <div id="cherry-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Cherry-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Cherry-->
+                    <div id="Walnut" class="wood">
+                        <h2>Noyer</h2>
+                        <p id="walnut-amount">0</p>
+                        <button id="walnut-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="walnut-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/WalnutWood.jpg" alt="Noyer">
+                        <div class="horizontal-progress-bar">
+                            <div id="walnut-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Walnut-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Walnut-->
+                    <div id="Mahogany" class="wood">
+                        <h2>Acajou</h2>
+                        <p id="mahogany-amount">0</p>
+                        <button id="mahogany-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="mahogany-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/MahoganyWood.jpg" alt="Acajou">
+                        <div class="horizontal-progress-bar">
+                            <div id="mahogany-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Mahogany-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Mahogany-->
+                    <div id="Cedar" class="wood">
+                        <h2>Cèdre</h2>
+                        <p id="cedar-amount">0</p>
+                        <button id="cedar-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="cedar-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/CedarWood.jpg" alt="Cèdre">
+                        <div class="horizontal-progress-bar">
+                            <div id="cedar-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Cedar-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Cedar-->
+                    <div id="Bamboo" class="wood">
+                        <h2>Bambou</h2>
+                        <p id="bamboo-amount">0</p>
+                        <button id="bamboo-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="bamboo-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/BambooWood.jpg" alt="Bambou">
+                        <div class="horizontal-progress-bar">
+                            <div id="bamboo-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Bamboo-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Bamboo-->
+                    <div id="Divine" class="wood">
+                        <h2>Divin</h2>
+                        <p id="divine-amount">0</p>
+                        <button id="divine-button" class="wood-button" style="display: none;">Couper</button>
+                        <button id="divine-unlock-button" class="unlock-wood-button">Bloquer</button>
+                        <img src="assets/images/ressources/DivineWood.jpg" alt="Divin">
+                        <div class="horizontal-progress-bar">
+                            <div id="divine-timer-progress" class="horizontal-progress"></div>
+                        </div>
+
+                        <!--Button-->
+                        <button id="Divine-upgrade-button" class="Upgrade-button"></button>
+                    </div>
+                    <!--Divine-->
+                </div>  
+            </div>
+        </div>
+
+        <script type="module" src="js/main.js"></script>
+        <script type="module" src="js/ui-interactions.js"></script>
+        <script type="module" src="js/player.js"></script>
+    </body>
+    </html>

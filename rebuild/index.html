@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Idle Kingdoms & Creatures - Prototype Bois</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="player-info">
+    <h2 id="player-name">Joueur</h2>
+    <p id="player-level">Niveau : 1</p>
+    <p id="player-gold">Gold : 100</p>
+  </div>
+
+  <div id="game-container">
+    <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
+    
+    <div id="tree-container">
+      <div id="tree" class="tree-clickable"></div>
+      <div id="tree-info">
+        <h3 id="tree-name">Nom de l'arbre</h3>
+        <div id="tree-health-container">
+          <div id="tree-progress"></div>
+        </div>
+        <p id="tree-health">0 / 0</p>
+      </div>
+    </div>
+    
+    <!-- Section des améliorations pour le bois -->
+<div id="wood-upgrades">
+    <h3>Améliorations du Bois</h3>
+    <div class="upgrade-section">
+      <p id="lumberjack-level">Niveau : 0</p>
+      <p id="lumberjack-cost">Coût : 100 Gold</p>
+      <button id="upgrade-lumberjack">Améliorer Bûcheron</button>
+    </div>
+    <div class="upgrade-section">
+      <p id="sawmill-level">Niveau : 0</p>
+      <p id="sawmill-cost">Coût : 500 Gold</p>
+      <button id="upgrade-sawmill">Améliorer Scierie</button>
+    </div>
+    <div class="upgrade-section">
+      <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
+      <p id="force-upgrade-cost">Coût : 200 Gold</p>
+      <button id="force-upgrade-button">Améliorer la Force</button>
+    </div>
+  </div>
+  
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

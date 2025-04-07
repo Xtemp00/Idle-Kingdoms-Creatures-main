@@ -1,0 +1,190 @@
+{
+    "NormalEgg" : [
+        {
+            "name" : "rockPet",
+            "rarity" : "common",
+            "skills" : "mine",
+            "goldMultiplier" : "1.5",
+            "xpMultiplier" : "1",
+            "probability" : "0.186"
+        },
+        {
+            "name" : "foragingPet",
+            "rarity" : "common",
+            "skills" : "wood",
+            "goldMultiplier" : "1.5",
+            "xpMultiplier" : "1.5",
+            "probability" : "0.186"
+        },
+        {
+            "name" : "fishingPet",
+            "rarity" : "common",
+            "skills" : "fishing",
+            "goldMultiplier" : "1.5",
+            "xpMultiplier" : "1.5",
+            "probability" : "0.186"
+        },
+        {
+            "name" : "farmingPet",
+            "rarity" : "common",
+            "skills" : "farming",
+            "goldMultiplier" : "1.5",
+            "xpMultiplier" : "1.5",
+            "probability" : "0.186"
+        },
+        {
+            "name" : "combatPet",
+            "rarity" : "common",
+            "skills" : "combat",
+            "goldMultiplier" : "1.5",
+            "xpMultiplier" : "1",
+            "probability" : "0.186"
+        },
+        {
+            "name" : "demonPet",
+            "rarity" : "epic",
+            "skills" : "all",
+            "goldMultiplier" : "2.0",
+            "xpMultiplier" : "2.0",
+            "probability" : "0.06"
+        },
+        {
+            "name" : "LegendaryPet",
+            "rarity" : "legendary",
+            "skills" : "all",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.009"
+        },
+        {
+            "name" : "DivinePet",
+            "rarity" : "mythic",
+            "skills" : "all",
+            "goldMultiplier" : "4.0",
+            "xpMultiplier" : "4.0",
+            "probability" : "0.001"
+        }
+    ],
+    "FireEgg" : [
+        {
+            "name" : "fireDragon",
+            "rarity" : "rare",
+            "skills" : "fire",
+            "goldMultiplier" : "2.0",
+            "xpMultiplier" : "2.0",
+            "probability" : "0.3"
+        },
+        {
+            "name" : "firePhoenix",
+            "rarity" : "epic",
+            "skills" : "fire",
+            "goldMultiplier" : "2.5",
+            "xpMultiplier" : "2.5",
+            "probability" : "0.2"
+        },
+        {
+            "name" : "fireElemental",
+            "rarity" : "legendary",
+            "skills" : "fire",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        }
+    ],
+    "WaterEgg" : [
+        {
+            "name" : "waterTurtle",
+            "rarity" : "rare",
+            "skills" : "water",
+            "goldMultiplier" : "2.0",
+            "xpMultiplier" : "2.0",
+            "probability" : "0.3"
+        },
+        {
+            "name" : "waterDolphin",
+            "rarity" : "epic",
+            "skills" : "water",
+            "goldMultiplier" : "2.5",
+            "xpMultiplier" : "2.5",
+            "probability" : "0.2"
+        },
+        {
+            "name" : "waterKraken",
+            "rarity" : "legendary",
+            "skills" : "water",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        }
+    ],
+    "SecretEgg" : [
+        {
+            "name" : "secretAgent",
+            "rarity" : "rare",
+            "skills" : "stealth",
+            "goldMultiplier" : "2.0",
+            "xpMultiplier" : "2.0",
+            "probability" : "0.3"
+        },
+        {
+            "name" : "mysteriousShadow",
+            "rarity" : "epic",
+            "skills" : "shadow",
+            "goldMultiplier" : "2.5",
+            "xpMultiplier" : "2.5",
+            "probability" : "0.2"
+        },
+        {
+            "name" : "ancientSage",
+            "rarity" : "legendary",
+            "skills" : "wisdom",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        },
+        {
+            "name" : "secretdragon",
+            "rarity" : "secret",
+            "skills" : "all",
+            "goldMultiplier" : "30.0",
+            "xpMultiplier" : "30.0",
+            "probability" : "0.01"
+        }
+    ],
+    "LegendaryEgg" : [
+        {
+            "name" : "legendaryDragon",
+            "rarity" : "legendary",
+            "skills" : "fire",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        },
+        {
+            "name" : "legendaryTurtle",
+            "rarity" : "legendary",
+            "skills" : "water",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        },
+        {
+            "name" : "legendaryPhoenix",
+            "rarity" : "legendary",
+            "skills" : "fire",
+            "goldMultiplier" : "3.0",
+            "xpMultiplier" : "3.0",
+            "probability" : "0.1"
+        }
+    ],
+    "GoldenEgg" : [
+        {
+            "name" : "goldenPet",
+            "rarity" : "legendary",
+            "skills" : "all",
+            "goldMultiplier" : "5.0",
+            "xpMultiplier" : "5.0",
+            "probability" : "1"
+        }
+    ]
+}

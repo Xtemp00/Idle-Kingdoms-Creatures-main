@@ -1,0 +1,35 @@
+{
+    "buildings": [
+      {
+        "name": "Miner",
+        "cooldown": 0.1,
+        "unlockstage": 5
+      },
+      {
+        "name": "Refinery",
+        "cooldown": 0.05,
+        "unlockstage": 10
+      },
+      {
+        "name": "Quarry",
+        "cooldown": 0.1,
+        "unlockstage": 25
+      },
+      {
+        "name":  "ChemicalFactory",
+        "cooldown": 30,
+        "unlockstage": 50
+      },
+      {
+        "name": "Drill",
+        "cooldown": 0,
+        "unlockstage": 100
+      },
+      {
+        "name": "NuclearQuarry",
+        "cooldown": 0,
+        "unlockstage": 200
+      }
+     
+    ]
+}
