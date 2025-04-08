@@ -1,0 +1,283 @@
+/* Remplacez le chemin par votre image de fond en haute résolution */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'MedievalSharp', cursive;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+  background: url('../assets/images/background/tree4.png') no-repeat center center fixed;
+  background-size: cover;
+
+}
+
+/* Conteneur d'informations du joueur, en haut à gauche */
+#player-info {
+  position: absolute; /* Pour le placer en overlay */
+  top: 20px;
+  left: 20px;
+  background-image: url('../assets/images/wood_part/player_background.png');
+  background-size: 240px;
+  background-position-y: -10px;
+  background-repeat: no-repeat;
+  padding: 15px 20px;
+  width: 220px;
+  height: 230px;
+  text-align: center;
+  
+
+}
+
+
+/* Conteneur principal (celui qui contient l'arbre, les upgrades, etc.) */
+#game-container {
+  margin-top: 0px;      /* Laisse un espace en haut */
+  margin-bottom: 40px;    /* Au besoin, on peut ajouter un espace en bas */
+  background-image: url('../assets/images/wood_part/wood_section_background.png');
+  background-size: 1000px;
+  width: 950px;           /* Ajustez la largeur selon vos préférences */
+  height: 950px;
+  max-width: 90%;         /* Pour que ça reste responsive */
+  padding: 20px;
+
+  margin-left: auto;      /* Centre horizontalement */
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Titre, textes d'intro, etc. */
+.intro-text {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+  color: #eee;
+}
+
+/* Conteneur de l'arbre : pas de background visible pour laisser l'image de fond ressortir */
+#tree-container {
+  background-image: url('../assets/images/wood_part/wood_background.png');
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 300px;
+  background-position: 160px;
+  top: 145px;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* L'image de l'arbre, gérée dynamiquement par votre code */
+.tree-clickable {
+  width: 250px;
+  height: 250px;
+  background-color: transparent; /* Laisse voir le fond du conteneur si l'image a des zones vides */
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.tree-clickable:hover {
+  transform: scale(1.05);
+}
+
+/* Info de l'arbre */
+#tree-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.8em;
+  color: #4a7c59;
+  text-shadow: none; /* On peut désactiver le text-shadow localement si on veut un rendu plus net */
+}
+
+#tree-health-container {
+  width: 250px;
+  height: 25px;
+  background: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#tree-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #4a7c59, #86A8E7);
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+#tree-health {
+  font-size: 1.2em;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* Section des améliorations du bois */
+#wood-upgrades {
+  margin-top: 30px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #4a7c59;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-left: auto;
+  margin-right: auto;
+  top: 100px;
+  position: relative;
+}
+
+.upgrade-section {
+  margin-bottom: 20px;
+}
+
+.upgrade-section p {
+  margin: 5px 0;
+  font-size: 1.1em;
+  color: #4a7c59;
+}
+
+.upgrade-section button {
+  background: #4a7c59;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upgrade-section button:hover {
+  background: #3b6846;
+}
+
+/* Conteneur global de l'arbre. 
+  Si vous voulez absolument la barre à gauche, vous pouvez faire 
+  un positionnement relatif, etc. */
+  #tree-container {
+  position: relative;
+  width: 600px; /* Ajustez selon vos besoins */
+  margin: 0 auto;
+}
+
+/* Panneau cliquable pour la barre. 
+    On le positionne en absolu pour qu'il soit collé à gauche du conteneur. */
+#tree-milestone-panel {
+  position: absolute;
+  left: 0;
+  top: 50px;  /* Ajustez pour aligner verticalement */
+  cursor: pointer;
+}
+
+/* La “piste” de la barre de milestone */
+#tree-milestone-container {
+  width: 30px;
+  height: 520px;
+  background: #555;
+  border: 2px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+/* La barre colorée qui progresse de bas en haut */
+#tree-milestone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%; /* On mettra un pourcentage dynamique via JS */
+  background: linear-gradient(to top, #4caf50, #81c784);
+  transition: height 0.3s;
+}
+
+/* Panneau d’informations (caché par défaut) */
+#milestone-details {
+  display: none; 
+  position: absolute;
+  left: 50px;   /* On l'affiche à droite de la barre */
+  top: 50px;
+  width: 220px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+#milestone-details h4 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+#milestone-details p {
+  margin: 5px 0;
+}
+
+#dps-container {
+  margin: 20px auto;
+  text-align: center;
+  width: 300px;
+}
+
+#dps-display {
+  background: #333;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+#dps-details {
+  background: #444;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 5px;
+  display: none;
+  color: #fff;
+}
+
+/* Sidebar : Liste des arbres (placée à droite) */
+#sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  overflow-y: auto;
+  color: #fff;
+}
+
+#sidebar h3 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.tree-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid #555;
+}
+
+.tree-menu-item img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  object-fit: contain;
+}
+
+.tree-menu-item span {
+  font-size: 1em;
+}
+

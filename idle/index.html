@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Idle Kingdoms & Creatures - Prototype Bois</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="player-info">
+    <h2 id="player-name">Joueur</h2>
+    <p id="player-level">Niveau : 1</p>
+    <p id="player-gold">Gold : 100</p>
+  </div>
+    <!-- Zone de DPS -->
+  <div id="dps-container" style="margin:20px auto; text-align:center; width:300px;">
+    <div id="dps-display" style="background:#333; padding:10px; border-radius:8px; cursor:pointer;">
+      DPS: 0
+    </div>
+    <div id="dps-details" style="background:#444; padding:10px; border-radius:8px; margin-top:5px; display:none; color:#fff;">
+      <!-- Les détails seront affichés ici lors du clic -->
+    </div>
+  </div>
+
+  <!-- Menu latéral à gauche -->
+  <div id="sidebar">
+    <h3>Liste des Arbres</h3>
+    <div id="tree-menu"></div>
+  </div>
+  <div id="tree-details">
+
+  </div>
+
+
+  <div id="game-container">
+    <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
+    
+    <!-- Conteneur principal de la zone "arbre" -->
+    <div id="tree-container">
+      <!-- Barre de milestone, cliquable pour afficher le détail -->
+      <div id="tree-milestone-panel" onclick="toggleMilestoneInfo()">
+        <div id="tree-milestone-container">
+          <div id="tree-milestone"></div>
+        </div>
+      </div>
+      
+      <!-- Boîte d'informations qui s'affiche au clic sur la barre -->
+      <div id="milestone-details">
+        <h4>Informations sur le Milestone</h4>
+        <p id="milestone-text">Cliquez sur la barre à gauche pour voir les infos.</p>
+      </div>
+
+      <!-- L'arbre et ses infos (déjà existants) -->
+      <div id="tree" class="tree-clickable"></div>
+      <div id="tree-info">
+        <h3 id="tree-name">Nom de l'arbre</h3>
+        <div id="tree-health-container">
+          <div id="tree-progress"></div>
+        </div>
+        <p id="tree-health">0 / 0</p>
+      </div>
+    </div>
+
+    
+    <!-- Section des améliorations pour le bois -->
+    <div id="wood-upgrades">
+      <h3>Améliorations du Bois</h3>
+      <div class="upgrade-section">
+        <p id="lumberjack-level">Niveau : 0</p>
+        <p id="lumberjack-cost">Coût : 100 Gold</p>
+        <button id="upgrade-lumberjack">Améliorer Bûcheron</button>
+      </div>
+      <div class="upgrade-section">
+        <p id="sawmill-level">Niveau : 0</p>
+        <p id="sawmill-cost">Coût : 500 Gold</p>
+        <button id="upgrade-sawmill">Améliorer Scierie</button>
+      </div>
+      <div class="upgrade-section">
+        <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
+        <p id="force-upgrade-cost">Coût : 200 Gold</p>
+        <button id="force-upgrade-button">Améliorer la Force</button>
+      </div>
+    </div>
+  
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Fonction globale pour basculer l'affichage des détails de milestone
+    function toggleMilestoneInfo() {
+      const panel = document.getElementById('milestone-details');
+      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
