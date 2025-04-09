@@ -127,7 +127,7 @@ export class WoodManager {
         <strong>Total Coupes :</strong> ${totalCoupes}<br>
         <strong>Palier actuel :</strong> ${level}<br>
         <strong>Prochain palier dans :</strong> ${coupesRestantes} coupes<br>
-        <strong>Bonus au prochain palier :</strong> +${nextMilestoneBonus}% HP / +${nextMilestoneBonus}% Gold
+        <strong>Bonus au prochain palier :</strong> +${nextMilestoneBonus}% HP / +${nextMilestoneBonus}% Gold / +${nextMilestoneBonus}% XP
       `;
     }
   }
@@ -190,8 +190,10 @@ export class WoodManager {
     // Calcul des récompenses, etc.
     const goldReward = this.currentTree.goldReward;
     const woodReward = this.currentTree.woodReward;
+    const xpReward = this.currentTree.xpReward;
     this.gameState.updateGold(goldReward);
     this.gameState.updateInventory("Wood", woodReward);
+    this.gameState.updateXP(xpReward);
     
     // Incrémente le compteur de coupures pour ce type d'arbre
     const treeType = this.currentTree.name;

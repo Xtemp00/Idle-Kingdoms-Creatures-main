@@ -8,6 +8,7 @@ export class UIManager {
     this.playerNameEl = document.getElementById('player-name');
     this.playerLevelEl = document.getElementById('player-level');
     this.playerGoldEl = document.getElementById('player-gold');
+    this.playerXPEl = document.getElementById('player-xp');
 
     this.gameState.subscribe((player) => this.updateUI(player));
     this.updateUI(this.gameState.player);
@@ -19,6 +20,9 @@ export class UIManager {
     }
     if (this.playerLevelEl) {
       this.playerLevelEl.textContent = `Niveau : ${player.level}`;
+    }
+    if (this.playerXPEl) {
+      this.playerXPEl.textContent = `xp : ${player.xp}`;
     }
     if (this.playerGoldEl) {
       this.playerGoldEl.textContent = `Gold : ${player.gold}`;

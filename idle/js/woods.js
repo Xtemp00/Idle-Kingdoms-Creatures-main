@@ -5,6 +5,7 @@ export const trees = [
     baseHealth: 100,
     goldReward: 20,
     woodReward: 1,
+    xpReward: 10,
     image: "assets/images/trees/oak.png"
   },
   {
@@ -13,6 +14,7 @@ export const trees = [
     baseHealth: 150,
     goldReward: 30,
     woodReward: 2,
+    xpReward: 10,
     image: "assets/images/trees/birch.png"
   },
   {
@@ -21,6 +23,7 @@ export const trees = [
     baseHealth: 200,
     goldReward: 50,
     woodReward: 3,
+    xpReward: 10,
     image: "assets/images/trees/pine.png"
   },
   // Nouveaux types d'arbres :
@@ -30,6 +33,7 @@ export const trees = [
     baseHealth: 130,
     goldReward: 25,
     woodReward: 2,
+    xpReward: 10,
     image: "assets/images/trees/red_oak.png"
   },
   {
@@ -38,6 +42,7 @@ export const trees = [
     baseHealth: 160,
     goldReward: 40,
     woodReward: 3,
+    xpReward: 10,
     image: "assets/images/trees/beech.png"
   },
   {
@@ -46,6 +51,7 @@ export const trees = [
     baseHealth: 140,
     goldReward: 35,
     woodReward: 2,
+    xpReward: 10,
     image: "assets/images/trees/willow.png"
   },
   {
@@ -54,6 +60,7 @@ export const trees = [
     baseHealth: 180,
     goldReward: 60,
     woodReward: 4,
+    xpReward: 10,
     image: "assets/images/trees/mahogany.png"
   },
   {
@@ -62,6 +69,7 @@ export const trees = [
     baseHealth: 90,
     goldReward: 20,
     woodReward: 1,
+    xpReward: 10,
     image: "assets/images/trees/bamboo.png"
   }
 ];
