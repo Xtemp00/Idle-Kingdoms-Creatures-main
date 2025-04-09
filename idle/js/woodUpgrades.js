@@ -57,7 +57,7 @@ export class WoodUpgrades {
     getUpgradeCost(type) {
       const level = this.gameState.player.woodUpgrades[type] || 0;
       // Coût exponentiel : ici on prend par exemple baseCost * (niveau + 1)²
-      return Math.floor(this.baseCost[type] * Math.pow(level + 1, 2));
+      return Math.floor(this.baseCost[type] * (level+1)*1.2);
     }
   
     purchaseUpgrade(type) {

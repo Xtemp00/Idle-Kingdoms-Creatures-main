@@ -31,7 +31,7 @@ export class ForceUpgrade {
     getUpgradeCost() {
       const level = this.gameState.player.forceUpgrade;
       // Coût exponentiel : par exemple, 200, 400, 800, ...
-      return this.baseCost * Math.pow(2, level);
+      return this.baseCost * level;
     }
   
     purchaseUpgrade() {

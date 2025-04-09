@@ -87,30 +87,53 @@ export class WoodManager {
     }
   }
   
-  updateMilestoneUI(milestoneCount) {
-    // Calcul du pourcentage de la barre
-    let progressPercent = (milestoneCount % 10) / 10 * 100;
+  updateMilestoneUI(totalCoupes) {
+    const base = 10;          // Nombre de coups requis pour le premier palier.
+    const multiplier = 1.5;   // Chaque palier requiert 1.5 fois plus de coups.
+    
+    let level = 0;
+    let cumulated = 0;
+    let requiredForCurrent = base * Math.pow(multiplier, level);
+    
+    // Détermine le niveau en soustrayant les coups nécessaires pour chaque palier complet
+    while (cumulated + requiredForCurrent <= totalCoupes) {
+      cumulated += requiredForCurrent;
+      level++;
+      requiredForCurrent = base * Math.pow(multiplier, level);
+    }
+    
+    let remainder = totalCoupes - cumulated;
+    
+    // Calcul de la progression dans le palier actuel (en %)
+    const progressPercent = (remainder / requiredForCurrent) * 100;
     if (this.treeMilestoneEl) {
       this.treeMilestoneEl.style.height = progressPercent + '%';
     }
-  
-    // Calcul de combien de coupes pour le prochain palier
-    let coupesRestantes = 10 - ((milestoneCount % 10) === 0 ? 10 : (milestoneCount % 10));
-    // Bonus actuel (milestoneLevel), ou bonus du prochain palier
-    let milestoneLevel = Math.floor(milestoneCount / 10);
-    let nextMilestoneBonus = (milestoneLevel + 1) * 20; // Ex: +20%, +40%, etc.
-  
-    // Mettre à jour le texte dans #milestone-text
+    
+    // Nombre de coups restants pour atteindre le prochain palier
+    let coupesRestantes = Math.ceil(requiredForCurrent - remainder);
+    
+    // Bonus prévu pour le prochain palier (exemple : +20% par palier)
+    let nextMilestoneBonus = (level + 1) * 20;
+    
+    // Sauvegarder le niveau actuel dans la mémoire
+    this.currentMilestoneLevel = level;
+    
+    // Mettre à jour le texte d'information
     const milestoneTextEl = document.getElementById('milestone-text');
-    if (milestoneTextEl) {
+    if (milestoneTextEl && this.currentTree) {
       milestoneTextEl.innerHTML = `
         <strong>Arbre actuel :</strong> ${this.currentTree.name}<br>
-        <strong>Coupe n° :</strong> ${milestoneCount}<br>
+        <strong>Total Coupes :</strong> ${totalCoupes}<br>
+        <strong>Palier actuel :</strong> ${level}<br>
         <strong>Prochain palier dans :</strong> ${coupesRestantes} coupes<br>
         <strong>Bonus au prochain palier :</strong> +${nextMilestoneBonus}% HP / +${nextMilestoneBonus}% Gold
       `;
     }
   }
+  
+  
+  
   
   
   spawnNewTree() {
@@ -145,7 +168,9 @@ export class WoodManager {
       this.treeNameEl.textContent = this.currentTree.name;
     }
     this.updateTreeUI();
-    this.updateMilestoneUI(milestoneCount % 10);
+    // Dans spawnNewTree()
+    this.updateMilestoneUI(milestoneCount);
+
   }
   
   
@@ -162,26 +187,23 @@ export class WoodManager {
   }
   
   treeChopped() {
-    // Récupère le compteur actuel pour ce type d'arbre
-    const treeType = this.currentTree.name;
-    let currentCount = this.gameState.player.milestones[treeType] || 0;
-    let milestoneLevel = Math.floor(currentCount / 10);
-    // Calcul du multiplicateur pour les récompenses en or : +20% par palier
-    const rewardMultiplier = 1 + milestoneLevel * 0.2;
-    const goldReward = Math.floor(this.currentTree.goldReward * rewardMultiplier);
+    // Calcul des récompenses, etc.
+    const goldReward = this.currentTree.goldReward;
     const woodReward = this.currentTree.woodReward;
-    
     this.gameState.updateGold(goldReward);
     this.gameState.updateInventory("Wood", woodReward);
     
     // Incrémente le compteur de coupures pour ce type d'arbre
+    const treeType = this.currentTree.name;
+    let currentCount = this.gameState.player.milestones[treeType] || 0;
     currentCount++;
     this.gameState.player.milestones[treeType] = currentCount;
     
-    // Met à jour l'affichage du milestone pour ce type
-    this.updateMilestoneUI(currentCount % 10);
+    // Met à jour l'affichage du milestone en passant le total complet
+    this.updateMilestoneUI(currentCount);
     
-    // Lancer le spawn d'un nouvel arbre (le bonus HP ne s'appliquera que si le milestone est atteint)
+    // Lancer le spawn d'un nouvel arbre
     this.spawnNewTree();
   }
+  
 }

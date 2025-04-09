@@ -4,7 +4,7 @@ export default class GameState {
     this.player = {
       name: "Joueur",
       level: 1,
-      gold: 10000,
+      gold: 1000000,
       inventory: {
         Wood: 0,
         Ore: 0,

@@ -117,12 +117,12 @@ body {
 #wood-upgrades {
   margin-top: 30px;
   padding: 15px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid #4a7c59;
-  border-radius: 10px;
+  background-image: url('../assets/images/wood_part/wood_upgrade.png');
+  background-repeat: no-repeat;
+  background-size: 500px;
+  background-position: -50px;
   width: 320px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   margin-left: auto;
   margin-right: auto;
   top: 100px;
@@ -136,7 +136,7 @@ body {
 .upgrade-section p {
   margin: 5px 0;
   font-size: 1.1em;
-  color: #4a7c59;
+  color: #FFF;
 }
 
 .upgrade-section button {
@@ -281,3 +281,35 @@ body {
   font-size: 1em;
 }
 
+/* Modal de détails de l'arbre */
+#tree-detail-modal {
+  display: none;              /* Caché par défaut */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);  /* Fond semi-transparent */
+  z-index: 10000;             /* Au-dessus de tout */
+}
+
+.modal-content {
+  background: #fff;
+  color: #333;
+  width: 600px;
+  margin: 100px auto;         /* Centré horizontalement et un peu vers le bas */
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}

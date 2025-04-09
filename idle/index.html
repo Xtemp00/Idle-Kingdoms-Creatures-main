@@ -27,8 +27,16 @@
     <h3>Liste des Arbres</h3>
     <div id="tree-menu"></div>
   </div>
-  <div id="tree-details">
-
+  <!-- Panneau Modal pour afficher les détails d'un arbre -->
+  <div id="tree-detail-modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeTreeDetailModal()">X</span>
+      <h3 id="modal-tree-name">Nom de l'arbre</h3>
+      <div id="modal-tree-info">
+        <!-- Détails à remplir dynamiquement (ex : HP max, gold reward, woodReward, rareté, taux de drop, spawn, milestone, etc.) -->
+        <p id="modal-tree-detail-text">Ici s'affichent toutes les informations détaillées de l'arbre.</p>
+      </div>
+    </div>
   </div>
 
 
@@ -87,10 +95,15 @@
 
   <script type="module" src="js/main.js"></script>
   <script>
-    // Fonction globale pour basculer l'affichage des détails de milestone
-    function toggleMilestoneInfo() {
-      const panel = document.getElementById('milestone-details');
-      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    // Fonction pour fermer le modal
+    function closeTreeDetailModal() {
+      document.getElementById('tree-detail-modal').style.display = 'none';
+    }
+    // Fonction pour ouvrir et remplir le modal (vous pourrez l'appeler depuis votre module TreeMenu)
+    function openTreeDetailModal(detailsHTML) {
+      const modal = document.getElementById('tree-detail-modal');
+      document.getElementById('modal-tree-info').innerHTML = detailsHTML;
+      modal.style.display = 'block';
     }
   </script>
 </body>
