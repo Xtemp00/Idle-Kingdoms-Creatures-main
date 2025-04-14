@@ -71,5 +71,14 @@ export const trees = [
     woodReward: 1,
     xpReward: 10,
     image: "assets/images/trees/bamboo.png"
+  },
+  {
+    name: "Legendaire",
+    rarity: 0.001,
+    baseHealth: 1000000,
+    goldReward: 5000000,
+    woodReward: 10000,
+    xpReward: 100000,
+    image: "assets/images/trees/legendary.png"
   }
 ];

@@ -51,12 +51,15 @@ export class WoodManager {
   }
     
   applyClickDamage() {
-    const effectiveDamage = this.clickDamage * this.gameState.player.forceMultiplier;
+    const baseDamage = this.clickDamage;
+    // Utilisation du bonus de clic issu du niveau
+    const effectiveDamage = baseDamage * this.gameState.player.forceMultiplier * this.gameState.player.bonuses.clickDamageMultiplier;
     this.dealDamage(effectiveDamage);
     if (this.dpsCalculator) {
       this.dpsCalculator.recordClick(effectiveDamage);
     }
   }
+  
 
   
   applyDPS() {
@@ -187,25 +190,36 @@ export class WoodManager {
   }
   
   treeChopped() {
-    // Calcul des récompenses, etc.
-    const goldReward = this.currentTree.goldReward;
-    const woodReward = this.currentTree.woodReward;
-    const xpReward = this.currentTree.xpReward;
-    this.gameState.updateGold(goldReward);
-    this.gameState.updateInventory("Wood", woodReward);
-    this.gameState.updateXP(xpReward);
-    
-    // Incrémente le compteur de coupures pour ce type d'arbre
+    // Récupère le compteur actuel pour ce type d'arbre
     const treeType = this.currentTree.name;
     let currentCount = this.gameState.player.milestones[treeType] || 0;
+    // Le palier actuel est basé sur le nombre total de coups déjà effectués
+    let milestoneLevel = Math.floor(currentCount / 10);
+    // Bonus milestone : par exemple, +20% par palier
+    const milestoneBonus = 1 + milestoneLevel * 0.2;
+    // Bonus de niveau issu des calculs dans GameState (défini par recalcBonuses)
+    const levelRewardMultiplier = this.gameState.player.bonuses.rewardMultiplier || 1;
+    
+    // Calcule les récompenses effectives en appliquant les deux bonus
+    const effectiveGoldReward = Math.floor(this.currentTree.goldReward * milestoneBonus * levelRewardMultiplier);
+    const effectiveXPReward   = Math.floor(this.currentTree.xpReward   * milestoneBonus * levelRewardMultiplier);
+    const woodReward = this.currentTree.woodReward; // On laisse le woodReward inchangé ou vous pouvez aussi y appliquer un bonus si souhaité
+    
+    // Mise à jour des ressources et de l'xp
+    this.gameState.updateGold(effectiveGoldReward);
+    this.gameState.updateInventory("Wood", woodReward);
+    this.gameState.updateXP(effectiveXPReward);
+    
+    // Incrémente le compteur de coups pour ce type d'arbre
     currentCount++;
     this.gameState.player.milestones[treeType] = currentCount;
     
-    // Met à jour l'affichage du milestone en passant le total complet
+    // Met à jour l'affichage du milestone en passant le total complet (sans modulo)
     this.updateMilestoneUI(currentCount);
     
     // Lancer le spawn d'un nouvel arbre
     this.spawnNewTree();
   }
+  
   
 }

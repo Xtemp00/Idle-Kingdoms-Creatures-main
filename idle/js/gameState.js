@@ -5,7 +5,7 @@ export default class GameState {
       name: "Joueur",
       level: 1,
       xp:0,
-      gold: 1000000,
+      gold: 100000000,
       inventory: {
         Wood: 0,
         Ore: 0,
@@ -20,7 +20,15 @@ export default class GameState {
       milestones: {},       // Compteur de coupures par type d’arbre
       spawnCount: {},       // Nombre de spawn par type d’arbre
       totalSpawns: 0,       // Total global des spawn
-      forceMultiplier: 1
+      forceMultiplier: 1000,
+      // Bonus attribués par le niveau, utilisés dans d'autres modules.
+      // Par défaut, au niveau 1, les bonus sont de 1 (aucun bonus)
+      bonuses: {
+        clickDamageMultiplier: 1,
+        dpsMultiplier: 1,
+        rewardMultiplier: 1,
+        cooldownReduction: 1
+      }
     };
     this.observers = [];
   }
@@ -58,6 +66,22 @@ export default class GameState {
     
     // On notifie les observateurs pour mettre à jour l'interface
     this.notifyObservers();
+    this.recalcBonuses();
+  }
+  /**
+   * Calcule et met à jour les bonus liés au niveau.
+   *
+   * - clickDamageMultiplier : augmente de 5% par niveau (ex : niveau 2 = x1.05)
+   * - dpsMultiplier : augmentation identique aux dégâts de clic
+   * - rewardMultiplier : augmente de 2% par niveau (ex : niveau 2 = x1.02)
+   * - cooldownReduction : diminue de 1% par niveau, avec un minimum de 0.8 (soit -20% au maximum)
+   */
+  recalcBonuses() {
+    const lvl = this.player.level;
+    this.player.bonuses.clickDamageMultiplier = 1 + 0.05 * (lvl - 1);
+    this.player.bonuses.dpsMultiplier = 1 + 0.05 * (lvl - 1);
+    this.player.bonuses.rewardMultiplier = 1 + 0.02 * (lvl - 1);
+    this.player.bonuses.cooldownReduction = Math.max(1 - 0.01 * (lvl - 1), 0.8);
   }
   
   subscribe(callback) {

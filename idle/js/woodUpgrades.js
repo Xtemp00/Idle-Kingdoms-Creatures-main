@@ -5,7 +5,7 @@ export class WoodUpgrades {
       // Initialisation des upgrades si non définis
       if (!this.gameState.player.woodUpgrades) {
         // On inclut désormais force en plus de lumberjack et sawmill
-        this.gameState.player.woodUpgrades = { lumberjack: 0, sawmill: 0, force: 0 };
+        this.gameState.player.woodUpgrades = { lumberjack: 1, sawmill: 1, force: 1 };
       }
       // Initialiser le multiplicateur de force s'il n'existe pas
       if (this.gameState.player.forceMultiplier === undefined) {
