@@ -4,17 +4,35 @@ body {
   padding: 0;
   font-family: 'MedievalSharp', cursive;
   color: #fff;
-  text-shadow: 1px 1px 2px #000;
   background: url('../assets/images/background/tree4.png') no-repeat center center fixed;
   background-size: cover;
+}
 
+#page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 32px 0;
+  gap: 20px;
+}
+
+#content {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 260px);
+  gap: 18px;
+  padding: 0 28px 30px;
 }
 
 /* Conteneur d'informations du joueur, en haut à gauche */
 #player-info {
-  position: absolute; /* Pour le placer en overlay */
-  top: 20px;
-  left: 20px;
+  position: relative;
   background-image: url('../assets/images/wood_part/player_background.png');
   background-size: 240px;
   background-position-y: -10px;
@@ -23,23 +41,23 @@ body {
   width: 220px;
   height: 230px;
   text-align: center;
-  
-
 }
 
 
 /* Conteneur principal (celui qui contient l'arbre, les upgrades, etc.) */
 #game-container {
-  margin-top: 0px;      /* Laisse un espace en haut */
-  margin-bottom: 40px;    /* Au besoin, on peut ajouter un espace en bas */
+  margin-top: 0px;
+  margin-bottom: 40px;
   background-image: url('../assets/images/wood_part/wood_section_background.png');
-  background-size: 1000px;
-  width: 950px;           /* Ajustez la largeur selon vos préférences */
-  height: 950px;
-  max-width: 90%;         /* Pour que ça reste responsive */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  min-height: 860px;
+  max-width: 980px;
   padding: 20px;
 
-  margin-left: auto;      /* Centre horizontalement */
+  margin-left: auto;
   margin-right: auto;
   text-align: center;
 }
@@ -56,11 +74,10 @@ body {
   background-image: url('../assets/images/wood_part/wood_background.png');
   text-align: center;
   background-repeat: no-repeat;
-  background-size: 300px;
-  background-position: 160px;
-  top: 145px;
-  width: 280px;
-  height: 280px;
+  background-size: 320px;
+  background-position: center;
+  width: min(520px, 90%);
+  min-height: 340px;
   margin: 0 auto;
   position: relative;
   display: flex;
@@ -87,8 +104,8 @@ body {
 #tree-info h3 {
   margin: 0 0 10px 0;
   font-size: 1.8em;
-  color: #4a7c59;
-  text-shadow: none; /* On peut désactiver le text-shadow localement si on veut un rendu plus net */
+  color: #2d5c3a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 #tree-health-container {
@@ -109,8 +126,8 @@ body {
 
 #tree-health {
   font-size: 1.2em;
-  color: #fff;
-  text-shadow: none;
+  color: #fef5e5;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Section des améliorations du bois */
@@ -119,13 +136,12 @@ body {
   padding: 15px;
   background-image: url('../assets/images/wood_part/wood_upgrade.png');
   background-repeat: no-repeat;
-  background-size: 500px;
-  background-position: -50px;
-  width: 320px;
+  background-size: contain;
+  background-position: center;
+  width: min(360px, 90%);
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  top: 100px;
   position: relative;
 }
 
@@ -136,7 +152,7 @@ body {
 .upgrade-section p {
   margin: 5px 0;
   font-size: 1.1em;
-  color: #FFF;
+  color: #fef5e5;
 }
 
 .upgrade-section button {
@@ -154,28 +170,19 @@ body {
   background: #3b6846;
 }
 
-/* Conteneur global de l'arbre. 
-  Si vous voulez absolument la barre à gauche, vous pouvez faire 
-  un positionnement relatif, etc. */
-  #tree-container {
-  position: relative;
-  width: 600px; /* Ajustez selon vos besoins */
-  margin: 0 auto;
-}
-
 /* Panneau cliquable pour la barre. 
     On le positionne en absolu pour qu'il soit collé à gauche du conteneur. */
 #tree-milestone-panel {
   position: absolute;
-  left: 0;
-  top: 50px;  /* Ajustez pour aligner verticalement */
+  left: -32px;
+  top: 30px;
   cursor: pointer;
 }
 
 /* La “piste” de la barre de milestone */
 #tree-milestone-container {
-  width: 30px;
-  height: 520px;
+  width: 26px;
+  height: 320px;
   background: #555;
   border: 2px solid #333;
   border-radius: 8px;
@@ -199,9 +206,9 @@ body {
 #milestone-details {
   display: none; 
   position: absolute;
-  left: 50px;   /* On l'affiche à droite de la barre */
-  top: 50px;
-  width: 220px;
+  left: 20px;
+  top: 20px;
+  width: 240px;
   background: rgba(0,0,0,0.7);
   color: #fff;
   padding: 10px;
@@ -221,40 +228,43 @@ body {
 }
 
 #dps-container {
-  margin: 20px auto;
+  margin: 0 auto;
   text-align: center;
-  width: 300px;
+  width: min(360px, 100%);
 }
 
 #dps-display {
-  background: #333;
-  padding: 10px;
-  border-radius: 8px;
+  background: rgba(25, 28, 32, 0.85);
+  padding: 10px 16px;
+  border-radius: 14px;
   cursor: pointer;
-  color: #fff;
+  color: #fef5e5;
   font-size: 1.2em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
 }
 
 #dps-details {
-  background: #444;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 5px;
+  background: rgba(30, 32, 36, 0.9);
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 8px;
   display: none;
   color: #fff;
 }
 
 /* Sidebar : Liste des arbres (placée à droite) */
 #sidebar {
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 200px;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 10px;
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  background: rgba(12, 16, 20, 0.8);
+  border-radius: 16px;
+  padding: 12px;
   overflow-y: auto;
   color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 #sidebar h3 {
@@ -267,7 +277,7 @@ body {
   align-items: center;
   padding: 5px;
   cursor: pointer;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .tree-menu-item img {
@@ -279,6 +289,138 @@ body {
 
 .tree-menu-item span {
   font-size: 1em;
+}
+
+#pet-panel {
+  margin: 24px auto 0;
+  width: min(520px, 92%);
+  background: rgba(15, 18, 20, 0.7);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+#pet-panel h3 {
+  margin: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.egg-counter {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 0.95em;
+}
+
+#pet-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pet-slot {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95em;
+}
+
+.pet-slot strong {
+  font-size: 1em;
+}
+
+.unequip-button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+}
+
+#open-egg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: #f2b750;
+  color: #3b2b08;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+#pet-collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.pet-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9em;
+}
+
+.pet-card span {
+  font-weight: bold;
+}
+
+.pet-card button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: #4a7c59;
+  color: #fff;
+  cursor: pointer;
+}
+
+.rarity-common {
+  color: #d6d6d6;
+}
+
+.rarity-rare {
+  color: #6fd1ff;
+}
+
+.rarity-epic {
+  color: #c879ff;
+}
+
+.rarity-legendary {
+  color: #f7d55d;
+}
+
+@media (max-width: 1024px) {
+  #content {
+    grid-template-columns: 1fr;
+  }
+
+  #sidebar {
+    width: min(360px, 100%);
+    margin: 0 auto;
+    position: relative;
+  }
 }
 
 /* Modal de détails de l'arbre */

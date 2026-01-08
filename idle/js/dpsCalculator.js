@@ -62,7 +62,10 @@ export class DPSCalculator {
     updateDPS() {
       const clickDPS = this.getClickDPS();
       const autoData = this.getAutoDPS();
-      const totalDPS = clickDPS + autoData.autoDPS;
+      const petBonus = this.gameState.player.petBonuses || { clickDamageMultiplier: 1, dpsMultiplier: 1 };
+      const adjustedClickDPS = clickDPS * petBonus.clickDamageMultiplier;
+      const adjustedAutoDPS = autoData.autoDPS * petBonus.dpsMultiplier;
+      const totalDPS = adjustedClickDPS + adjustedAutoDPS;
       if (this.dpsDisplayEl) {
         this.dpsDisplayEl.textContent = `DPS: ${totalDPS.toFixed(1)}`;
       }
@@ -71,12 +74,12 @@ export class DPSCalculator {
         // Affichage détaillé incluant la décomposition du auto DPS
         this.dpsDetailsEl.innerHTML = `
           <h4>Détail DPS</h4>
-          <p><strong>Auto DPS:</strong> ${autoData.autoDPS.toFixed(1)}</p>
+          <p><strong>Auto DPS:</strong> ${adjustedAutoDPS.toFixed(1)}</p>
           <ul>
             <li>Bûcheron: ${autoData.lumberjackDPS.toFixed(1)}</li>
             <li>Scierie: ${autoData.sawmillDPS.toFixed(1)}</li>
           </ul>
-          <p><strong>Click DPS (moyenne sur ${this.windowSize} s):</strong> ${clickDPS.toFixed(1)}</p>
+          <p><strong>Click DPS (moyenne sur ${this.windowSize} s):</strong> ${adjustedClickDPS.toFixed(1)}</p>
           <p><strong>Total DPS:</strong> ${totalDPS.toFixed(1)}</p>
           <p><strong>Clics récents:</strong> ${this.clickEvents.length}</p>
         `;
