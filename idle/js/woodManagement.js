@@ -53,7 +53,11 @@ export class WoodManager {
   applyClickDamage() {
     const baseDamage = this.clickDamage;
     // Utilisation du bonus de clic issu du niveau
-    const effectiveDamage = baseDamage * this.gameState.player.forceMultiplier * this.gameState.player.bonuses.clickDamageMultiplier;
+    const petBonus = this.gameState.player.petBonuses?.clickDamageMultiplier || 1;
+    const effectiveDamage = baseDamage
+      * this.gameState.player.forceMultiplier
+      * this.gameState.player.bonuses.clickDamageMultiplier
+      * petBonus;
     this.dealDamage(effectiveDamage);
     if (this.dpsCalculator) {
       this.dpsCalculator.recordClick(effectiveDamage);
@@ -65,7 +69,8 @@ export class WoodManager {
   applyDPS() {
     const lumberjackDPS = this.gameState.player.woodUpgrades.lumberjack * 1;
     const sawmillDPS = this.gameState.player.woodUpgrades.sawmill * 10;
-    const totalDPS = lumberjackDPS + sawmillDPS;
+    const petBonus = this.gameState.player.petBonuses?.dpsMultiplier || 1;
+    const totalDPS = (lumberjackDPS + sawmillDPS) * petBonus;
     if (totalDPS > 0) {
       this.dealDamage(totalDPS);
     }
@@ -94,18 +99,7 @@ export class WoodManager {
     const base = 10;          // Nombre de coups requis pour le premier palier.
     const multiplier = 1.5;   // Chaque palier requiert 1.5 fois plus de coups.
     
-    let level = 0;
-    let cumulated = 0;
-    let requiredForCurrent = base * Math.pow(multiplier, level);
-    
-    // Détermine le niveau en soustrayant les coups nécessaires pour chaque palier complet
-    while (cumulated + requiredForCurrent <= totalCoupes) {
-      cumulated += requiredForCurrent;
-      level++;
-      requiredForCurrent = base * Math.pow(multiplier, level);
-    }
-    
-    let remainder = totalCoupes - cumulated;
+    const { level, remainder, requiredForCurrent } = this.getMilestoneProgress(totalCoupes, base, multiplier);
     
     // Calcul de la progression dans le palier actuel (en %)
     const progressPercent = (remainder / requiredForCurrent) * 100;
@@ -119,9 +113,6 @@ export class WoodManager {
     // Bonus prévu pour le prochain palier (exemple : +20% par palier)
     let nextMilestoneBonus = (level + 1) * 20;
     
-    // Sauvegarder le niveau actuel dans la mémoire
-    this.currentMilestoneLevel = level;
-    
     // Mettre à jour le texte d'information
     const milestoneTextEl = document.getElementById('milestone-text');
     if (milestoneTextEl && this.currentTree) {
@@ -133,6 +124,21 @@ export class WoodManager {
         <strong>Bonus au prochain palier :</strong> +${nextMilestoneBonus}% HP / +${nextMilestoneBonus}% Gold / +${nextMilestoneBonus}% XP
       `;
     }
+  }
+
+  getMilestoneProgress(totalCoupes, base, multiplier) {
+    let level = 0;
+    let cumulated = 0;
+    let requiredForCurrent = base * Math.pow(multiplier, level);
+
+    while (cumulated + requiredForCurrent <= totalCoupes) {
+      cumulated += requiredForCurrent;
+      level++;
+      requiredForCurrent = base * Math.pow(multiplier, level);
+    }
+
+    const remainder = totalCoupes - cumulated;
+    return { level, remainder, requiredForCurrent };
   }
   
   
@@ -161,8 +167,10 @@ export class WoodManager {
     
     // Récupérer le nombre de coupures déjà effectuées pour ce type d’arbre
     let milestoneCount = this.gameState.player.milestones[this.currentTree.name] || 0;
-    let milestoneLevel = Math.floor(milestoneCount / 10);
-    // HP bonus uniquement si le milestone est atteint : +20% par tranche de 10
+    const base = 10;
+    const multiplier = 1.5;
+    const { level: milestoneLevel } = this.getMilestoneProgress(milestoneCount, base, multiplier);
+    // HP bonus uniquement si le milestone est atteint : +20% par palier
     const hpMultiplier = 1 + milestoneLevel * 0.2;
     
     this.maxTreeHealth = Math.floor(this.currentTree.baseHealth * hpMultiplier);
@@ -194,21 +202,29 @@ export class WoodManager {
     const treeType = this.currentTree.name;
     let currentCount = this.gameState.player.milestones[treeType] || 0;
     // Le palier actuel est basé sur le nombre total de coups déjà effectués
-    let milestoneLevel = Math.floor(currentCount / 10);
+    const base = 10;
+    const multiplier = 1.5;
+    const { level: milestoneLevel } = this.getMilestoneProgress(currentCount, base, multiplier);
     // Bonus milestone : par exemple, +20% par palier
     const milestoneBonus = 1 + milestoneLevel * 0.2;
     // Bonus de niveau issu des calculs dans GameState (défini par recalcBonuses)
     const levelRewardMultiplier = this.gameState.player.bonuses.rewardMultiplier || 1;
+    const petRewardMultiplier = this.gameState.player.petBonuses?.rewardMultiplier || 1;
     
     // Calcule les récompenses effectives en appliquant les deux bonus
-    const effectiveGoldReward = Math.floor(this.currentTree.goldReward * milestoneBonus * levelRewardMultiplier);
-    const effectiveXPReward   = Math.floor(this.currentTree.xpReward   * milestoneBonus * levelRewardMultiplier);
+    const effectiveGoldReward = Math.floor(this.currentTree.goldReward * milestoneBonus * levelRewardMultiplier * petRewardMultiplier);
+    const effectiveXPReward   = Math.floor(this.currentTree.xpReward   * milestoneBonus * levelRewardMultiplier * petRewardMultiplier);
     const woodReward = this.currentTree.woodReward; // On laisse le woodReward inchangé ou vous pouvez aussi y appliquer un bonus si souhaité
     
     // Mise à jour des ressources et de l'xp
     this.gameState.updateGold(effectiveGoldReward);
     this.gameState.updateInventory("Wood", woodReward);
     this.gameState.updateXP(effectiveXPReward);
+
+    const eggDropChance = 0.05 + (1 - this.currentTree.rarity) * 0.08;
+    if (Math.random() < eggDropChance) {
+      this.gameState.updateInventory("Egg", 1);
+    }
     
     // Incrémente le compteur de coups pour ce type d'arbre
     currentCount++;

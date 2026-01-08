@@ -20,7 +20,14 @@ export default class GameState {
       milestones: {},       // Compteur de coupures par type d’arbre
       spawnCount: {},       // Nombre de spawn par type d’arbre
       totalSpawns: 0,       // Total global des spawn
-      forceMultiplier: 1000,
+      forceMultiplier: 1,
+      petsOwned: [],
+      equippedPets: [null, null, null],
+      petBonuses: {
+        clickDamageMultiplier: 1,
+        dpsMultiplier: 1,
+        rewardMultiplier: 1
+      },
       // Bonus attribués par le niveau, utilisés dans d'autres modules.
       // Par défaut, au niveau 1, les bonus sont de 1 (aucun bonus)
       bonuses: {
@@ -92,4 +99,3 @@ export default class GameState {
     this.observers.forEach(callback => callback(this.player));
   }
 }
-
