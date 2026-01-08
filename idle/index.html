@@ -7,26 +7,116 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="player-info">
-    <h2 id="player-name">Joueur</h2>
-    <p id="player-level">Niveau : 1</p>
-    <p id="player-xp">xp : 0</p>
-    <p id="player-gold">Gold : 100</p>
-  </div>
-    <!-- Zone de DPS -->
-  <div id="dps-container" style="margin:20px auto; text-align:center; width:300px;">
-    <div id="dps-display" style="background:#333; padding:10px; border-radius:8px; cursor:pointer;">
-      DPS: 0
-    </div>
-    <div id="dps-details" style="background:#444; padding:10px; border-radius:8px; margin-top:5px; display:none; color:#fff;">
-      <!-- Les détails seront affichés ici lors du clic -->
-    </div>
-  </div>
+  <div id="page">
+    <header id="hud">
+      <div id="player-info">
+        <h2 id="player-name">Joueur</h2>
+        <p id="player-level">Niveau : 1</p>
+        <p id="player-xp">xp : 0</p>
+        <p id="player-gold">Gold : 100</p>
+      </div>
+      <!-- Zone de DPS -->
+      <div id="dps-container">
+        <div id="dps-display">
+          DPS: 0
+        </div>
+        <div id="dps-details">
+          <!-- Les détails seront affichés ici lors du clic -->
+        </div>
+      </div>
+    </header>
 
-  <!-- Menu latéral à gauche -->
-  <div id="sidebar">
-    <h3>Liste des Arbres</h3>
-    <div id="tree-menu"></div>
+    <main id="content">
+      <div id="game-container">
+        <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
+        
+        <!-- Conteneur principal de la zone "arbre" -->
+        <div id="tree-container">
+          <!-- Barre de milestone, cliquable pour afficher le détail -->
+          <div id="tree-milestone-panel" onclick="toggleMilestoneInfo()">
+            <div id="tree-milestone-container">
+              <div id="tree-milestone"></div>
+            </div>
+          </div>
+          
+          <!-- Boîte d'informations qui s'affiche au clic sur la barre -->
+          <div id="milestone-details">
+            <h4>Informations sur le Milestone</h4>
+            <p id="milestone-text">Cliquez sur la barre à gauche pour voir les infos.</p>
+          </div>
+
+          <!-- L'arbre et ses infos (déjà existants) -->
+          <div id="tree" class="tree-clickable"></div>
+          <div id="tree-info">
+            <h3 id="tree-name">Nom de l'arbre</h3>
+            <div id="tree-health-container">
+              <div id="tree-progress"></div>
+            </div>
+            <p id="tree-health">0 / 0</p>
+          </div>
+        </div>
+
+        
+        <!-- Section des améliorations pour le bois -->
+        <div id="wood-upgrades">
+          <h3>Améliorations du Bois</h3>
+          <div class="upgrade-section">
+            <p id="lumberjack-level">Niveau : 0</p>
+            <p id="lumberjack-cost">Coût : 100 Gold</p>
+            <button id="upgrade-lumberjack">Améliorer Bûcheron</button>
+          </div>
+          <div class="upgrade-section">
+            <p id="sawmill-level">Niveau : 0</p>
+            <p id="sawmill-cost">Coût : 500 Gold</p>
+            <button id="upgrade-sawmill">Améliorer Scierie</button>
+          </div>
+          <div class="upgrade-section">
+            <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
+            <p id="force-upgrade-cost">Coût : 200 Gold</p>
+            <button id="force-upgrade-button">Améliorer la Force</button>
+          </div>
+        </div>
+
+        <div id="pet-panel">
+          <div class="panel-header">
+            <h3>Compagnons</h3>
+            <div class="resource-counters">
+              <div class="egg-counter">
+                <span>Œufs :</span>
+                <strong id="egg-count">0</strong>
+              </div>
+              <div class="essence-counter">
+                <span>Essence :</span>
+                <strong id="essence-count">0</strong>
+              </div>
+            </div>
+          </div>
+          <div id="pet-slots">
+            <div class="pet-slot" data-slot="0">
+              <span>Slot 1</span>
+              <button class="unequip-button" data-slot="0">Retirer</button>
+            </div>
+            <div class="pet-slot" data-slot="1">
+              <span>Slot 2</span>
+              <button class="unequip-button" data-slot="1">Retirer</button>
+            </div>
+            <div class="pet-slot" data-slot="2">
+              <span>Slot 3</span>
+              <button class="unequip-button" data-slot="2">Retirer</button>
+            </div>
+          </div>
+          <div id="pet-bonus-summary"></div>
+          <button id="open-egg-button">Ouvrir un œuf</button>
+          <div id="pet-collection"></div>
+        </div>
+      </div>
+
+      <!-- Menu latéral à droite -->
+      <aside id="sidebar">
+        <h3>Liste des Arbres</h3>
+        <div id="tree-menu"></div>
+      </aside>
+    </main>
   </div>
   <!-- Panneau Modal pour afficher les détails d'un arbre -->
   <div id="tree-detail-modal">
@@ -39,61 +129,6 @@
       </div>
     </div>
   </div>
-
-
-  <div id="game-container">
-    <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
-    
-    <!-- Conteneur principal de la zone "arbre" -->
-    <div id="tree-container">
-      <!-- Barre de milestone, cliquable pour afficher le détail -->
-      <div id="tree-milestone-panel" onclick="toggleMilestoneInfo()">
-        <div id="tree-milestone-container">
-          <div id="tree-milestone"></div>
-        </div>
-      </div>
-      
-      <!-- Boîte d'informations qui s'affiche au clic sur la barre -->
-      <div id="milestone-details">
-        <h4>Informations sur le Milestone</h4>
-        <p id="milestone-text">Cliquez sur la barre à gauche pour voir les infos.</p>
-      </div>
-
-      <!-- L'arbre et ses infos (déjà existants) -->
-      <div id="tree" class="tree-clickable"></div>
-      <div id="tree-info">
-        <h3 id="tree-name">Nom de l'arbre</h3>
-        <div id="tree-health-container">
-          <div id="tree-progress"></div>
-        </div>
-        <p id="tree-health">0 / 0</p>
-      </div>
-    </div>
-
-    
-    <!-- Section des améliorations pour le bois -->
-    <div id="wood-upgrades">
-      <h3>Améliorations du Bois</h3>
-      <div class="upgrade-section">
-        <p id="lumberjack-level">Niveau : 0</p>
-        <p id="lumberjack-cost">Coût : 100 Gold</p>
-        <button id="upgrade-lumberjack">Améliorer Bûcheron</button>
-      </div>
-      <div class="upgrade-section">
-        <p id="sawmill-level">Niveau : 0</p>
-        <p id="sawmill-cost">Coût : 500 Gold</p>
-        <button id="upgrade-sawmill">Améliorer Scierie</button>
-      </div>
-      <div class="upgrade-section">
-        <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
-        <p id="force-upgrade-cost">Coût : 200 Gold</p>
-        <button id="force-upgrade-button">Améliorer la Force</button>
-      </div>
-    </div>
-  
-
-  </div>
-
   <script type="module" src="js/main.js"></script>
   <script>
     // Fonction pour fermer le modal
