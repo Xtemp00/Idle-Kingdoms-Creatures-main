@@ -6,6 +6,7 @@ export default class GameState {
       level: 1,
       xp:0,
       gold: 100000000,
+      baseClickDamage: 1,
       inventory: {
         Wood: 0,
         Ore: 0,
@@ -28,6 +29,10 @@ export default class GameState {
         dpsMultiplier: 1,
         rewardMultiplier: 1
       },
+      settings: {
+        reducedMotion: false,
+        compactUi: false
+      },
       // Bonus attribués par le niveau, utilisés dans d'autres modules.
       // Par défaut, au niveau 1, les bonus sont de 1 (aucun bonus)
       bonuses: {
@@ -38,12 +43,14 @@ export default class GameState {
       }
     };
     this.observers = [];
+    this.listeners = {};
   }
   // méthodes updateGold, updateInventory, subscribe, notifyObservers...
 
   
   updateGold(amount) {
     this.player.gold += amount;
+    this.emit('gold-updated', { amount, total: this.player.gold });
     this.notifyObservers();
   }
 
@@ -52,6 +59,11 @@ export default class GameState {
       this.player.inventory[resource] = 0;
     }
     this.player.inventory[resource] += amount;
+    this.emit('inventory-updated', {
+      resource,
+      amount,
+      total: this.player.inventory[resource]
+    });
     this.notifyObservers();
   }
   
@@ -69,6 +81,7 @@ export default class GameState {
       this.player.xp -= xpNeeded;  // Retirer l'XP nécessaire pour le passage de niveau
       this.player.level++;         // Monter d'un niveau
       xpNeeded = 100 * this.player.level;  // Recalculer l'XP nécessaire pour le niveau suivant
+      this.emit('level-up', { level: this.player.level });
     }
     
     // On notifie les observateurs pour mettre à jour l'interface
@@ -97,5 +110,16 @@ export default class GameState {
 
   notifyObservers() {
     this.observers.forEach(callback => callback(this.player));
+  }
+
+  on(eventName, callback) {
+    if (!this.listeners[eventName]) {
+      this.listeners[eventName] = [];
+    }
+    this.listeners[eventName].push(callback);
+  }
+
+  emit(eventName, payload) {
+    (this.listeners[eventName] || []).forEach(callback => callback(payload));
   }
 }

@@ -5,9 +5,12 @@ import { WoodUpgrades } from './woodUpgrades.js';
 import { DPSCalculator } from './dpsCalculator.js';
 import { TreeMenu } from './TreeMenu.js';
 import { PetManager } from './petManager.js';
+import { PersistenceManager } from './persistenceManager.js';
+import { QoLManager } from './qolManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameState = new GameState();
+  const persistenceManager = new PersistenceManager(gameState);
   const uiManager = new UIManager(gameState);
   const woodManager = new WoodManager(gameState);
   const woodUpgrades = new WoodUpgrades(gameState);
@@ -19,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Instancier le menu des arbres
   const treeMenu = new TreeMenu(gameState);
+
+  const qolManager = new QoLManager(gameState, {
+    woodManager,
+    dpsCalculator,
+    petManager,
+    persistenceManager
+  });
 });
 
 

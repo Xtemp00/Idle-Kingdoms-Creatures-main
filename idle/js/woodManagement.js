@@ -1,5 +1,6 @@
 // woodManagement.js
 import { trees } from './woods.js';
+import { formatNumber, clamp } from './utils.js';
 
 export class WoodManager {
   constructor(gameState) {
@@ -12,11 +13,12 @@ export class WoodManager {
     if (!this.gameState.player.woodUpgrades) {
       this.gameState.player.woodUpgrades = { lumberjack: 0, sawmill: 0 };
     }
-    this.clickDamage = 1;
+    this.clickDamage = this.gameState.player.baseClickDamage || 1;
     this.treeElement = document.getElementById('tree');
     this.treeProgressBar = document.getElementById('tree-progress');
     this.treeNameEl = document.getElementById('tree-name');
     this.treeHealthEl = document.getElementById('tree-health');
+    this.treeContainerEl = document.getElementById('tree-container');
     
     // Élément pour afficher la progression du milestone (par exemple, une barre verticale)
     this.treeMilestoneEl = document.getElementById('tree-milestone');
@@ -43,6 +45,12 @@ export class WoodManager {
       this.treeElement.addEventListener('click', () => {
         this.applyClickDamage();
       });
+      this.treeElement.addEventListener('keydown', (event) => {
+        if (event.code === 'Enter' || event.code === 'Space') {
+          event.preventDefault();
+          this.applyClickDamage();
+        }
+      });
     }
   }
 
@@ -59,6 +67,7 @@ export class WoodManager {
       * this.gameState.player.bonuses.clickDamageMultiplier
       * petBonus;
     this.dealDamage(effectiveDamage);
+    this.spawnDamageFloat(effectiveDamage);
     if (this.dpsCalculator) {
       this.dpsCalculator.recordClick(effectiveDamage);
     }
@@ -91,7 +100,7 @@ export class WoodManager {
       this.treeProgressBar.style.width = `${percent}%`;
     }
     if (this.treeHealthEl) {
-      this.treeHealthEl.textContent = `${Math.ceil(this.currentTreeHealth)} / ${this.maxTreeHealth}`;
+      this.treeHealthEl.textContent = `${formatNumber(Math.ceil(this.currentTreeHealth))} / ${formatNumber(this.maxTreeHealth)}`;
     }
   }
   
@@ -118,9 +127,9 @@ export class WoodManager {
     if (milestoneTextEl && this.currentTree) {
       milestoneTextEl.innerHTML = `
         <strong>Arbre actuel :</strong> ${this.currentTree.name}<br>
-        <strong>Total Coupes :</strong> ${totalCoupes}<br>
+        <strong>Total Coupes :</strong> ${formatNumber(totalCoupes)}<br>
         <strong>Palier actuel :</strong> ${level}<br>
-        <strong>Prochain palier dans :</strong> ${coupesRestantes} coupes<br>
+        <strong>Prochain palier dans :</strong> ${formatNumber(coupesRestantes)} coupes<br>
         <strong>Bonus au prochain palier :</strong> +${nextMilestoneBonus}% HP / +${nextMilestoneBonus}% Gold / +${nextMilestoneBonus}% XP
       `;
     }
@@ -224,17 +233,48 @@ export class WoodManager {
     const eggDropChance = 0.05 + (1 - this.currentTree.rarity) * 0.08;
     if (Math.random() < eggDropChance) {
       this.gameState.updateInventory("Egg", 1);
+      this.gameState.emit('egg-drop', { tree: this.currentTree.name });
     }
     
     // Incrémente le compteur de coups pour ce type d'arbre
+    const previousMilestoneLevel = milestoneLevel;
     currentCount++;
     this.gameState.player.milestones[treeType] = currentCount;
+    const { level: nextMilestoneLevel } = this.getMilestoneProgress(currentCount, base, multiplier);
+    if (nextMilestoneLevel > previousMilestoneLevel) {
+      this.gameState.emit('milestone-reached', {
+        tree: treeType,
+        level: nextMilestoneLevel
+      });
+    }
+
+    this.gameState.emit('tree-chopped', {
+      tree: treeType,
+      gold: effectiveGoldReward,
+      wood: woodReward,
+      xp: effectiveXPReward
+    });
     
     // Met à jour l'affichage du milestone en passant le total complet (sans modulo)
     this.updateMilestoneUI(currentCount);
     
     // Lancer le spawn d'un nouvel arbre
     this.spawnNewTree();
+  }
+
+  spawnDamageFloat(amount) {
+    if (!this.treeContainerEl) return;
+    const floatEl = document.createElement('div');
+    floatEl.className = 'damage-float';
+    floatEl.textContent = `-${formatNumber(amount)}`;
+    const offsetX = clamp((Math.random() * 120) - 60, -60, 60);
+    const offsetY = clamp((Math.random() * 40) - 20, -20, 20);
+    floatEl.style.left = `calc(50% + ${offsetX}px)`;
+    floatEl.style.top = `calc(50% + ${offsetY}px)`;
+    this.treeContainerEl.appendChild(floatEl);
+    floatEl.addEventListener('animationend', () => {
+      floatEl.remove();
+    });
   }
   
   
