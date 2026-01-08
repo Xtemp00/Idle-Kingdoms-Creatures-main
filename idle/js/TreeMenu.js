@@ -31,7 +31,7 @@ export class TreeMenu {
   showTreeDetails(tree) {
     // Récupération de la progression de milestone pour ce type d'arbre
     const milestoneCount = this.gameState.player.milestones ? (this.gameState.player.milestones[tree.name] || 0) : 0;
-    const milestoneLevel = Math.floor(milestoneCount / 10);
+    const milestoneLevel = this.getMilestoneLevel(milestoneCount);
     const hpMultiplier = 1 + milestoneLevel * 0.2;
     const effectiveHP = Math.floor(tree.baseHealth * hpMultiplier);
     // Bonus gold applique pareil : +20% par palier
@@ -69,5 +69,21 @@ export class TreeMenu {
     if (rarity >= 0.4) return "Inhabituel";
     if (rarity >= 0.2) return "Rare";
     return "Épique";
+  }
+
+  getMilestoneLevel(totalCoupes) {
+    const base = 10;
+    const multiplier = 1.5;
+    let level = 0;
+    let cumulated = 0;
+    let requiredForCurrent = base * Math.pow(multiplier, level);
+
+    while (cumulated + requiredForCurrent <= totalCoupes) {
+      cumulated += requiredForCurrent;
+      level++;
+      requiredForCurrent = base * Math.pow(multiplier, level);
+    }
+
+    return level;
   }
 }
