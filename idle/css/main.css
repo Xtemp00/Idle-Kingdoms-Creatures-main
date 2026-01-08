@@ -294,15 +294,19 @@ body {
 #pet-panel {
   margin: 24px auto 0;
   width: min(520px, 92%);
-  background: rgba(15, 18, 20, 0.7);
-  border-radius: 16px;
-  padding: 16px;
+  background: linear-gradient(180deg, rgba(40, 28, 18, 0.92), rgba(25, 18, 14, 0.9));
+  border-radius: 18px;
+  padding: 16px 18px 18px;
   text-align: left;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 215, 140, 0.2);
+  backdrop-filter: blur(4px);
 }
 
 #pet-panel h3 {
   margin: 0;
+  color: #f8e5c0;
+  letter-spacing: 0.5px;
 }
 
 .panel-header {
@@ -310,16 +314,19 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .egg-counter {
   display: flex;
   gap: 6px;
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 6px 12px;
   border-radius: 12px;
   font-size: 0.95em;
+  color: #f8e5c0;
 }
 
 #pet-slots {
@@ -331,12 +338,19 @@ body {
 
 .pet-slot {
   background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 0.95em;
+  min-height: 74px;
+}
+
+.pet-slot.occupied {
+  background: rgba(70, 120, 95, 0.2);
+  border-color: rgba(110, 180, 140, 0.4);
 }
 
 .pet-slot strong {
@@ -347,8 +361,8 @@ body {
   border: none;
   border-radius: 8px;
   padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fef5e5;
   cursor: pointer;
 }
 
@@ -359,11 +373,18 @@ body {
   border: none;
   border-radius: 10px;
   padding: 10px 16px;
-  background: #f2b750;
+  background: linear-gradient(180deg, #f6c96b, #e6a941);
   color: #3b2b08;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#open-egg-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
 }
 
 #pet-collection {
@@ -373,17 +394,36 @@ body {
 }
 
 .pet-card {
+  position: relative;
   background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 0.9em;
+  min-height: 120px;
+  overflow: hidden;
 }
 
-.pet-card span {
+.pet-card::before {
+  content: "🐾";
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 1.4em;
+  opacity: 0.35;
+}
+
+.pet-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   font-weight: bold;
+  font-size: 1em;
+  color: #fef5e5;
 }
 
 .pet-card button {
@@ -393,6 +433,12 @@ body {
   background: #4a7c59;
   color: #fff;
   cursor: pointer;
+}
+
+.pet-card button:disabled {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fef5e5;
 }
 
 .rarity-common {

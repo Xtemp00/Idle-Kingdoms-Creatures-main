@@ -103,8 +103,15 @@ export class PetManager {
   }
 
   render() {
+    const equippedSet = new Set(this.gameState.player.equippedPets.filter(Boolean));
+
     if (this.eggCountEl) {
       this.eggCountEl.textContent = this.gameState.player.inventory.Egg;
+    }
+    if (this.openEggButton) {
+      const hasEggs = this.gameState.player.inventory.Egg > 0;
+      this.openEggButton.disabled = !hasEggs;
+      this.openEggButton.textContent = hasEggs ? 'Ouvrir un œuf' : 'Aucun œuf';
     }
 
     if (this.collectionEl) {
@@ -118,13 +125,20 @@ export class PetManager {
           const card = document.createElement('div');
           card.classList.add('pet-card');
           card.innerHTML = `
-            <span>${pet.name}</span>
-            <em class="rarity-${pet.rarity}">${this.getRarityLabel(pet.rarity)}</em>
-            <p>Bonus: ${this.describeBonus(pet)}</p>
+            <div class="pet-card-header">
+              <span>${pet.name}</span>
+              <em class="rarity-${pet.rarity}">${this.getRarityLabel(pet.rarity)}</em>
+            </div>
+            <p>Bonus : ${this.describeBonus(pet)}</p>
           `;
           const equipButton = document.createElement('button');
-          equipButton.textContent = 'Équiper';
-          equipButton.addEventListener('click', () => this.equipPet(pet.instanceId));
+          if (equippedSet.has(pet.instanceId)) {
+            equipButton.textContent = 'Équipé';
+            equipButton.disabled = true;
+          } else {
+            equipButton.textContent = 'Équiper';
+            equipButton.addEventListener('click', () => this.equipPet(pet.instanceId));
+          }
           card.appendChild(equipButton);
           this.collectionEl.appendChild(card);
         });
@@ -136,6 +150,7 @@ export class PetManager {
       const petInstanceId = this.gameState.player.equippedPets[slotIndex];
       const slotLabel = slotEl.querySelector('span');
       const pet = this.gameState.player.petsOwned.find(item => item.instanceId === petInstanceId);
+      slotEl.classList.toggle('occupied', Boolean(pet));
       if (slotLabel) {
         if (pet) {
           slotLabel.innerHTML = `<strong>${pet.name}</strong><br><small>${this.describeBonus(pet)}</small>`;
