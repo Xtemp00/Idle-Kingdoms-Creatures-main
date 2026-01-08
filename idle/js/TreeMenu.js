@@ -6,21 +6,40 @@ export class TreeMenu {
     this.gameState = gameState;
     // On suppose qu'il y a un élément avec id "tree-menu" pour le menu
     this.menuEl = document.getElementById("tree-menu");
+    this.searchInput = document.getElementById("tree-search");
+    this.filterSelect = document.getElementById("tree-filter");
     this.init();
   }
   
   init() {
     this.renderMenu();
+    if (this.searchInput) {
+      this.searchInput.addEventListener('input', () => this.renderMenu());
+    }
+    if (this.filterSelect) {
+      this.filterSelect.addEventListener('change', () => this.renderMenu());
+    }
   }
   
   renderMenu() {
     // Vider le menu
     this.menuEl.innerHTML = "";
-    trees.forEach(tree => {
+    const filteredTrees = this.getFilteredTrees();
+    if (filteredTrees.length === 0) {
+      const emptyEl = document.createElement('p');
+      emptyEl.textContent = 'Aucun arbre trouvé.';
+      this.menuEl.appendChild(emptyEl);
+      return;
+    }
+    filteredTrees.forEach(tree => {
       const item = document.createElement("div");
       item.classList.add("tree-menu-item");
       // On utilise l'image et le nom dans chaque item
-      item.innerHTML = `<img src="${tree.image}" alt="${tree.name}" /><span>${tree.name}</span>`;
+      item.innerHTML = `
+        <img src="${tree.image}" alt="${tree.name}" />
+        <span>${tree.name}</span>
+        <em>${this.getRarityLabel(tree.rarity)}</em>
+      `;
       item.addEventListener("click", () => {
         this.showTreeDetails(tree);
       });
@@ -69,6 +88,23 @@ export class TreeMenu {
     if (rarity >= 0.4) return "Inhabituel";
     if (rarity >= 0.2) return "Rare";
     return "Épique";
+  }
+
+  getFilteredTrees() {
+    const query = this.searchInput ? this.searchInput.value.trim().toLowerCase() : '';
+    const filter = this.filterSelect ? this.filterSelect.value : 'all';
+    const filterMap = {
+      common: 'commun',
+      uncommon: 'inhabituel',
+      rare: 'rare',
+      epic: 'épique'
+    };
+    return trees.filter(tree => {
+      const matchesQuery = !query || tree.name.toLowerCase().includes(query);
+      const rarity = this.getRarityLabel(tree.rarity).toLowerCase();
+      const matchesFilter = filter === 'all' || rarity.startsWith(filterMap[filter] || filter);
+      return matchesQuery && matchesFilter;
+    });
   }
 
   getMilestoneLevel(totalCoupes) {

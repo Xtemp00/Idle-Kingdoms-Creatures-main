@@ -8,6 +8,8 @@ export class PetManager {
     this.collectionEl = document.getElementById('pet-collection');
     this.slotEls = document.querySelectorAll('.pet-slot');
     this.unequipButtons = document.querySelectorAll('.unequip-button');
+    this.equippedCountEl = document.getElementById('pet-equipped-count');
+    this.unequipAllButton = document.getElementById('unequip-all-button');
 
     this.init();
   }
@@ -37,6 +39,9 @@ export class PetManager {
         this.unequipPet(slotIndex);
       });
     });
+    if (this.unequipAllButton) {
+      this.unequipAllButton.addEventListener('click', () => this.unequipAll());
+    }
 
     this.updatePetBonuses();
     this.gameState.subscribe(() => this.render());
@@ -45,25 +50,39 @@ export class PetManager {
 
   openEgg() {
     if (this.gameState.player.inventory.Egg <= 0) {
-      alert('Tu n’as pas d’œuf à ouvrir.');
+      this.gameState.emit('toast', {
+        type: 'warning',
+        message: 'Tu n’as pas d’œuf à ouvrir.'
+      });
       return;
     }
-    this.gameState.player.inventory.Egg -= 1;
+    this.gameState.updateInventory('Egg', -1);
     const newPet = rollPet();
     this.gameState.player.petsOwned.push(newPet);
     this.gameState.notifyObservers();
     this.updatePetBonuses();
+    this.gameState.emit('toast', {
+      type: 'success',
+      message: `Nouveau compagnon obtenu : ${newPet.name} !`
+    });
   }
 
   equipPet(petInstanceId) {
     const emptySlotIndex = this.gameState.player.equippedPets.findIndex(slot => slot === null);
     if (emptySlotIndex === -1) {
-      alert('Tous les slots sont déjà occupés.');
+      this.gameState.emit('toast', {
+        type: 'warning',
+        message: 'Tous les slots sont déjà occupés.'
+      });
       return;
     }
     this.gameState.player.equippedPets[emptySlotIndex] = petInstanceId;
     this.updatePetBonuses();
     this.gameState.notifyObservers();
+    this.gameState.emit('toast', {
+      type: 'success',
+      message: 'Compagnon équipé !'
+    });
   }
 
   unequipPet(slotIndex) {
@@ -71,7 +90,21 @@ export class PetManager {
       this.gameState.player.equippedPets[slotIndex] = null;
       this.updatePetBonuses();
       this.gameState.notifyObservers();
+      this.gameState.emit('toast', {
+        type: 'warning',
+        message: 'Compagnon retiré.'
+      });
     }
+  }
+
+  unequipAll() {
+    this.gameState.player.equippedPets = [null, null, null];
+    this.updatePetBonuses();
+    this.gameState.notifyObservers();
+    this.gameState.emit('toast', {
+      type: 'warning',
+      message: 'Tous les compagnons ont été retirés.'
+    });
   }
 
   getRarityLabel(rarityKey) {
@@ -107,6 +140,10 @@ export class PetManager {
 
     if (this.eggCountEl) {
       this.eggCountEl.textContent = this.gameState.player.inventory.Egg;
+    }
+    if (this.equippedCountEl) {
+      const equippedCount = this.gameState.player.equippedPets.filter(Boolean).length;
+      this.equippedCountEl.textContent = `${equippedCount}/3`;
     }
     if (this.openEggButton) {
       const hasEggs = this.gameState.player.inventory.Egg > 0;

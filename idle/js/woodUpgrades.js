@@ -1,4 +1,6 @@
 // woodUpgrades.js
+import { formatNumber } from './utils.js';
+
 export class WoodUpgrades {
     constructor(gameState) {
       this.gameState = gameState;
@@ -30,12 +32,16 @@ export class WoodUpgrades {
       this.forceLevelEl = document.getElementById('force-upgrade-level');
       this.forceCostEl = document.getElementById('force-upgrade-cost');
       this.forceUpgradeButton = document.getElementById('force-upgrade-button');
+      this.buyModeButtons = document.querySelectorAll('#upgrade-buy-mode button');
+      this.buyAllButton = document.getElementById('upgrade-all-button');
+      this.buyMode = '1';
   
       this.init();
     }
   
     init() {
       this.updateUI();
+      this.gameState.subscribe(() => this.updateUI());
       if (this.lumberjackUpgradeButton) {
         this.lumberjackUpgradeButton.addEventListener('click', () => {
           this.purchaseUpgrade('lumberjack');
@@ -51,6 +57,26 @@ export class WoodUpgrades {
           this.purchaseUpgrade('force');
         });
       }
+      this.buyModeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          this.setBuyMode(button.dataset.mode);
+        });
+      });
+      if (this.buyAllButton) {
+        this.buyAllButton.addEventListener('click', () => {
+          ['lumberjack', 'sawmill', 'force'].forEach(type => {
+            this.purchaseUpgrade(type, { silent: true });
+          });
+        });
+      }
+    }
+
+    setBuyMode(mode) {
+      this.buyMode = mode;
+      this.buyModeButtons.forEach(button => {
+        button.classList.toggle('active', button.dataset.mode === mode);
+      });
+      this.updateUI();
     }
   
     // Calcule le coût de l'amélioration selon le niveau actuel
@@ -59,44 +85,96 @@ export class WoodUpgrades {
       // Coût exponentiel : ici on prend par exemple baseCost * (niveau + 1)²
       return Math.floor(this.baseCost[type] * (level+1)*1.2);
     }
-  
-    purchaseUpgrade(type) {
-      const cost = this.getUpgradeCost(type);
-      if (this.gameState.player.gold >= cost) {
-        // Déduire le coût
-        this.gameState.player.gold -= cost;
-        // Augmenter le niveau de l'amélioration pour le type donné
-        this.gameState.player.woodUpgrades[type] = (this.gameState.player.woodUpgrades[type] || 0) + 1;
-        // Si c'est une amélioration de force, augmenter le multiplicateur (par exemple +0.5 par niveau)
-        if (type === 'force') {
-          this.gameState.player.forceMultiplier += 0.5;
+
+    getBulkCost(type, levelsToBuy) {
+      let totalCost = 0;
+      const currentLevel = this.gameState.player.woodUpgrades[type] || 0;
+      for (let i = 0; i < levelsToBuy; i++) {
+        const nextLevel = currentLevel + i;
+        totalCost += Math.floor(this.baseCost[type] * (nextLevel + 1) * 1.2);
+      }
+      return totalCost;
+    }
+
+    getMaxAffordableLevels(type) {
+      let levels = 0;
+      let gold = this.gameState.player.gold;
+      let currentLevel = this.gameState.player.woodUpgrades[type] || 0;
+      while (gold > 0) {
+        const nextCost = Math.floor(this.baseCost[type] * (currentLevel + 1) * 1.2);
+        if (gold < nextCost) break;
+        gold -= nextCost;
+        currentLevel += 1;
+        levels += 1;
+      }
+      return levels;
+    }
+
+    purchaseUpgrade(type, options = {}) {
+      let levelsToBuy = 1;
+      if (this.buyMode === '10') {
+        levelsToBuy = 10;
+      } else if (this.buyMode === 'max') {
+        levelsToBuy = this.getMaxAffordableLevels(type);
+      }
+
+      if (levelsToBuy === 0) {
+        if (!options.silent) {
+          this.gameState.emit('toast', {
+            type: 'warning',
+            message: `Or insuffisant pour ${type}.`
+          });
         }
-        // Notifier les observateurs pour mettre à jour l'UI
-        this.gameState.notifyObservers();
+        return;
+      }
+
+      const cost = this.getBulkCost(type, levelsToBuy);
+      if (this.gameState.player.gold >= cost) {
+        this.gameState.updateGold(-cost);
+        this.gameState.player.woodUpgrades[type] = (this.gameState.player.woodUpgrades[type] || 0) + levelsToBuy;
+        if (type === 'force') {
+          this.gameState.player.forceMultiplier += 0.5 * levelsToBuy;
+        }
+        if (!options.silent) {
+          this.gameState.emit('toast', {
+            type: 'success',
+            message: `Upgrade ${type} +${levelsToBuy} acheté !`
+          });
+        }
         this.updateUI();
-      } else {
-        alert(`Pas assez d'or pour améliorer ${type}. Coût : ${cost} Gold.`);
+      } else if (!options.silent) {
+        this.gameState.emit('toast', {
+          type: 'warning',
+          message: `Pas assez d'or (${formatNumber(cost)} requis).`
+        });
       }
     }
   
     updateUI() {
+      const modeLabel = this.buyMode === 'max' ? 'max' : this.buyMode;
       if (this.lumberjackLevelEl) {
         this.lumberjackLevelEl.textContent = `Niveau : ${this.gameState.player.woodUpgrades.lumberjack}`;
       }
       if (this.lumberjackCostEl) {
-        this.lumberjackCostEl.textContent = `Coût : ${this.getUpgradeCost('lumberjack')} Gold`;
+        const levels = this.buyMode === 'max' ? this.getMaxAffordableLevels('lumberjack') : Number(this.buyMode);
+        const cost = levels > 0 ? this.getBulkCost('lumberjack', levels) : this.getUpgradeCost('lumberjack');
+        this.lumberjackCostEl.textContent = `Coût (x${modeLabel}) : ${formatNumber(cost)} Gold`;
       }
       if (this.sawmillLevelEl) {
         this.sawmillLevelEl.textContent = `Niveau : ${this.gameState.player.woodUpgrades.sawmill}`;
       }
       if (this.sawmillCostEl) {
-        this.sawmillCostEl.textContent = `Coût : ${this.getUpgradeCost('sawmill')} Gold`;
+        const levels = this.buyMode === 'max' ? this.getMaxAffordableLevels('sawmill') : Number(this.buyMode);
+        const cost = levels > 0 ? this.getBulkCost('sawmill', levels) : this.getUpgradeCost('sawmill');
+        this.sawmillCostEl.textContent = `Coût (x${modeLabel}) : ${formatNumber(cost)} Gold`;
       }
       if (this.forceLevelEl) {
         this.forceLevelEl.textContent = `Force Upgrade : Niveau ${this.gameState.player.woodUpgrades.force}`;
       }
       if (this.forceCostEl) {
-        this.forceCostEl.textContent = `Coût : ${this.getUpgradeCost('force')} Gold`;
+        const levels = this.buyMode === 'max' ? this.getMaxAffordableLevels('force') : Number(this.buyMode);
+        const cost = levels > 0 ? this.getBulkCost('force', levels) : this.getUpgradeCost('force');
+        this.forceCostEl.textContent = `Coût (x${modeLabel}) : ${formatNumber(cost)} Gold`;
       }
     }
   }

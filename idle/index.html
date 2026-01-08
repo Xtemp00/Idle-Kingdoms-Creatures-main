@@ -9,20 +9,77 @@
 <body>
   <div id="page">
     <header id="hud">
-      <div id="player-info">
+      <div id="player-info" class="panel card">
         <h2 id="player-name">Joueur</h2>
         <p id="player-level">Niveau : 1</p>
         <p id="player-xp">xp : 0</p>
         <p id="player-gold">Gold : 100</p>
+        <div id="resource-summary">
+          <div class="resource" data-tooltip="Bois disponible pour les futures constructions.">
+            <span>Bois</span>
+            <strong id="resource-wood">0</strong>
+          </div>
+          <div class="resource" data-tooltip="Ouvrir des œufs pour obtenir des compagnons.">
+            <span>Œufs</span>
+            <strong id="resource-egg">0</strong>
+          </div>
+        </div>
       </div>
       <!-- Zone de DPS -->
-      <div id="dps-container">
+      <div id="dps-container" class="panel card">
+        <div class="panel-header-inline">
+          <h3>Combat</h3>
+          <button id="toggle-dps-details" class="ghost-button" aria-expanded="false">Détails</button>
+        </div>
         <div id="dps-display">
           DPS: 0
         </div>
-        <div id="dps-details">
+        <div id="dps-details" aria-live="polite">
           <!-- Les détails seront affichés ici lors du clic -->
         </div>
+        <div id="combat-stats">
+          <div>
+            <span>Dégâts de clic</span>
+            <strong id="stat-click-damage">1</strong>
+          </div>
+          <div>
+            <span>Auto DPS</span>
+            <strong id="stat-auto-dps">0</strong>
+          </div>
+          <div>
+            <span>Bonus récomp.</span>
+            <strong id="stat-reward-multi">x1.0</strong>
+          </div>
+        </div>
+      </div>
+      <div id="qol-panel" class="panel card">
+        <div class="panel-header-inline">
+          <h3>Contrôles</h3>
+          <span id="save-status">Auto-save : --</span>
+        </div>
+        <div class="button-row">
+          <button id="save-button" data-tooltip="Sauvegarde manuelle immédiate.">Sauvegarder</button>
+          <button id="load-button" data-tooltip="Charger la dernière sauvegarde locale.">Charger</button>
+          <button id="reset-button" class="danger" data-tooltip="Réinitialiser la partie (irréversible).">Reset</button>
+        </div>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="toggle-reduced-motion">
+            <span>Réduire animations</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-compact-ui">
+            <span>Mode compact</span>
+          </label>
+        </div>
+        <div class="shortcut-list">
+          <span>␣ Couper</span>
+          <span>E Ouvrir œuf</span>
+          <span>D DPS</span>
+          <span>M Milestones</span>
+          <span>S Sauvegarder</span>
+        </div>
+        <div id="event-log" aria-live="polite"></div>
       </div>
     </header>
 
@@ -46,13 +103,14 @@
           </div>
 
           <!-- L'arbre et ses infos (déjà existants) -->
-          <div id="tree" class="tree-clickable"></div>
+          <div id="tree" class="tree-clickable" role="button" aria-label="Couper l'arbre" tabindex="0"></div>
           <div id="tree-info">
             <h3 id="tree-name">Nom de l'arbre</h3>
             <div id="tree-health-container">
               <div id="tree-progress"></div>
             </div>
             <p id="tree-health">0 / 0</p>
+            <p class="hint-text">Astuce : appuyez sur <strong>Espace</strong> pour couper plus vite.</p>
           </div>
         </div>
 
@@ -60,20 +118,28 @@
         <!-- Section des améliorations pour le bois -->
         <div id="wood-upgrades">
           <h3>Améliorations du Bois</h3>
+          <div class="upgrade-toolbar">
+            <div id="upgrade-buy-mode" class="segmented">
+              <button data-mode="1" class="active">x1</button>
+              <button data-mode="10">x10</button>
+              <button data-mode="max">xMax</button>
+            </div>
+            <button id="upgrade-all-button" class="ghost-button" data-tooltip="Acheter chaque upgrade avec le mode actif.">Tout améliorer</button>
+          </div>
           <div class="upgrade-section">
             <p id="lumberjack-level">Niveau : 0</p>
             <p id="lumberjack-cost">Coût : 100 Gold</p>
-            <button id="upgrade-lumberjack">Améliorer Bûcheron</button>
+            <button id="upgrade-lumberjack" data-tooltip="Augmente l'auto DPS.">Améliorer Bûcheron</button>
           </div>
           <div class="upgrade-section">
             <p id="sawmill-level">Niveau : 0</p>
             <p id="sawmill-cost">Coût : 500 Gold</p>
-            <button id="upgrade-sawmill">Améliorer Scierie</button>
+            <button id="upgrade-sawmill" data-tooltip="Gross boost d'auto DPS.">Améliorer Scierie</button>
           </div>
           <div class="upgrade-section">
             <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
             <p id="force-upgrade-cost">Coût : 200 Gold</p>
-            <button id="force-upgrade-button">Améliorer la Force</button>
+            <button id="force-upgrade-button" data-tooltip="Augmente les dégâts de clic.">Améliorer la Force</button>
           </div>
         </div>
 
@@ -84,6 +150,10 @@
             <div class="egg-counter">
               <span>Œufs :</span>
               <strong id="egg-count">0</strong>
+            </div>
+            <div class="egg-counter">
+              <span>Équipés :</span>
+              <strong id="pet-equipped-count">0/3</strong>
             </div>
           </div>
           <div id="pet-slots">
@@ -100,6 +170,7 @@
               <button class="unequip-button" data-slot="2">Retirer</button>
             </div>
           </div>
+          <button id="unequip-all-button" class="ghost-button">Tout retirer</button>
           <button id="open-egg-button">Ouvrir un œuf</button>
           <div id="pet-collection"></div>
         </div>
@@ -108,6 +179,16 @@
       <!-- Menu latéral à droite -->
       <aside id="sidebar">
         <h3>Liste des Arbres</h3>
+        <div class="tree-menu-controls">
+          <input id="tree-search" type="search" placeholder="Rechercher un arbre..." aria-label="Rechercher un arbre">
+          <select id="tree-filter" aria-label="Filtrer par rareté">
+            <option value="all">Toutes raretés</option>
+            <option value="common">Commun</option>
+            <option value="uncommon">Inhabituel</option>
+            <option value="rare">Rare</option>
+            <option value="epic">Épique</option>
+          </select>
+        </div>
         <div id="tree-menu"></div>
       </aside>
     </main>
@@ -115,7 +196,7 @@
   <!-- Panneau Modal pour afficher les détails d'un arbre -->
   <div id="tree-detail-modal">
     <div class="modal-content">
-      <span class="modal-close" onclick="closeTreeDetailModal()">X</span>
+      <span class="modal-close" onclick="closeTreeDetailModal()" aria-label="Fermer la fenêtre">X</span>
       <h3 id="modal-tree-name">Nom de l'arbre</h3>
       <div id="modal-tree-info">
         <!-- Détails à remplir dynamiquement (ex : HP max, gold reward, woodReward, rareté, taux de drop, spawn, milestone, etc.) -->
@@ -123,6 +204,7 @@
       </div>
     </div>
   </div>
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
   <script type="module" src="js/main.js"></script>
   <script>
     // Fonction pour fermer le modal
