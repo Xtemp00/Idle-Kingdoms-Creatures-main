@@ -57,6 +57,157 @@ body::after {
   gap: 12px;
 }
 
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 18px;
+  background: radial-gradient(circle at top, rgba(76, 248, 255, 0.2), transparent 55%),
+    rgba(4, 8, 14, 0.95);
+  z-index: 15000;
+}
+
+body.menu-open #main-menu-screen,
+body.hub-open #hub-screen {
+  display: flex;
+}
+
+body.menu-open #page,
+body.hub-open #page {
+  display: none;
+}
+
+.screen-card {
+  width: min(960px, 92vw);
+  background: rgba(8, 14, 22, 0.92);
+  border-radius: 26px;
+  padding: 32px;
+  border: 1px solid rgba(76, 248, 255, 0.25);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.screen-card h1 {
+  margin: 10px 0 8px;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+}
+
+.game-kicker {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.game-subtitle {
+  color: var(--text-dim);
+  margin: 0 auto 18px;
+  max-width: 600px;
+}
+
+.main-menu-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0 16px;
+}
+
+.primary-action {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 24px;
+  background: linear-gradient(120deg, rgba(76, 248, 255, 0.65), rgba(255, 79, 216, 0.4));
+  color: var(--text-bright);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.primary-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.options-panel {
+  margin: 16px auto 0;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  background: rgba(6, 12, 20, 0.85);
+  max-width: 520px;
+  text-align: left;
+}
+
+.options-panel h2 {
+  margin: 0 0 6px;
+}
+
+.options-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.menu-footnote {
+  margin: 18px 0 0;
+  color: rgba(236, 247, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.hub-card {
+  text-align: left;
+}
+
+.hub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 24px 0 10px;
+}
+
+.hub-node {
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(7, 16, 24, 0.75);
+  color: var(--text-bright);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.hub-node span {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.hub-node small {
+  color: var(--text-dim);
+}
+
+.hub-node:hover {
+  transform: translateY(-2px);
+  border-color: rgba(76, 248, 255, 0.5);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.35);
+}
+
 #hud {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -155,6 +306,11 @@ body::after {
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+#open-hub-button-inline {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .menu-button:hover {
@@ -683,6 +839,14 @@ body::after {
   font-size: 0.9em;
   min-height: 120px;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.pet-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(76, 248, 255, 0.4);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.35);
 }
 
 .pet-card::before {
@@ -717,6 +881,29 @@ body::after {
   cursor: default;
   background: rgba(255, 255, 255, 0.18);
   color: #fef5e5;
+}
+
+.pet-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 0.85em;
+  color: var(--text-dim);
+}
+
+.pet-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(76, 248, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pet-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(76, 248, 255, 0.7), rgba(255, 79, 216, 0.6));
+  width: 0%;
 }
 
 .rarity-common {
@@ -842,6 +1029,17 @@ body.reduced-motion * {
   height: 100%;
   background: rgba(2, 6, 12, 0.85);  /* Fond semi-transparent */
   z-index: 10000;             /* Au-dessus de tout */
+}
+
+#pet-detail-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 6, 12, 0.85);
+  z-index: 10000;
 }
 
 .modal-content {
