@@ -12,6 +12,16 @@ export default class GameState {
         Ore: 0,
         Egg: 0,
         Fish: 0,
+        Charbon: 0,
+        Cuivre: 0,
+        Étain: 0,
+        Fer: 0,
+        Argent: 0,
+        Or: 0,
+        Mithril: 0,
+        Adamantite: 0,
+        Orichalque: 0,
+        Étherium: 0
       },
       skills: {
         woodcutting: 1,
@@ -40,6 +50,17 @@ export default class GameState {
         dpsMultiplier: 1,
         rewardMultiplier: 1,
         cooldownReduction: 1
+      },
+      mining: {
+        floor: 1,
+        cells: [],
+        quarryIndex: 0,
+        upgrades: {
+          quarry: 0,
+          randomStrike: 0,
+          pickaxePower: 0,
+          pickaxePrecision: 0
+        }
       }
     };
     this.observers = [];
