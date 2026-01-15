@@ -226,16 +226,68 @@
 
           <section id="section-mining" class="content-section" data-section="mining" aria-hidden="true">
             <header class="section-header">
-              <h2>Minage - En cours de développement</h2>
-              <p>Creusez des galeries, trouvez des minerais rares et préparez vos futures forges.</p>
+              <h2>Minage</h2>
+              <p>Explorez une grille 10x10, découvrez des minerais rares et descendez toujours plus bas.</p>
             </header>
-            <div class="development-panel">
-              <h3>Prochaine étape</h3>
-              <ul>
-                <li>Système de filons et de pioches.</li>
-                <li>Atelier de raffinage.</li>
-                <li>Quêtes d'exploration souterraine.</li>
-              </ul>
+            <div class="mining-layout">
+              <div class="mining-panel card">
+                <div class="panel-header-inline">
+                  <h3>Galerie - Étage <span id="mine-floor">1</span></h3>
+                  <span id="mine-progress" class="mine-progress">0/100</span>
+                </div>
+                <div id="mine-grid" class="mine-grid" role="grid" aria-label="Grille de minage 10 par 10"></div>
+                <div class="mining-actions">
+                  <button id="mine-reset-grid" class="ghost-button">Recommencer l'étage</button>
+                  <button id="mine-scan-grid" class="ghost-button">Scanner</button>
+                </div>
+                <p class="hint-text">Cliquez sur une case pour révéler un minerai, du vide, une échelle ou un trou.</p>
+                <div id="mine-log" class="mining-log" aria-live="polite"></div>
+              </div>
+              <div class="mining-panel card">
+                <h3>Inventaire minier</h3>
+                <div id="mine-ore-list" class="ore-list"></div>
+              </div>
+              <div class="mining-panel card">
+                <h3>Améliorations de la mine</h3>
+                <div id="mine-upgrades" class="upgrade-list">
+                  <div class="upgrade-card" data-upgrade="quarry">
+                    <div>
+                      <h4>Quarry directionnelle</h4>
+                      <p class="upgrade-desc">Mine automatiquement de haut en bas, colonne par colonne.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="randomStrike">
+                    <div>
+                      <h4>Frappes erratiques</h4>
+                      <p class="upgrade-desc">Tape aléatoirement une case de la grille.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="pickaxePower">
+                    <div>
+                      <h4>Renfort de pioche</h4>
+                      <p class="upgrade-desc">Augmente l'or et l'XP obtenus en minant.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="pickaxePrecision">
+                    <div>
+                      <h4>Affûtage</h4>
+                      <p class="upgrade-desc">Augmente les chances de trouver un minerai.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 

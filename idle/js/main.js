@@ -7,6 +7,7 @@ import { TreeMenu } from './TreeMenu.js';
 import { PetManager } from './petManager.js';
 import { PersistenceManager } from './persistenceManager.js';
 import { QoLManager } from './qolManager.js';
+import { MiningManager } from './miningManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameState = new GameState();
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const woodUpgrades = new WoodUpgrades(gameState);
   const dpsCalculator = new DPSCalculator(gameState);
   const petManager = new PetManager(gameState);
+  const miningManager = new MiningManager(gameState);
   
   // Relier le DPSCalculator au WoodManager afin d'enregistrer les clics
   woodManager.setDPSCalculator(dpsCalculator);
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     woodManager,
     dpsCalculator,
     petManager,
+    miningManager,
     persistenceManager
   });
 
