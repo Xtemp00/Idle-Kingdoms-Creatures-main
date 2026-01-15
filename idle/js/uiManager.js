@@ -13,6 +13,7 @@ export class UIManager {
     this.playerXPEl = document.getElementById('player-xp');
     this.woodEl = document.getElementById('resource-wood');
     this.eggEl = document.getElementById('resource-egg');
+    this.agriResources = document.querySelectorAll('[data-agri-resource]');
 
     this.gameState.subscribe((player) => this.updateUI(player));
     this.updateUI(this.gameState.player);
@@ -36,6 +37,13 @@ export class UIManager {
     }
     if (this.eggEl) {
       this.eggEl.textContent = formatNumber(player.inventory.Egg || 0);
+    }
+    if (this.agriResources?.length) {
+      const storage = player.agriculture?.storage || {};
+      this.agriResources.forEach((element) => {
+        const resource = element.dataset.agriResource;
+        element.textContent = formatNumber(storage[resource] || 0);
+      });
     }
   }
 }

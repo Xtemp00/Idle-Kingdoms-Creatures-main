@@ -87,6 +87,18 @@
             <span>Œufs</span>
             <strong id="resource-egg">0</strong>
           </div>
+          <div class="resource" data-tooltip="Nectar récolté dans les serres.">
+            <span>Nectar</span>
+            <strong data-agri-resource="Nectar">0</strong>
+          </div>
+          <div class="resource" data-tooltip="Fibres récoltées dans les serres.">
+            <span>Fibres</span>
+            <strong data-agri-resource="Fibres">0</strong>
+          </div>
+          <div class="resource" data-tooltip="Tubercules récoltés dans les serres.">
+            <span>Tubercules</span>
+            <strong data-agri-resource="Tubercules">0</strong>
+          </div>
         </div>
       </div>
       <!-- Zone de DPS -->
@@ -327,16 +339,48 @@
 
           <section id="section-agriculture" class="content-section" data-section="agriculture" aria-hidden="true">
             <header class="section-header">
-              <h2>Agriculture - En cours de développement</h2>
-              <p>Faites pousser des plantations rares et nourrissez vos compagnons.</p>
+              <h2>Agriculture - Serres des Éclats</h2>
+              <p>Orchestrez des cycles courts, enchaînez les récoltes pour déclencher l'Éclosion et booster votre royaume.</p>
             </header>
-            <div class="development-panel">
-              <h3>Prochaine étape</h3>
-              <ul>
-                <li>Champs modulables et récoltes passives.</li>
-                <li>Système de météo et de fertilisants.</li>
-                <li>Marché d'échange agricole.</li>
-              </ul>
+            <div class="agriculture-layout">
+              <div class="agri-panel card">
+                <div class="panel-header-inline">
+                  <h3>Terrasses vivantes</h3>
+                  <label class="toggle">
+                    <input type="checkbox" id="agri-auto-harvest">
+                    <span>Auto-récolte</span>
+                  </label>
+                </div>
+                <p class="agri-hint">Alternez les cultures pour monter l'inspiration et activer une Éclosion surpuissante.</p>
+                <div id="agri-plots" class="agri-plots"></div>
+              </div>
+              <div class="agri-panel card">
+                <h3>Serre tactique</h3>
+                <div class="agri-status">
+                  <div class="agri-status-card">
+                    <span>Météo cosmique</span>
+                    <div id="agri-weather" class="agri-weather"></div>
+                  </div>
+                  <div class="agri-status-card">
+                    <span>Éclosion</span>
+                    <div class="agri-bloom">
+                      <div class="agri-bloom-fill" id="agri-bloom-fill"></div>
+                    </div>
+                    <p id="agri-bloom-status">Inspiration : 0/100</p>
+                    <button id="agri-bloom-button" class="primary-action" disabled>Déclencher l'Éclosion</button>
+                  </div>
+                </div>
+                <h4>Ressources récoltées</h4>
+                <div id="agri-storage" class="agri-storage"></div>
+                <h4>Affinités par culture</h4>
+                <div id="agri-focus" class="agri-focus"></div>
+              </div>
+              <div class="agri-panel card">
+                <h3>Améliorations agricoles</h3>
+                <div id="agri-upgrades" class="upgrade-list"></div>
+                <h4>Journal des récoltes</h4>
+                <div id="agri-log" class="agri-log" aria-live="polite"></div>
+              </div>
             </div>
           </section>
 
