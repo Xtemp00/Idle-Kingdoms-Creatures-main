@@ -73,6 +73,12 @@ body::after {
   padding: 0 28px 30px;
 }
 
+#main-area {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 /* Conteneur d'informations du joueur, en haut à gauche */
 #player-info {
   position: relative;
@@ -113,6 +119,92 @@ body::after {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+#main-menu {
+  text-align: left;
+}
+
+.menu-tag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(76, 248, 255, 0.1);
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  color: var(--text-dim);
+}
+
+.menu-hint {
+  margin: 6px 0 12px;
+  color: var(--text-dim);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.menu-button {
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(7, 16, 24, 0.65);
+  color: var(--text-bright);
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menu-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(76, 248, 255, 0.4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.menu-button.active {
+  background: linear-gradient(120deg, rgba(76, 248, 255, 0.25), rgba(255, 79, 216, 0.15));
+  border-color: rgba(76, 248, 255, 0.55);
+  box-shadow: 0 12px 24px rgba(24, 200, 214, 0.25);
+}
+
+#game-container .content-section {
+  display: none;
+}
+
+#game-container .content-section.is-active {
+  display: block;
+}
+
+.section-header {
+  margin: 6px auto 18px;
+  max-width: 700px;
+}
+
+.section-header h2 {
+  margin: 0 0 8px;
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.development-panel {
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(10, 18, 28, 0.8);
+  border: 1px dashed rgba(76, 248, 255, 0.25);
+  text-align: left;
+}
+
+.development-panel ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: var(--text-dim);
 }
 
 #save-status {
