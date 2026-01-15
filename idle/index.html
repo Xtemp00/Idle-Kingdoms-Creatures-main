@@ -240,6 +240,25 @@
                   <button id="mine-reset-grid" class="ghost-button">Recommencer l'étage</button>
                   <button id="mine-scan-grid" class="ghost-button">Scanner</button>
                 </div>
+                <div class="mining-insights">
+                  <div class="insight-card">
+                    <span>Chance minerai</span>
+                    <strong id="mine-odds">--%</strong>
+                  </div>
+                  <div class="insight-card">
+                    <span>Bonus combo</span>
+                    <strong id="mine-combo-bonus">x1.00</strong>
+                  </div>
+                  <div class="insight-card">
+                    <span>Série</span>
+                    <strong id="mine-combo">0</strong>
+                    <small id="mine-combo-best">Record : 0</small>
+                  </div>
+                  <label class="toggle mining-toggle">
+                    <input type="checkbox" id="mine-auto-descend" checked>
+                    <span>Auto-descente</span>
+                  </label>
+                </div>
                 <p class="hint-text">Cliquez sur une case pour révéler un minerai, du vide, une échelle ou un trou.</p>
                 <div id="mine-log" class="mining-log" aria-live="polite"></div>
               </div>

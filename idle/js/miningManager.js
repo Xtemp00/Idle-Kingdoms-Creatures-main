@@ -143,6 +143,9 @@ const DEFAULT_MINING_STATE = {
   floor: 1,
   cells: [],
   quarryIndex: 0,
+  combo: 0,
+  bestCombo: 0,
+  autoDescend: true,
   upgrades: {
     quarry: 0,
     randomStrike: 0,
@@ -171,6 +174,11 @@ export class MiningManager {
     this.upgradeListEl = document.getElementById('mine-upgrades');
     this.resetButton = document.getElementById('mine-reset-grid');
     this.scanButton = document.getElementById('mine-scan-grid');
+    this.oddsEl = document.getElementById('mine-odds');
+    this.comboEl = document.getElementById('mine-combo');
+    this.comboBestEl = document.getElementById('mine-combo-best');
+    this.comboBonusEl = document.getElementById('mine-combo-bonus');
+    this.autoDescendToggle = document.getElementById('mine-auto-descend');
 
     this.oreCounts = {};
     this.logMessages = [];
@@ -182,6 +190,7 @@ export class MiningManager {
     this.renderOreList();
     this.updateUpgradeCards();
     this.updateProgress();
+    this.updateInsights();
     this.attachEvents();
     this.startAutomation();
 
@@ -232,10 +241,18 @@ export class MiningManager {
     if (this.scanButton) {
       this.scanButton.addEventListener('click', () => {
         const odds = this.getOutcomeOdds();
+        const bonus = this.getComboBonus();
         this.gameState.emit('toast', {
           type: 'success',
-          message: `Analyse : ${Math.round(odds.ore * 100)}% minerai, ${Math.round(odds.ladder * 100)}% échelle, ${Math.round(odds.hole * 100)}% trou.`
+          message: `Analyse : ${Math.round(odds.ore * 100)}% minerai, ${Math.round(odds.ladder * 100)}% échelle, ${Math.round(odds.hole * 100)}% trou. Bonus combo x${bonus.toFixed(2)}.`
         });
+      });
+    }
+
+    if (this.autoDescendToggle) {
+      this.autoDescendToggle.addEventListener('change', (event) => {
+        this.state.autoDescend = event.target.checked;
+        this.updateInsights();
       });
     }
 
@@ -342,6 +359,18 @@ export class MiningManager {
     }
     const revealed = this.state.cells.filter((cell) => cell.revealed).length;
     this.progressEl.textContent = `${revealed}/${CELL_COUNT}`;
+    this.updateInsights();
+
+    if (revealed === CELL_COUNT) {
+      if (this.state.autoDescend) {
+        this.addLog('⛏️ Galerie sécurisée ! Descente automatique...');
+        setTimeout(() => {
+          this.advanceFloor(1);
+        }, 650);
+      } else {
+        this.addLog('✅ Étape complétée. Activez l\'auto-descente pour enchaîner plus vite.');
+      }
+    }
   }
 
   getOutcomeOdds() {
@@ -410,23 +439,27 @@ export class MiningManager {
     if (outcome.type === 'ore' && outcome.oreId) {
       const ore = ORES.find((item) => item.id === outcome.oreId);
       if (ore) {
+        this.state.combo = (this.state.combo || 0) + 1;
+        this.state.bestCombo = Math.max(this.state.bestCombo || 0, this.state.combo);
         const rewardMultiplier = this.getRewardMultiplier();
         const gold = Math.round(ore.gold * rewardMultiplier);
         const xp = Math.round(ore.xp * rewardMultiplier);
         this.gameState.updateInventory(ore.name, 1);
         this.gameState.updateGold(gold);
         this.gameState.updateXP(xp);
-        this.addLog(`⛏️ ${source} trouve ${ore.name} (+${gold}g, +${xp}xp).`);
+        this.addLog(`⛏️ ${source} trouve ${ore.name} (+${gold}g, +${xp}xp). Série x${this.state.combo}.`);
       }
     }
 
     if (outcome.type === 'ladder') {
+      this.resetCombo();
       this.addLog('🪜 Une échelle apparaît. Descente d\'un étage.');
       this.advanceFloor(1);
       return;
     }
 
     if (outcome.type === 'hole') {
+      this.resetCombo();
       const drop = Math.floor(Math.random() * 3) + 2;
       this.addLog(`⬇️ Un trou rare ! Descente de ${drop} étages.`);
       this.advanceFloor(drop);
@@ -434,6 +467,7 @@ export class MiningManager {
     }
 
     if (outcome.type === 'empty') {
+      this.resetCombo();
       this.addLog('... Du vide.');
     }
 
@@ -443,6 +477,7 @@ export class MiningManager {
   resetGrid() {
     this.state.cells = createEmptyCells();
     this.state.quarryIndex = 0;
+    this.resetCombo();
     this.renderGrid();
     this.addLog('Vous repartez à zéro sur cet étage.');
     this.updateProgress();
@@ -452,6 +487,7 @@ export class MiningManager {
     this.state.floor += delta;
     this.state.cells = createEmptyCells();
     this.state.quarryIndex = 0;
+    this.resetCombo();
     this.renderGrid();
     this.updateProgress();
   }
@@ -477,12 +513,43 @@ export class MiningManager {
 
   getRewardMultiplier() {
     const pickaxePower = this.state.upgrades.pickaxePower || 0;
-    return (1 + pickaxePower * 0.2) * (this.gameState.player.bonuses?.rewardMultiplier || 1);
+    return (1 + pickaxePower * 0.2)
+      * this.getComboBonus()
+      * (this.gameState.player.bonuses?.rewardMultiplier || 1);
   }
 
   getPrecisionBonus() {
     const precisionLevel = this.state.upgrades.pickaxePrecision || 0;
     return precisionLevel * 0.04;
+  }
+
+  getComboBonus() {
+    const combo = this.state.combo || 0;
+    const cappedCombo = Math.min(combo, 10);
+    return 1 + cappedCombo * 0.03;
+  }
+
+  resetCombo() {
+    this.state.combo = 0;
+  }
+
+  updateInsights() {
+    const odds = this.getOutcomeOdds();
+    if (this.oddsEl) {
+      this.oddsEl.textContent = `${Math.round(odds.ore * 100)}%`;
+    }
+    if (this.comboEl) {
+      this.comboEl.textContent = `${this.state.combo || 0}`;
+    }
+    if (this.comboBestEl) {
+      this.comboBestEl.textContent = `Record : ${this.state.bestCombo || 0}`;
+    }
+    if (this.comboBonusEl) {
+      this.comboBonusEl.textContent = `x${this.getComboBonus().toFixed(2)}`;
+    }
+    if (this.autoDescendToggle) {
+      this.autoDescendToggle.checked = this.state.autoDescend !== false;
+    }
   }
 
   purchaseUpgrade(upgradeId) {

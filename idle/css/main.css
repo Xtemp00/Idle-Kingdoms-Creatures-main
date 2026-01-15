@@ -1116,6 +1116,7 @@ body.reduced-motion * {
   background: rgba(13, 16, 28, 0.65);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 25px rgba(5, 8, 18, 0.7);
 }
 
 .mine-cell {
@@ -1128,6 +1129,7 @@ body.reduced-motion * {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.45);
 }
 
 .mine-cell:hover {
@@ -1142,12 +1144,12 @@ body.reduced-motion * {
 }
 
 .mine-cell.is-ore {
-  background: rgba(52, 72, 120, 0.85);
+  background: linear-gradient(145deg, rgba(68, 92, 150, 0.95), rgba(36, 46, 88, 0.9));
 }
 
 .mine-cell.is-ladder,
 .mine-cell.is-hole {
-  background: rgba(91, 74, 140, 0.85);
+  background: linear-gradient(160deg, rgba(115, 92, 176, 0.9), rgba(68, 50, 120, 0.92));
 }
 
 .mine-progress {
@@ -1159,6 +1161,46 @@ body.reduced-motion * {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.mining-insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  align-items: center;
+}
+
+.insight-card {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(14, 18, 33, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.8rem;
+}
+
+.insight-card strong {
+  font-size: 1.05rem;
+  color: #eff1ff;
+}
+
+.insight-card small {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+}
+
+.mining-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(17, 20, 34, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .mining-log {
@@ -1242,24 +1284,48 @@ body.reduced-motion * {
   color: #c7d2ff;
 }
 
+.mine-cell.rarity-commun {
+  box-shadow: 0 0 10px rgba(199, 210, 255, 0.15);
+}
+
 .rarity-inhabituel {
   color: #a8e2b0;
+}
+
+.mine-cell.rarity-inhabituel {
+  box-shadow: 0 0 12px rgba(168, 226, 176, 0.25);
 }
 
 .rarity-rare {
   color: #8cc9ff;
 }
 
+.mine-cell.rarity-rare {
+  box-shadow: 0 0 14px rgba(140, 201, 255, 0.3);
+}
+
 .rarity-epique {
   color: #d3a8ff;
+}
+
+.mine-cell.rarity-epique {
+  box-shadow: 0 0 16px rgba(211, 168, 255, 0.35);
 }
 
 .rarity-legendaire {
   color: #f7d58b;
 }
 
+.mine-cell.rarity-legendaire {
+  box-shadow: 0 0 18px rgba(247, 213, 139, 0.4);
+}
+
 .rarity-mythique {
   color: #ff9bd5;
+}
+
+.mine-cell.rarity-mythique {
+  box-shadow: 0 0 20px rgba(255, 155, 213, 0.45);
 }
 
 @media (max-width: 1100px) {
