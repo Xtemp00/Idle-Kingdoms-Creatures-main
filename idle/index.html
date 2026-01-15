@@ -84,95 +84,168 @@
     </header>
 
     <main id="content">
-      <div id="game-container">
-        <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
-        
-        <!-- Conteneur principal de la zone "arbre" -->
-        <div id="tree-container">
-          <!-- Barre de milestone, cliquable pour afficher le détail -->
-          <div id="tree-milestone-panel" onclick="toggleMilestoneInfo()">
-            <div id="tree-milestone-container">
-              <div id="tree-milestone"></div>
-            </div>
+      <div id="main-area">
+        <nav id="main-menu" class="panel card" aria-label="Menu principal">
+          <div class="panel-header-inline">
+            <h3>Menu principal</h3>
+            <span class="menu-tag">Exploration</span>
           </div>
-          
-          <!-- Boîte d'informations qui s'affiche au clic sur la barre -->
-          <div id="milestone-details">
-            <h4>Informations sur le Milestone</h4>
-            <p id="milestone-text">Cliquez sur la barre à gauche pour voir les infos.</p>
+          <p class="menu-hint">Choisissez une section pour explorer le royaume. D'autres zones arrivent bientôt.</p>
+          <div class="menu-grid">
+            <button class="menu-button active" data-target="wood">Bois</button>
+            <button class="menu-button" data-target="mining">Minage</button>
+            <button class="menu-button" data-target="gaming">Gaming</button>
+            <button class="menu-button" data-target="agriculture">Agriculture</button>
+            <button class="menu-button" data-target="pets">Pets</button>
           </div>
+        </nav>
 
-          <!-- L'arbre et ses infos (déjà existants) -->
-          <div id="tree" class="tree-clickable" role="button" aria-label="Couper l'arbre" tabindex="0"></div>
-          <div id="tree-info">
-            <h3 id="tree-name">Nom de l'arbre</h3>
-            <div id="tree-health-container">
-              <div id="tree-progress"></div>
-            </div>
-            <p id="tree-health">0 / 0</p>
-            <p class="hint-text">Astuce : appuyez sur <strong>Espace</strong> pour couper plus vite.</p>
-          </div>
-        </div>
+        <div id="game-container">
+          <section id="section-wood" class="content-section is-active" data-section="wood" aria-hidden="false">
+            <header class="section-header">
+              <h2>Bois &amp; Forêt d'Éveil</h2>
+              <p>Coupez des arbres, débloquez des améliorations et préparez le futur royaume.</p>
+            </header>
+            <!--<p class="intro-text">Cliquez sur l'arbre pour le couper et récolter vos ressources !</p>-->
+            
+            <!-- Conteneur principal de la zone "arbre" -->
+            <div id="tree-container">
+              <!-- Barre de milestone, cliquable pour afficher le détail -->
+              <div id="tree-milestone-panel" onclick="toggleMilestoneInfo()">
+                <div id="tree-milestone-container">
+                  <div id="tree-milestone"></div>
+                </div>
+              </div>
+              
+              <!-- Boîte d'informations qui s'affiche au clic sur la barre -->
+              <div id="milestone-details">
+                <h4>Informations sur le Milestone</h4>
+                <p id="milestone-text">Cliquez sur la barre à gauche pour voir les infos.</p>
+              </div>
 
-        
-        <!-- Section des améliorations pour le bois -->
-        <div id="wood-upgrades">
-          <h3>Améliorations du Bois</h3>
-          <div class="upgrade-toolbar">
-            <div id="upgrade-buy-mode" class="segmented">
-              <button data-mode="1" class="active">x1</button>
-              <button data-mode="10">x10</button>
-              <button data-mode="max">xMax</button>
+              <!-- L'arbre et ses infos (déjà existants) -->
+              <div id="tree" class="tree-clickable" role="button" aria-label="Couper l'arbre" tabindex="0"></div>
+              <div id="tree-info">
+                <h3 id="tree-name">Nom de l'arbre</h3>
+                <div id="tree-health-container">
+                  <div id="tree-progress"></div>
+                </div>
+                <p id="tree-health">0 / 0</p>
+                <p class="hint-text">Astuce : appuyez sur <strong>Espace</strong> pour couper plus vite.</p>
+              </div>
             </div>
-            <button id="upgrade-all-button" class="ghost-button" data-tooltip="Acheter chaque upgrade avec le mode actif.">Tout améliorer</button>
-          </div>
-          <div class="upgrade-section">
-            <p id="lumberjack-level">Niveau : 0</p>
-            <p id="lumberjack-cost">Coût : 100 Gold</p>
-            <button id="upgrade-lumberjack" data-tooltip="Augmente l'auto DPS.">Améliorer Bûcheron</button>
-          </div>
-          <div class="upgrade-section">
-            <p id="sawmill-level">Niveau : 0</p>
-            <p id="sawmill-cost">Coût : 500 Gold</p>
-            <button id="upgrade-sawmill" data-tooltip="Gross boost d'auto DPS.">Améliorer Scierie</button>
-          </div>
-          <div class="upgrade-section">
-            <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
-            <p id="force-upgrade-cost">Coût : 200 Gold</p>
-            <button id="force-upgrade-button" data-tooltip="Augmente les dégâts de clic.">Améliorer la Force</button>
-          </div>
-        </div>
 
-        
-        <div id="pet-panel">
-          <div class="panel-header">
-            <h3>Compagnons</h3>
-            <div class="egg-counter">
-              <span>Œufs :</span>
-              <strong id="egg-count">0</strong>
+            
+            <!-- Section des améliorations pour le bois -->
+            <div id="wood-upgrades">
+              <h3>Améliorations du Bois</h3>
+              <div class="upgrade-toolbar">
+                <div id="upgrade-buy-mode" class="segmented">
+                  <button data-mode="1" class="active">x1</button>
+                  <button data-mode="10">x10</button>
+                  <button data-mode="max">xMax</button>
+                </div>
+                <button id="upgrade-all-button" class="ghost-button" data-tooltip="Acheter chaque upgrade avec le mode actif.">Tout améliorer</button>
+              </div>
+              <div class="upgrade-section">
+                <p id="lumberjack-level">Niveau : 0</p>
+                <p id="lumberjack-cost">Coût : 100 Gold</p>
+                <button id="upgrade-lumberjack" data-tooltip="Augmente l'auto DPS.">Améliorer Bûcheron</button>
+              </div>
+              <div class="upgrade-section">
+                <p id="sawmill-level">Niveau : 0</p>
+                <p id="sawmill-cost">Coût : 500 Gold</p>
+                <button id="upgrade-sawmill" data-tooltip="Gross boost d'auto DPS.">Améliorer Scierie</button>
+              </div>
+              <div class="upgrade-section">
+                <p id="force-upgrade-level">Force Upgrade : Niveau 0</p>
+                <p id="force-upgrade-cost">Coût : 200 Gold</p>
+                <button id="force-upgrade-button" data-tooltip="Augmente les dégâts de clic.">Améliorer la Force</button>
+              </div>
             </div>
-            <div class="egg-counter">
-              <span>Équipés :</span>
-              <strong id="pet-equipped-count">0/3</strong>
+          </section>
+
+          <section id="section-mining" class="content-section" data-section="mining" aria-hidden="true">
+            <header class="section-header">
+              <h2>Minage - En cours de développement</h2>
+              <p>Creusez des galeries, trouvez des minerais rares et préparez vos futures forges.</p>
+            </header>
+            <div class="development-panel">
+              <h3>Prochaine étape</h3>
+              <ul>
+                <li>Système de filons et de pioches.</li>
+                <li>Atelier de raffinage.</li>
+                <li>Quêtes d'exploration souterraine.</li>
+              </ul>
             </div>
-          </div>
-          <div id="pet-slots">
-            <div class="pet-slot" data-slot="0">
-              <span>Slot 1</span>
-              <button class="unequip-button" data-slot="0">Retirer</button>
+          </section>
+
+          <section id="section-gaming" class="content-section" data-section="gaming" aria-hidden="true">
+            <header class="section-header">
+              <h2>Gaming - En cours de développement</h2>
+              <p>Débloquez des mini-jeux, défis de réflexes et tournois inter-royaumes.</p>
+            </header>
+            <div class="development-panel">
+              <h3>Prochaine étape</h3>
+              <ul>
+                <li>Mini-arcade et récompenses saisonnières.</li>
+                <li>Classements communautaires.</li>
+                <li>Défis quotidiens synchronisés.</li>
+              </ul>
             </div>
-            <div class="pet-slot" data-slot="1">
-              <span>Slot 2</span>
-              <button class="unequip-button" data-slot="1">Retirer</button>
+          </section>
+
+          <section id="section-agriculture" class="content-section" data-section="agriculture" aria-hidden="true">
+            <header class="section-header">
+              <h2>Agriculture - En cours de développement</h2>
+              <p>Faites pousser des plantations rares et nourrissez vos compagnons.</p>
+            </header>
+            <div class="development-panel">
+              <h3>Prochaine étape</h3>
+              <ul>
+                <li>Champs modulables et récoltes passives.</li>
+                <li>Système de météo et de fertilisants.</li>
+                <li>Marché d'échange agricole.</li>
+              </ul>
             </div>
-            <div class="pet-slot" data-slot="2">
-              <span>Slot 3</span>
-              <button class="unequip-button" data-slot="2">Retirer</button>
+          </section>
+
+          <section id="section-pets" class="content-section" data-section="pets" aria-hidden="true">
+            <header class="section-header">
+              <h2>Centre des Compagnons</h2>
+              <p>Ouvrez des œufs, équipez vos pets et gérez votre équipe active.</p>
+            </header>
+            <div id="pet-panel">
+              <div class="panel-header">
+                <h3>Compagnons</h3>
+                <div class="egg-counter">
+                  <span>Œufs :</span>
+                  <strong id="egg-count">0</strong>
+                </div>
+                <div class="egg-counter">
+                  <span>Équipés :</span>
+                  <strong id="pet-equipped-count">0/3</strong>
+                </div>
+              </div>
+              <div id="pet-slots">
+                <div class="pet-slot" data-slot="0">
+                  <span>Slot 1</span>
+                  <button class="unequip-button" data-slot="0">Retirer</button>
+                </div>
+                <div class="pet-slot" data-slot="1">
+                  <span>Slot 2</span>
+                  <button class="unequip-button" data-slot="1">Retirer</button>
+                </div>
+                <div class="pet-slot" data-slot="2">
+                  <span>Slot 3</span>
+                  <button class="unequip-button" data-slot="2">Retirer</button>
+                </div>
+              </div>
+              <button id="unequip-all-button" class="ghost-button">Tout retirer</button>
+              <button id="open-egg-button">Ouvrir un œuf</button>
+              <div id="pet-collection"></div>
             </div>
-          </div>
-          <button id="unequip-all-button" class="ghost-button">Tout retirer</button>
-          <button id="open-egg-button">Ouvrir un œuf</button>
-          <div id="pet-collection"></div>
+          </section>
         </div>
       </div>
 

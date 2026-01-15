@@ -29,7 +29,54 @@ document.addEventListener('DOMContentLoaded', () => {
     petManager,
     persistenceManager
   });
+
+  initMainMenu();
 });
+
+const initMainMenu = () => {
+  const menuButtons = document.querySelectorAll('#main-menu [data-target]');
+  const sections = document.querySelectorAll('.content-section[data-section]');
+  const sidebar = document.getElementById('sidebar');
+
+  if (!menuButtons.length || !sections.length) {
+    return;
+  }
+
+  const setActiveSection = (target) => {
+    sections.forEach((section) => {
+      const isActive = section.dataset.section === target;
+      section.classList.toggle('is-active', isActive);
+      section.setAttribute('aria-hidden', String(!isActive));
+    });
+
+    menuButtons.forEach((button) => {
+      const isActive = button.dataset.target === target;
+      button.classList.toggle('active', isActive);
+      if (isActive) {
+        button.setAttribute('aria-current', 'page');
+      } else {
+        button.removeAttribute('aria-current');
+      }
+    });
+
+    if (sidebar) {
+      sidebar.hidden = target !== 'wood';
+    }
+  };
+
+  menuButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setActiveSection(button.dataset.target);
+    });
+  });
+
+  const defaultTarget = document.querySelector('#main-menu .menu-button.active')?.dataset.target
+    || menuButtons[0]?.dataset.target;
+
+  if (defaultTarget) {
+    setActiveSection(defaultTarget);
+  }
+};
 
 
 // main.js ou un script global
