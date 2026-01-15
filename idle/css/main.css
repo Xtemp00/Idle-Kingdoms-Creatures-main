@@ -363,6 +363,196 @@ body.hub-open #page {
   color: var(--text-dim);
 }
 
+.agriculture-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  text-align: left;
+}
+
+.agri-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.agri-hint {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.agri-plots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.agri-plot {
+  background: rgba(8, 14, 22, 0.7);
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agri-plot-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.agri-plot-soil {
+  display: inline-flex;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+.agri-plot-status {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(76, 248, 255, 0.1);
+  border: 1px solid rgba(76, 248, 255, 0.25);
+}
+
+.agri-plot-flavor {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.agri-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.agri-select select {
+  background: rgba(6, 12, 18, 0.8);
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  color: var(--text-bright);
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.agri-progress {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.agri-progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(120deg, rgba(76, 248, 255, 0.7), rgba(255, 79, 216, 0.45));
+  transition: width 0.3s ease;
+}
+
+.agri-plot-meta {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.agri-plot-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.agri-status {
+  display: grid;
+  gap: 12px;
+}
+
+.agri-status-card {
+  background: rgba(7, 16, 24, 0.7);
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agri-weather {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-dim);
+}
+
+.agri-bloom {
+  position: relative;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.agri-bloom-fill {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  background: linear-gradient(120deg, rgba(255, 79, 216, 0.6), rgba(125, 255, 140, 0.4));
+  transition: width 0.3s ease;
+}
+
+.agri-storage {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.agri-resource {
+  background: rgba(7, 16, 24, 0.8);
+  border: 1px solid rgba(76, 248, 255, 0.18);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.agri-focus {
+  display: grid;
+  gap: 10px;
+}
+
+.agri-focus-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: rgba(7, 16, 24, 0.75);
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.agri-focus-card span {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.agri-focus-level {
+  font-size: 0.75rem;
+  color: rgba(236, 247, 255, 0.7);
+}
+
+.agri-log {
+  display: grid;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
 #save-status {
   font-size: 0.85em;
   color: rgba(255, 255, 255, 0.7);

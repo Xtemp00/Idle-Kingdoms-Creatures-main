@@ -74,6 +74,18 @@ export class PersistenceManager {
     player.equippedPets = Array.isArray(savedPlayer.equippedPets) ? savedPlayer.equippedPets : [null, null, null];
     player.petBonuses = { ...player.petBonuses, ...(savedPlayer.petBonuses || {}) };
     player.settings = { ...player.settings, ...(savedPlayer.settings || {}) };
+    player.agriculture = {
+      ...player.agriculture,
+      ...(savedPlayer.agriculture || {}),
+      storage: {
+        ...(player.agriculture?.storage || {}),
+        ...(savedPlayer.agriculture?.storage || {})
+      },
+      upgrades: {
+        ...(player.agriculture?.upgrades || {}),
+        ...(savedPlayer.agriculture?.upgrades || {})
+      }
+    };
     this.gameState.notifyObservers();
     this.gameState.emit('settings-updated', player.settings);
   }

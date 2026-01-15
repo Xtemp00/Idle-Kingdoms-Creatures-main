@@ -61,6 +61,28 @@ export default class GameState {
           pickaxePower: 0,
           pickaxePrecision: 0
         }
+      },
+      agriculture: {
+        plots: [],
+        storage: {
+          Nectar: 0,
+          Fibres: 0,
+          Tubercules: 0
+        },
+        affinity: {},
+        inspiration: 0,
+        bloomUntil: 0,
+        lastHarvests: [],
+        autoHarvest: false,
+        weather: {
+          id: 'meteores',
+          endsAt: 0
+        },
+        upgrades: {
+          irrigation: 0,
+          pollinisateurs: 0,
+          mycelium: 0
+        }
       }
     };
     this.observers = [];
