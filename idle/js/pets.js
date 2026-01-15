@@ -34,6 +34,6 @@ export function rollPet() {
   const pick = availablePets[Math.floor(Math.random() * availablePets.length)];
   return {
     ...pick,
-    instanceId: `${pick.id}-${Date.now()}-${Math.floor(Math.random() * 1000)}`
+    baseBonusValue: pick.bonusValue
   };
 }

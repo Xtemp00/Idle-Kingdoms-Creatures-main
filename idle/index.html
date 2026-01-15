@@ -7,6 +7,70 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="main-menu-screen" class="screen" aria-hidden="false">
+    <div class="screen-card">
+      <p class="game-kicker">Terminal Cosmos présente</p>
+      <h1>Idle Kingdoms &amp; Creatures</h1>
+      <p class="game-subtitle">Bâtissez votre royaume, recrutez des compagnons uniques et explorez un hub vivant.</p>
+      <div class="main-menu-actions">
+        <button id="start-new-game" class="primary-action">Nouveau</button>
+        <button id="resume-game" class="primary-action">Reprendre</button>
+        <button id="toggle-options" class="ghost-button">Options</button>
+      </div>
+      <div id="options-panel" class="options-panel" hidden>
+        <h2>Options rapides</h2>
+        <p>Personnalisez votre confort avant de partir à l'aventure.</p>
+        <div class="options-grid">
+          <label class="toggle">
+            <input type="checkbox" id="menu-toggle-reduced-motion">
+            <span>Réduire animations</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="menu-toggle-compact-ui">
+            <span>Mode compact</span>
+          </label>
+        </div>
+      </div>
+      <p class="menu-footnote">Astuce : toutes les zones se débloquent depuis le hub plein écran.</p>
+    </div>
+  </div>
+
+  <div id="hub-screen" class="screen" aria-hidden="true">
+    <div class="screen-card hub-card">
+      <div class="hub-header">
+        <div>
+          <p class="game-kicker">Hub principal</p>
+          <h2>Choisissez votre destination</h2>
+          <p class="game-subtitle">Traversez le monde pour récolter, miner, gérer vos pets et plus encore.</p>
+        </div>
+        <button id="hub-back-button" class="ghost-button">Retour menu</button>
+      </div>
+      <div class="hub-grid">
+        <button class="hub-node" data-target="wood">
+          <span>Bois</span>
+          <small>Forêt d'Éveil</small>
+        </button>
+        <button class="hub-node" data-target="mining">
+          <span>Mine</span>
+          <small>Galeries profondes</small>
+        </button>
+        <button class="hub-node" data-target="gaming">
+          <span>Gaming</span>
+          <small>Mini-jeux &amp; défis</small>
+        </button>
+        <button class="hub-node" data-target="agriculture">
+          <span>Agriculture</span>
+          <small>Plantations rares</small>
+        </button>
+        <button class="hub-node" data-target="pets">
+          <span>Pets</span>
+          <small>Centre des compagnons</small>
+        </button>
+      </div>
+      <p class="menu-footnote">Cliquez sur une zone pour plonger dans l'action.</p>
+    </div>
+  </div>
+
   <div id="page">
     <header id="hud">
       <div id="player-info" class="panel card">
@@ -61,6 +125,7 @@
           <button id="save-button" data-tooltip="Sauvegarde manuelle immédiate.">Sauvegarder</button>
           <button id="load-button" data-tooltip="Charger la dernière sauvegarde locale.">Charger</button>
           <button id="reset-button" class="danger" data-tooltip="Réinitialiser la partie (irréversible).">Reset</button>
+          <button id="open-hub-button" class="ghost-button">Hub</button>
         </div>
         <div class="toggle-row">
           <label class="toggle">
@@ -85,20 +150,14 @@
 
     <main id="content">
       <div id="main-area">
-        <nav id="main-menu" class="panel card" aria-label="Menu principal">
+        <div id="main-menu" class="panel card" aria-label="Navigation rapide">
           <div class="panel-header-inline">
-            <h3>Menu principal</h3>
-            <span class="menu-tag">Exploration</span>
+            <h3>Navigation</h3>
+            <span class="menu-tag">En jeu</span>
           </div>
-          <p class="menu-hint">Choisissez une section pour explorer le royaume. D'autres zones arrivent bientôt.</p>
-          <div class="menu-grid">
-            <button class="menu-button active" data-target="wood">Bois</button>
-            <button class="menu-button" data-target="mining">Minage</button>
-            <button class="menu-button" data-target="gaming">Gaming</button>
-            <button class="menu-button" data-target="agriculture">Agriculture</button>
-            <button class="menu-button" data-target="pets">Pets</button>
-          </div>
-        </nav>
+          <p class="menu-hint">Revenez au hub pour changer de zone principale.</p>
+          <button id="open-hub-button-inline" class="menu-button">Ouvrir le hub</button>
+        </div>
 
         <div id="game-container">
           <section id="section-wood" class="content-section is-active" data-section="wood" aria-hidden="false">
@@ -277,6 +336,15 @@
       </div>
     </div>
   </div>
+  <div id="pet-detail-modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closePetDetailModal()" aria-label="Fermer la fenêtre">X</span>
+      <h3 id="modal-pet-name">Nom du compagnon</h3>
+      <div id="modal-pet-info">
+        <p id="modal-pet-detail-text">Ici s'affichent les statistiques détaillées du compagnon.</p>
+      </div>
+    </div>
+  </div>
   <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
   <script type="module" src="js/main.js"></script>
   <script>
@@ -288,6 +356,15 @@
     function openTreeDetailModal(detailsHTML) {
       const modal = document.getElementById('tree-detail-modal');
       document.getElementById('modal-tree-info').innerHTML = detailsHTML;
+      modal.style.display = 'block';
+    }
+    function closePetDetailModal() {
+      document.getElementById('pet-detail-modal').style.display = 'none';
+    }
+    function openPetDetailModal(detailsHTML, petName = 'Compagnon') {
+      const modal = document.getElementById('pet-detail-modal');
+      document.getElementById('modal-pet-name').textContent = petName;
+      document.getElementById('modal-pet-info').innerHTML = detailsHTML;
       modal.style.display = 'block';
     }
   </script>
