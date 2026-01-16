@@ -65,7 +65,8 @@ export class WoodManager {
     const effectiveDamage = baseDamage
       * this.gameState.player.forceMultiplier
       * this.gameState.player.bonuses.clickDamageMultiplier
-      * petBonus;
+      * petBonus
+      * this.gameState.getPrestigeBoost();
     this.dealDamage(effectiveDamage);
     this.spawnDamageFloat(effectiveDamage);
     if (this.dpsCalculator) {
@@ -79,7 +80,9 @@ export class WoodManager {
     const lumberjackDPS = this.gameState.player.woodUpgrades.lumberjack * 1;
     const sawmillDPS = this.gameState.player.woodUpgrades.sawmill * 10;
     const petBonus = this.gameState.player.petBonuses?.dpsMultiplier || 1;
-    const totalDPS = (lumberjackDPS + sawmillDPS) * petBonus;
+    const totalDPS = (lumberjackDPS + sawmillDPS)
+      * petBonus
+      * this.gameState.getPrestigeBoost();
     if (totalDPS > 0) {
       this.dealDamage(totalDPS);
     }
@@ -221,14 +224,16 @@ export class WoodManager {
     const petRewardMultiplier = this.gameState.player.petBonuses?.rewardMultiplier || 1;
     
     // Calcule les récompenses effectives en appliquant les deux bonus
-    const effectiveGoldReward = Math.floor(this.currentTree.goldReward * milestoneBonus * levelRewardMultiplier * petRewardMultiplier);
-    const effectiveXPReward   = Math.floor(this.currentTree.xpReward   * milestoneBonus * levelRewardMultiplier * petRewardMultiplier);
+    const prestigeBoost = this.gameState.getPrestigeBoost();
+    const effectiveGoldReward = Math.floor(this.currentTree.goldReward * milestoneBonus * levelRewardMultiplier * petRewardMultiplier * prestigeBoost);
+    const effectiveXPReward   = Math.floor(this.currentTree.xpReward   * milestoneBonus * levelRewardMultiplier * petRewardMultiplier * prestigeBoost);
     const woodReward = this.currentTree.woodReward; // On laisse le woodReward inchangé ou vous pouvez aussi y appliquer un bonus si souhaité
     
     // Mise à jour des ressources et de l'xp
     this.gameState.updateGold(effectiveGoldReward);
     this.gameState.updateInventory("Wood", woodReward);
     this.gameState.updateXP(effectiveXPReward);
+    this.gameState.player.stats.treesChopped += 1;
 
     const eggDropChance = 0.05 + (1 - this.currentTree.rarity) * 0.08;
     if (Math.random() < eggDropChance) {

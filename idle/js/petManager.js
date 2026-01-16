@@ -64,6 +64,7 @@ export class PetManager {
       return;
     }
     this.gameState.updateInventory('Egg', -1);
+    this.gameState.player.stats.eggsOpened += 1;
     const newPet = rollPet();
     const evolved = this.addOrEvolvePet(newPet);
     this.gameState.notifyObservers();

@@ -11,6 +11,7 @@ export class UIManager {
     this.playerLevelEl = document.getElementById('player-level');
     this.playerGoldEl = document.getElementById('player-gold');
     this.playerXPEl = document.getElementById('player-xp');
+    this.playerPrestigeEl = document.getElementById('player-prestige');
     this.woodEl = document.getElementById('resource-wood');
     this.eggEl = document.getElementById('resource-egg');
     this.agriResources = document.querySelectorAll('[data-agri-resource]');
@@ -31,6 +32,11 @@ export class UIManager {
     }
     if (this.playerGoldEl) {
       this.playerGoldEl.textContent = `Gold : ${formatNumber(player.gold)}`;
+    }
+    if (this.playerPrestigeEl) {
+      const prestigeCount = player.meta?.prestigeCount || 0;
+      const prestigeBoost = this.gameState.getPrestigeBoost().toFixed(2);
+      this.playerPrestigeEl.textContent = `Prestige : ${prestigeCount} (x${prestigeBoost})`;
     }
     if (this.woodEl) {
       this.woodEl.textContent = formatNumber(player.inventory.Wood || 0);

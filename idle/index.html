@@ -54,10 +54,6 @@
           <span>Mine</span>
           <small>Galeries profondes</small>
         </button>
-        <button class="hub-node" data-target="gaming">
-          <span>Gaming</span>
-          <small>Mini-jeux &amp; défis</small>
-        </button>
         <button class="hub-node" data-target="agriculture">
           <span>Agriculture</span>
           <small>Plantations rares</small>
@@ -78,6 +74,7 @@
         <p id="player-level">Niveau : 1</p>
         <p id="player-xp">xp : 0</p>
         <p id="player-gold">Gold : 100</p>
+        <p id="player-prestige">Prestige : 0 (x1.00)</p>
         <div id="resource-summary">
           <div class="resource" data-tooltip="Bois disponible pour les futures constructions.">
             <span>Bois</span>
@@ -170,6 +167,22 @@
           <p class="menu-hint">Revenez au hub pour changer de zone principale.</p>
           <button id="open-hub-button-inline" class="menu-button">Ouvrir le hub</button>
         </div>
+        <section id="meta-progression" class="panel card" aria-label="Objectifs globaux">
+          <div class="panel-header-inline">
+            <h3>Objectifs globaux</h3>
+            <span id="prestige-summary" class="menu-tag">Prestige x1.00</span>
+          </div>
+          <p class="menu-hint">Atteignez des milestones transverses pour booster durablement votre royaume.</p>
+          <div id="global-objectives" class="objective-list"></div>
+          <div class="prestige-panel">
+            <div>
+              <h4>Prestige</h4>
+              <p id="prestige-description">Chargez votre prestige pour obtenir un bonus permanent.</p>
+              <ul id="prestige-requirements" class="objective-requirements"></ul>
+            </div>
+            <button id="prestige-button" class="danger">Prestige</button>
+          </div>
+        </section>
 
         <div id="game-container">
           <section id="section-wood" class="content-section is-active" data-section="wood" aria-hidden="false">
@@ -319,21 +332,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-
-          <section id="section-gaming" class="content-section" data-section="gaming" aria-hidden="true">
-            <header class="section-header">
-              <h2>Gaming - En cours de développement</h2>
-              <p>Débloquez des mini-jeux, défis de réflexes et tournois inter-royaumes.</p>
-            </header>
-            <div class="development-panel">
-              <h3>Prochaine étape</h3>
-              <ul>
-                <li>Mini-arcade et récompenses saisonnières.</li>
-                <li>Classements communautaires.</li>
-                <li>Défis quotidiens synchronisés.</li>
-              </ul>
             </div>
           </section>
 
