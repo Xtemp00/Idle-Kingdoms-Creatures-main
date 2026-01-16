@@ -7,11 +7,11 @@ export class UIManager {
   }
 
   init() {
-    this.playerNameEl = document.getElementById('player-name');
-    this.playerLevelEl = document.getElementById('player-level');
-    this.playerGoldEl = document.getElementById('player-gold');
-    this.playerXPEl = document.getElementById('player-xp');
-    this.playerPrestigeEl = document.getElementById('player-prestige');
+    this.playerNameEls = document.querySelectorAll('[data-player-name]');
+    this.playerLevelEls = document.querySelectorAll('[data-player-level]');
+    this.playerGoldEls = document.querySelectorAll('[data-player-gold]');
+    this.playerXPEls = document.querySelectorAll('[data-player-xp]');
+    this.playerPrestigeEls = document.querySelectorAll('[data-player-prestige]');
     this.woodEl = document.getElementById('resource-wood');
     this.eggEl = document.getElementById('resource-egg');
     this.agriResources = document.querySelectorAll('[data-agri-resource]');
@@ -21,23 +21,23 @@ export class UIManager {
   }
 
   updateUI(player) {
-    if (this.playerNameEl) {
-      this.playerNameEl.textContent = player.name;
-    }
-    if (this.playerLevelEl) {
-      this.playerLevelEl.textContent = `Niveau : ${player.level}`;
-    }
-    if (this.playerXPEl) {
-      this.playerXPEl.textContent = `xp : ${formatNumber(player.xp)}`;
-    }
-    if (this.playerGoldEl) {
-      this.playerGoldEl.textContent = `Gold : ${formatNumber(player.gold)}`;
-    }
-    if (this.playerPrestigeEl) {
-      const prestigeCount = player.meta?.prestigeCount || 0;
-      const prestigeBoost = this.gameState.getPrestigeBoost().toFixed(2);
-      this.playerPrestigeEl.textContent = `Prestige : ${prestigeCount} (x${prestigeBoost})`;
-    }
+    this.playerNameEls.forEach((element) => {
+      element.textContent = player.name;
+    });
+    this.playerLevelEls.forEach((element) => {
+      element.textContent = `Niveau : ${player.level}`;
+    });
+    this.playerXPEls.forEach((element) => {
+      element.textContent = `xp : ${formatNumber(player.xp)}`;
+    });
+    this.playerGoldEls.forEach((element) => {
+      element.textContent = `Gold : ${formatNumber(player.gold)}`;
+    });
+    const prestigeCount = player.meta?.prestigeCount || 0;
+    const prestigeBoost = this.gameState.getPrestigeBoost().toFixed(2);
+    this.playerPrestigeEls.forEach((element) => {
+      element.textContent = `Prestige : ${prestigeCount} (x${prestigeBoost})`;
+    });
     if (this.woodEl) {
       this.woodEl.textContent = formatNumber(player.inventory.Wood || 0);
     }

@@ -1,12 +1,13 @@
 import { formatNumber } from './utils.js';
 
 export class QoLManager {
-  constructor(gameState, { woodManager, dpsCalculator, petManager, persistenceManager }) {
+  constructor(gameState, { woodManager, dpsCalculator, petManager, persistenceManager, miningManager }) {
     this.gameState = gameState;
     this.woodManager = woodManager;
     this.dpsCalculator = dpsCalculator;
     this.petManager = petManager;
     this.persistenceManager = persistenceManager;
+    this.miningManager = miningManager;
     this.toastContainer = document.getElementById('toast-container');
     this.eventLogEl = document.getElementById('event-log');
     this.reducedMotionToggle = document.getElementById('toggle-reduced-motion');
@@ -29,7 +30,12 @@ export class QoLManager {
       }
       if (event.code === 'Space') {
         event.preventDefault();
-        this.woodManager.applyClickDamage();
+        const activeSection = document.querySelector('.content-section.is-active')?.dataset.section;
+        if (activeSection === 'mining' && this.miningManager?.isSpaceMiningEnabled()) {
+          this.miningManager.startSpaceMining();
+        } else {
+          this.woodManager.applyClickDamage();
+        }
       }
       if (event.code === 'KeyE') {
         this.petManager.openEgg();
@@ -44,6 +50,12 @@ export class QoLManager {
         event.preventDefault();
         this.persistenceManager.save('manuel');
         this.showToast('Sauvegarde manuelle effectuée.', 'success');
+      }
+    });
+
+    document.addEventListener('keyup', (event) => {
+      if (event.code === 'Space') {
+        this.miningManager?.stopSpaceMining();
       }
     });
   }

@@ -100,6 +100,7 @@ const UPGRADE_CONFIG = {
   quarry: {
     name: 'Quarry directionnelle',
     maxLevel: 1,
+    unlockFloor: 100,
     baseGold: 1200,
     baseResources: [
       { name: 'Charbon', amount: 25 },
@@ -110,6 +111,7 @@ const UPGRADE_CONFIG = {
   randomStrike: {
     name: 'Frappes erratiques',
     maxLevel: 1,
+    unlockFloor: 500,
     baseGold: 1800,
     baseResources: [
       { name: 'Fer', amount: 20 },
@@ -120,6 +122,7 @@ const UPGRADE_CONFIG = {
   pickaxePower: {
     name: 'Renfort de pioche',
     maxLevel: 3,
+    unlockFloor: 1,
     baseGold: 400,
     baseResources: [
       { name: 'Cuivre', amount: 10 },
@@ -130,12 +133,24 @@ const UPGRADE_CONFIG = {
   pickaxePrecision: {
     name: 'Affûtage',
     maxLevel: 3,
+    unlockFloor: 25,
     baseGold: 450,
     baseResources: [
       { name: 'Étain', amount: 10 },
       { name: 'Argent', amount: 4 }
     ],
     description: 'Augmente les chances de trouver un minerai.'
+  },
+  spaceDrill: {
+    name: 'Foreuse rythmée',
+    maxLevel: 5,
+    unlockFloor: 50,
+    baseGold: 600,
+    baseResources: [
+      { name: 'Charbon', amount: 18 },
+      { name: 'Cuivre', amount: 12 }
+    ],
+    description: 'Appuyez sur Espace pour miner automatiquement des cases.'
   }
 };
 
@@ -150,7 +165,8 @@ const DEFAULT_MINING_STATE = {
     quarry: 0,
     randomStrike: 0,
     pickaxePower: 0,
-    pickaxePrecision: 0
+    pickaxePrecision: 0,
+    spaceDrill: 0
   }
 };
 
@@ -184,6 +200,7 @@ export class MiningManager {
     this.logMessages = [];
     this.quarryInterval = null;
     this.randomStrikeInterval = null;
+    this.spaceMiningInterval = null;
 
     this.initState();
     this.renderGrid();
@@ -360,6 +377,7 @@ export class MiningManager {
     const revealed = this.state.cells.filter((cell) => cell.revealed).length;
     this.progressEl.textContent = `${revealed}/${CELL_COUNT}`;
     this.updateInsights();
+    this.updateUpgradeCards();
 
     if (revealed === CELL_COUNT) {
       if (this.state.autoDescend) {
@@ -559,6 +577,13 @@ export class MiningManager {
     if (!config) {
       return;
     }
+    if (!this.isUpgradeUnlocked(upgradeId)) {
+      this.gameState.emit('toast', {
+        type: 'warning',
+        message: `${config.name} se débloque à l'étage ${config.unlockFloor}.`
+      });
+      return;
+    }
     const currentLevel = this.state.upgrades[upgradeId] || 0;
     if (currentLevel >= config.maxLevel) {
       this.gameState.emit('toast', {
@@ -612,6 +637,50 @@ export class MiningManager {
     });
   }
 
+  isUpgradeUnlocked(upgradeId) {
+    const config = UPGRADE_CONFIG[upgradeId];
+    if (!config || !config.unlockFloor) {
+      return true;
+    }
+    return this.state.floor >= config.unlockFloor;
+  }
+
+  getSpaceMiningInterval() {
+    const level = this.state.upgrades.spaceDrill || 0;
+    const baseInterval = 1200;
+    const reduction = Math.min(level * 150, 750);
+    return Math.max(350, baseInterval - reduction);
+  }
+
+  startSpaceMining() {
+    if (!this.isUpgradeUnlocked('spaceDrill')) {
+      return;
+    }
+    const level = this.state.upgrades.spaceDrill || 0;
+    if (level <= 0 || this.spaceMiningInterval) {
+      return;
+    }
+    this.spaceMiningInterval = setInterval(() => {
+      const index = this.findRandomCell();
+      if (index !== null) {
+        this.revealCell(index, 'foreuse');
+      } else {
+        this.stopSpaceMining();
+      }
+    }, this.getSpaceMiningInterval());
+  }
+
+  stopSpaceMining() {
+    if (this.spaceMiningInterval) {
+      clearInterval(this.spaceMiningInterval);
+      this.spaceMiningInterval = null;
+    }
+  }
+
+  isSpaceMiningEnabled() {
+    return this.isUpgradeUnlocked('spaceDrill') && (this.state.upgrades.spaceDrill || 0) > 0;
+  }
+
   updateUpgradeCards() {
     if (!this.upgradeListEl) {
       return;
@@ -623,11 +692,26 @@ export class MiningManager {
       if (!config) {
         return;
       }
+      const isUnlocked = this.isUpgradeUnlocked(upgradeId);
+      card.classList.toggle('is-locked', !isUnlocked);
       const level = this.state.upgrades[upgradeId] || 0;
       const levelEl = card.querySelector('[data-upgrade-level]');
       const costEl = card.querySelector('[data-upgrade-cost]');
       const button = card.querySelector('[data-upgrade-button]');
 
+      if (!isUnlocked) {
+        if (levelEl) {
+          levelEl.textContent = 'Niveau : --';
+        }
+        if (costEl) {
+          costEl.textContent = `Débloqué à l'étage ${config.unlockFloor}.`;
+        }
+        if (button) {
+          button.disabled = true;
+          button.textContent = 'Bloqué';
+        }
+        return;
+      }
       if (levelEl) {
         levelEl.textContent = `Niveau : ${level}/${config.maxLevel}`;
       }
