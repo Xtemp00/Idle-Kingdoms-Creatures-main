@@ -447,6 +447,7 @@ export class MiningManager {
         this.gameState.updateInventory(ore.name, 1);
         this.gameState.updateGold(gold);
         this.gameState.updateXP(xp);
+        this.gameState.player.stats.oresMined += 1;
         this.addLog(`⛏️ ${source} trouve ${ore.name} (+${gold}g, +${xp}xp). Série x${this.state.combo}.`);
       }
     }
@@ -515,7 +516,8 @@ export class MiningManager {
     const pickaxePower = this.state.upgrades.pickaxePower || 0;
     return (1 + pickaxePower * 0.2)
       * this.getComboBonus()
-      * (this.gameState.player.bonuses?.rewardMultiplier || 1);
+      * (this.gameState.player.bonuses?.rewardMultiplier || 1)
+      * this.gameState.getPrestigeBoost();
   }
 
   getPrecisionBonus() {

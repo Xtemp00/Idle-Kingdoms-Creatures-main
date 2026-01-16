@@ -74,6 +74,15 @@ export class PersistenceManager {
     player.equippedPets = Array.isArray(savedPlayer.equippedPets) ? savedPlayer.equippedPets : [null, null, null];
     player.petBonuses = { ...player.petBonuses, ...(savedPlayer.petBonuses || {}) };
     player.settings = { ...player.settings, ...(savedPlayer.settings || {}) };
+    player.stats = { ...player.stats, ...(savedPlayer.stats || {}) };
+    player.meta = {
+      ...player.meta,
+      ...(savedPlayer.meta || {}),
+      objectivesCompleted: {
+        ...(player.meta?.objectivesCompleted || {}),
+        ...(savedPlayer.meta?.objectivesCompleted || {})
+      }
+    };
     player.agriculture = {
       ...player.agriculture,
       ...(savedPlayer.agriculture || {}),
@@ -100,6 +109,30 @@ export class PersistenceManager {
     this.gameState.emit('toast', {
       type: 'warning',
       message: 'Partie réinitialisée.'
+    });
+  }
+
+  prestigeReset() {
+    if (!confirm('Lancer un prestige ? Vous repartirez à zéro mais avec un boost permanent.')) {
+      return;
+    }
+    const player = this.gameState.player;
+    const baseState = JSON.parse(JSON.stringify(this.defaultState));
+    baseState.settings = { ...(player.settings || {}) };
+    baseState.meta = {
+      ...(baseState.meta || {}),
+      ...(player.meta || {}),
+      prestigeCount: (player.meta?.prestigeCount || 0) + 1,
+      lastPrestigeAt: Date.now()
+    };
+    this.applySaveData(baseState);
+    this.updateStatus(null);
+    this.gameState.emit('prestige', {
+      count: baseState.meta.prestigeCount
+    });
+    this.gameState.emit('toast', {
+      type: 'success',
+      message: `Prestige effectué ! Bonus global x${this.gameState.getPrestigeBoost().toFixed(2)}.`
     });
   }
 

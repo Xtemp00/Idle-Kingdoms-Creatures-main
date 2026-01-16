@@ -86,6 +86,13 @@ export class QoLManager {
       this.showToast(`Œuf trouvé sur ${tree} !`, 'success');
       this.addLog(`🥚 Œuf trouvé (${tree}).`);
     });
+    this.gameState.on('objective-completed', ({ label, reward }) => {
+      this.showToast(`Objectif terminé : ${label}`, 'success');
+      this.addLog(`🎯 Objectif : ${label} (+${reward} cachet${reward > 1 ? 's' : ''}).`);
+    });
+    this.gameState.on('prestige', ({ count }) => {
+      this.addLog(`🧬 Prestige ${count} activé. Boost permanent amélioré.`);
+    });
     this.gameState.on('settings-updated', (settings) => {
       if (this.reducedMotionToggle) {
         this.reducedMotionToggle.checked = settings.reducedMotion;

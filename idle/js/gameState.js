@@ -5,7 +5,7 @@ export default class GameState {
       name: "Joueur",
       level: 1,
       xp:0,
-      gold: 100000000,
+      gold: 100,
       baseClickDamage: 1,
       inventory: {
         Wood: 0,
@@ -42,6 +42,18 @@ export default class GameState {
       settings: {
         reducedMotion: false,
         compactUi: false
+      },
+      stats: {
+        treesChopped: 0,
+        oresMined: 0,
+        eggsOpened: 0,
+        totalGoldEarned: 0
+      },
+      meta: {
+        prestigeCount: 0,
+        legacyPoints: 0,
+        objectivesCompleted: {},
+        lastPrestigeAt: null
       },
       // Bonus attribués par le niveau, utilisés dans d'autres modules.
       // Par défaut, au niveau 1, les bonus sont de 1 (aucun bonus)
@@ -93,6 +105,9 @@ export default class GameState {
   
   updateGold(amount) {
     this.player.gold += amount;
+    if (amount > 0) {
+      this.player.stats.totalGoldEarned += amount;
+    }
     this.emit('gold-updated', { amount, total: this.player.gold });
     this.notifyObservers();
   }
@@ -145,6 +160,12 @@ export default class GameState {
     this.player.bonuses.dpsMultiplier = 1 + 0.05 * (lvl - 1);
     this.player.bonuses.rewardMultiplier = 1 + 0.02 * (lvl - 1);
     this.player.bonuses.cooldownReduction = Math.max(1 - 0.01 * (lvl - 1), 0.8);
+  }
+
+  getPrestigeBoost() {
+    const prestigeCount = this.player.meta?.prestigeCount || 0;
+    const legacyPoints = this.player.meta?.legacyPoints || 0;
+    return 1 + prestigeCount * 0.15 + legacyPoints * 0.03;
   }
   
   subscribe(callback) {

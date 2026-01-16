@@ -290,6 +290,83 @@ body.hub-open #page {
   color: var(--text-dim);
 }
 
+.objective-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.objective-card {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(76, 248, 255, 0.2);
+  background: rgba(8, 16, 26, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.objective-card h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.objective-card p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.objective-progress {
+  min-width: 110px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.objective-card.completed {
+  border-color: rgba(125, 255, 140, 0.6);
+  background: rgba(12, 26, 18, 0.8);
+}
+
+.objective-card.completed .objective-progress {
+  color: var(--neon-lime);
+}
+
+.objective-requirements {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.objective-requirements li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.objective-requirements li span {
+  color: var(--neon-lime);
+}
+
+.prestige-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid rgba(76, 248, 255, 0.18);
+  padding-top: 12px;
+}
+
+.prestige-panel h4 {
+  margin: 0 0 6px;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
