@@ -14,6 +14,7 @@ export class UIManager {
     this.playerPrestigeEls = document.querySelectorAll('[data-player-prestige]');
     this.woodEl = document.getElementById('resource-wood');
     this.eggEl = document.getElementById('resource-egg');
+    this.fishEl = document.getElementById('resource-fish');
     this.agriResources = document.querySelectorAll('[data-agri-resource]');
 
     this.gameState.subscribe((player) => this.updateUI(player));
@@ -43,6 +44,9 @@ export class UIManager {
     }
     if (this.eggEl) {
       this.eggEl.textContent = formatNumber(player.inventory.Egg || 0);
+    }
+    if (this.fishEl) {
+      this.fishEl.textContent = formatNumber(player.inventory.Fish || 0);
     }
     if (this.agriResources?.length) {
       const storage = player.agriculture?.storage || {};

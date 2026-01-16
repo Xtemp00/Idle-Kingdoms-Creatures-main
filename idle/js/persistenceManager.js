@@ -95,6 +95,18 @@ export class PersistenceManager {
         ...(savedPlayer.agriculture?.upgrades || {})
       }
     };
+    player.fishing = {
+      ...player.fishing,
+      ...(savedPlayer.fishing || {}),
+      upgrades: {
+        ...(player.fishing?.upgrades || {}),
+        ...(savedPlayer.fishing?.upgrades || {})
+      },
+      stats: {
+        ...(player.fishing?.stats || {}),
+        ...(savedPlayer.fishing?.stats || {})
+      }
+    };
     this.gameState.notifyObservers();
     this.gameState.emit('settings-updated', player.settings);
   }

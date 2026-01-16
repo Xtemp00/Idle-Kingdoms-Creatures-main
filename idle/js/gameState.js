@@ -26,6 +26,7 @@ export default class GameState {
       skills: {
         woodcutting: 1,
         mining: 1,
+        fishing: 1,
       },
       woodUpgrades: {},
       milestones: {},       // Compteur de coupures par type d’arbre
@@ -100,6 +101,20 @@ export default class GameState {
           irrigation: 0,
           pollinisateurs: 0,
           mycelium: 0
+        }
+      },
+      fishing: {
+        level: 1,
+        xp: 0,
+        upgrades: {
+          rod: 0,
+          reel: 0,
+          autoCast: 0
+        },
+        stats: {
+          fishCaught: 0,
+          currentStreak: 0,
+          bestStreak: 0
         }
       }
     };

@@ -62,6 +62,10 @@
           <span>Agriculture</span>
           <small>Plantations rares</small>
         </button>
+        <button class="hub-node" data-target="fishing">
+          <span>Pêche</span>
+          <small>Rivage d'Altéa</small>
+        </button>
         <button class="hub-node" data-target="pets">
           <span>Pets</span>
           <small>Centre des compagnons</small>
@@ -107,6 +111,10 @@
           <div class="resource" data-tooltip="Tubercules récoltés dans les serres.">
             <span>Tubercules</span>
             <strong data-agri-resource="Tubercules">0</strong>
+          </div>
+          <div class="resource" data-tooltip="Poissons disponibles pour la cuisine et les expéditions.">
+            <span>Poissons</span>
+            <strong id="resource-fish">0</strong>
           </div>
         </div>
       </div>
@@ -453,6 +461,77 @@
                 <div id="agri-upgrades" class="upgrade-list"></div>
                 <h4>Journal des récoltes</h4>
                 <div id="agri-log" class="agri-log" aria-live="polite"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="section-fishing" class="content-section" data-section="fishing" aria-hidden="true">
+            <header class="section-header">
+              <h2>Pêche</h2>
+              <p>Attendez la morsure, moulinez et optimisez votre cadence jusqu'à l'automatisation.</p>
+            </header>
+            <div class="fishing-layout">
+              <div class="fishing-panel card">
+                <div class="panel-header-inline">
+                  <h3>Rivage d'Altéa</h3>
+                  <span id="fishing-level" class="menu-tag">Niveau 1</span>
+                </div>
+                <p id="fishing-status" class="fishing-status">Prêt à lancer la ligne.</p>
+                <div class="fishing-bars">
+                  <div>
+                    <span>Attente de morsure</span>
+                    <div class="progress-bar">
+                      <div id="fishing-bite-progress" class="progress-fill"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <span>Capture</span>
+                    <div class="progress-bar">
+                      <div id="fishing-catch-progress" class="progress-fill"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="fishing-actions">
+                  <button id="fishing-cast-button" class="primary-action">Lancer la ligne</button>
+                  <button id="fishing-reel-button" class="ghost-button">Mouliner</button>
+                </div>
+                <div class="fishing-stats">
+                  <span id="fishing-streak">Série : 0 (record 0)</span>
+                  <span id="fishing-count">Poissons attrapés : 0</span>
+                </div>
+                <div id="fishing-log" class="fishing-log" aria-live="polite"></div>
+              </div>
+              <div class="fishing-panel card">
+                <h3>Atelier du pêcheur</h3>
+                <div class="upgrade-list">
+                  <div class="upgrade-card" data-fishing-upgrade="rod">
+                    <div>
+                      <h4>Canne équilibrée</h4>
+                      <p class="upgrade-desc">Réduit le temps avant la morsure.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-fishing-upgrade="reel">
+                    <div>
+                      <h4>Moulinet orbital</h4>
+                      <p class="upgrade-desc">Ajoute un auto-moulinage constant.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-fishing-upgrade="autoCast">
+                    <div>
+                      <h4>Capteur autonome</h4>
+                      <p class="upgrade-desc">Relance la ligne automatiquement après une prise.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
