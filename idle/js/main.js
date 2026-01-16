@@ -9,6 +9,7 @@ import { PersistenceManager } from './persistenceManager.js';
 import { QoLManager } from './qolManager.js';
 import { MiningManager } from './miningManager.js';
 import { AgricultureManager } from './agricultureManager.js';
+import { FishingManager } from './fishingManager.js';
 import { ProgressionManager } from './progressionManager.js';
 import { DevModeManager } from './devModeManager.js';
 
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const petManager = new PetManager(gameState);
   const miningManager = new MiningManager(gameState);
   const agricultureManager = new AgricultureManager(gameState);
+  new FishingManager(gameState);
   new ProgressionManager(gameState, persistenceManager);
   new DevModeManager(gameState, miningManager);
   
