@@ -54,7 +54,8 @@ export default class GameState {
         prestigeCount: 0,
         legacyPoints: 0,
         objectivesCompleted: {},
-        lastPrestigeAt: null
+        lastPrestigeAt: null,
+        devMode: false
       },
       // Bonus attribués par le niveau, utilisés dans d'autres modules.
       // Par défaut, au niveau 1, les bonus sont de 1 (aucun bonus)
@@ -73,7 +74,10 @@ export default class GameState {
           randomStrike: 0,
           pickaxePower: 0,
           pickaxePrecision: 0,
-          spaceDrill: 0
+          spaceDrill: 0,
+          spaceResonator: 0,
+          spaceAmplifier: 0,
+          spaceCascade: 0
         }
       },
       agriculture: {
