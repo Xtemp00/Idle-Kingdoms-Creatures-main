@@ -482,6 +482,30 @@ body.hub-open #page {
   color: var(--text-dim);
 }
 
+.dev-unlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 6px;
+}
+
+.dev-unlock input {
+  flex: 1 1 220px;
+  border-radius: 10px;
+  border: 1px solid rgba(76, 248, 255, 0.25);
+  background: rgba(7, 16, 24, 0.9);
+  color: #fff;
+  padding: 8px 12px;
+  font-family: inherit;
+}
+
+.dev-controls {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .agriculture-layout {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

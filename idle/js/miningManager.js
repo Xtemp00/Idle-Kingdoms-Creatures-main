@@ -100,7 +100,6 @@ const UPGRADE_CONFIG = {
   quarry: {
     name: 'Quarry directionnelle',
     maxLevel: 1,
-    unlockFloor: 100,
     baseGold: 1200,
     baseResources: [
       { name: 'Charbon', amount: 25 },
@@ -111,7 +110,6 @@ const UPGRADE_CONFIG = {
   randomStrike: {
     name: 'Frappes erratiques',
     maxLevel: 1,
-    unlockFloor: 500,
     baseGold: 1800,
     baseResources: [
       { name: 'Fer', amount: 20 },
@@ -122,7 +120,6 @@ const UPGRADE_CONFIG = {
   pickaxePower: {
     name: 'Renfort de pioche',
     maxLevel: 3,
-    unlockFloor: 1,
     baseGold: 400,
     baseResources: [
       { name: 'Cuivre', amount: 10 },
@@ -133,7 +130,6 @@ const UPGRADE_CONFIG = {
   pickaxePrecision: {
     name: 'Affûtage',
     maxLevel: 3,
-    unlockFloor: 25,
     baseGold: 450,
     baseResources: [
       { name: 'Étain', amount: 10 },
@@ -144,13 +140,45 @@ const UPGRADE_CONFIG = {
   spaceDrill: {
     name: 'Foreuse rythmée',
     maxLevel: 5,
-    unlockFloor: 50,
     baseGold: 600,
     baseResources: [
       { name: 'Charbon', amount: 18 },
       { name: 'Cuivre', amount: 12 }
     ],
     description: 'Appuyez sur Espace pour miner automatiquement des cases.'
+  },
+  spaceResonator: {
+    name: 'Résonateur spatial',
+    maxLevel: 1,
+    unlockFloor: 100,
+    baseGold: 3200,
+    baseResources: [
+      { name: 'Mithril', amount: 6 },
+      { name: 'Orichalque', amount: 2 }
+    ],
+    description: 'Accélère la cadence de la foreuse spatiale.'
+  },
+  spaceAmplifier: {
+    name: 'Amplificateur cosmique',
+    maxLevel: 1,
+    unlockFloor: 250,
+    baseGold: 4800,
+    baseResources: [
+      { name: 'Adamantite', amount: 4 },
+      { name: 'Orichalque', amount: 4 }
+    ],
+    description: 'Augmente les gains obtenus via la foreuse spatiale.'
+  },
+  spaceCascade: {
+    name: 'Cascade orbitale',
+    maxLevel: 1,
+    unlockFloor: 500,
+    baseGold: 7500,
+    baseResources: [
+      { name: 'Orichalque', amount: 6 },
+      { name: 'Étherium', amount: 2 }
+    ],
+    description: 'Offre une seconde extraction occasionnelle via la foreuse spatiale.'
   }
 };
 
@@ -166,7 +194,10 @@ const DEFAULT_MINING_STATE = {
     randomStrike: 0,
     pickaxePower: 0,
     pickaxePrecision: 0,
-    spaceDrill: 0
+    spaceDrill: 0,
+    spaceResonator: 0,
+    spaceAmplifier: 0,
+    spaceCascade: 0
   }
 };
 
@@ -459,7 +490,7 @@ export class MiningManager {
       if (ore) {
         this.state.combo = (this.state.combo || 0) + 1;
         this.state.bestCombo = Math.max(this.state.bestCombo || 0, this.state.combo);
-        const rewardMultiplier = this.getRewardMultiplier();
+        const rewardMultiplier = this.getRewardMultiplier(source);
         const gold = Math.round(ore.gold * rewardMultiplier);
         const xp = Math.round(ore.xp * rewardMultiplier);
         this.gameState.updateInventory(ore.name, 1);
@@ -530,12 +561,15 @@ export class MiningManager {
       .replace('ï', 'i');
   }
 
-  getRewardMultiplier() {
+  getRewardMultiplier(source) {
     const pickaxePower = this.state.upgrades.pickaxePower || 0;
-    return (1 + pickaxePower * 0.2)
+    const baseMultiplier = (1 + pickaxePower * 0.2)
       * this.getComboBonus()
       * (this.gameState.player.bonuses?.rewardMultiplier || 1)
       * this.gameState.getPrestigeBoost();
+    const spaceAmplifier = this.state.upgrades.spaceAmplifier || 0;
+    const spaceBonus = source === 'foreuse' && spaceAmplifier > 0 ? 1.2 : 1;
+    return baseMultiplier * spaceBonus;
   }
 
   getPrecisionBonus() {
@@ -649,7 +683,9 @@ export class MiningManager {
     const level = this.state.upgrades.spaceDrill || 0;
     const baseInterval = 1200;
     const reduction = Math.min(level * 150, 750);
-    return Math.max(350, baseInterval - reduction);
+    const resonator = this.state.upgrades.spaceResonator || 0;
+    const speedMultiplier = resonator > 0 ? 0.85 : 1;
+    return Math.max(350, Math.round((baseInterval - reduction) * speedMultiplier));
   }
 
   startSpaceMining() {
@@ -664,6 +700,13 @@ export class MiningManager {
       const index = this.findRandomCell();
       if (index !== null) {
         this.revealCell(index, 'foreuse');
+        const cascadeLevel = this.state.upgrades.spaceCascade || 0;
+        if (cascadeLevel > 0 && Math.random() < 0.35) {
+          const extraIndex = this.findRandomCell();
+          if (extraIndex !== null) {
+            this.revealCell(extraIndex, 'foreuse');
+          }
+        }
       } else {
         this.stopSpaceMining();
       }

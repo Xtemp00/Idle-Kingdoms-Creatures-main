@@ -199,6 +199,29 @@
             <button id="prestige-button" class="danger">Prestige</button>
           </div>
         </section>
+        <section id="dev-panel" class="panel card development-panel" aria-label="Profil développeur">
+          <div class="panel-header-inline">
+            <h3>Profil développeur</h3>
+            <span id="dev-mode-status" class="menu-tag">Verrouillé</span>
+          </div>
+          <p class="menu-hint">Entrez un code pour activer les outils de développement et tester des récompenses spéciales.</p>
+          <div class="dev-unlock">
+            <input id="dev-code-input" type="password" autocomplete="off" placeholder="Code développeur">
+            <button id="dev-code-submit" class="ghost-button">Activer</button>
+          </div>
+          <div id="dev-controls" class="dev-controls" hidden>
+            <p class="menu-hint">Utilisez ces actions uniquement pour tester le gameplay.</p>
+            <div class="button-row">
+              <button data-dev-action="xp">+1 000 XP</button>
+              <button data-dev-action="gold">+10 000 Gold</button>
+              <button data-dev-action="resources">Pack ressources</button>
+            </div>
+            <div class="button-row">
+              <button data-dev-action="mine-10">+10 étages mine</button>
+              <button data-dev-action="mine-50">+50 étages mine</button>
+            </div>
+          </div>
+        </section>
 
         <div id="game-container">
           <section id="section-wood" class="content-section is-active" data-section="wood" aria-hidden="false">
@@ -350,6 +373,33 @@
                     <div>
                       <h4>Foreuse rythmée</h4>
                       <p class="upgrade-desc">Appuyez sur Espace pour miner automatiquement des cases. Améliorable pour accélérer la cadence.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="spaceResonator">
+                    <div>
+                      <h4>Résonateur spatial</h4>
+                      <p class="upgrade-desc">Optimise la foreuse spatiale pour accélérer l'extraction.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="spaceAmplifier">
+                    <div>
+                      <h4>Amplificateur cosmique</h4>
+                      <p class="upgrade-desc">Augmente les gains obtenus via la foreuse spatiale.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="spaceCascade">
+                    <div>
+                      <h4>Cascade orbitale</h4>
+                      <p class="upgrade-desc">Donne une chance d'ouvrir une seconde case lors de l'extraction spatiale.</p>
                       <p class="upgrade-level" data-upgrade-level></p>
                       <p class="upgrade-cost" data-upgrade-cost></p>
                     </div>

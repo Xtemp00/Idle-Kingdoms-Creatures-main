@@ -10,6 +10,7 @@ import { QoLManager } from './qolManager.js';
 import { MiningManager } from './miningManager.js';
 import { AgricultureManager } from './agricultureManager.js';
 import { ProgressionManager } from './progressionManager.js';
+import { DevModeManager } from './devModeManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameState = new GameState();
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const miningManager = new MiningManager(gameState);
   const agricultureManager = new AgricultureManager(gameState);
   new ProgressionManager(gameState, persistenceManager);
+  new DevModeManager(gameState, miningManager);
   
   // Relier le DPSCalculator au WoodManager afin d'enregistrer les clics
   woodManager.setDPSCalculator(dpsCalculator);
