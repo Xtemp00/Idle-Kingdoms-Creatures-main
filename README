@@ -1,1 +1,77 @@
+# Idle Kingdoms & Creatures
 
+Jeu idle en navigateur où l'on bâtit un royaume, recrute des compagnons et progresse à travers plusieurs activités (bois, mine, agriculture, pets). Le jeu est pensé pour une progression rapide au clic puis durable en automatisation et prestige.
+
+## Aperçu du gameplay
+
+- **Menu principal + hub** pour choisir une zone (bois, mine, agriculture, pets).
+- **Récolte active** (clic) et **progression passive** (DPS).
+- **Gestion des ressources** (bois, minerais, œufs, ressources agricoles).
+- **Compagnons** avec bonus et slots équipables.
+- **Objectifs globaux** et **prestige** pour des boosts permanents.
+- **Qualité de vie** : sauvegarde locale, options “réduire animations” et “mode compact”, raccourcis clavier.
+
+## Structure du projet
+
+```
+.
+├── README
+└── idle
+    ├── index.html
+    ├── css
+    ├── js
+    └── assets
+```
+
+### Points clés par dossier
+
+- **`idle/index.html`** : structure UI (menu, hub, HUD, sections de jeu). 
+- **`idle/css/`** : styles du jeu (thèmes, layout, animations, composants). 
+- **`idle/js/`** : logique gameplay (state, managers, progression, persistance). 
+- **`idle/assets/`** : ressources graphiques (si présentes).
+
+## Lancer le projet en local
+
+Le jeu est un site statique. Vous pouvez :
+
+1. **Ouvrir directement** `idle/index.html` dans un navigateur.
+2. **Ou utiliser un petit serveur local** :
+
+```bash
+cd idle
+python -m http.server 8000
+```
+
+Puis ouvrir `http://localhost:8000`.
+
+## Sauvegarde et données
+
+- **Sauvegarde automatique** via `localStorage`.
+- Boutons **Sauvegarder**, **Charger**, **Reset** dans le HUD.
+
+## Raccourcis clavier
+
+- **E** : ouvrir un œuf
+- **D** : afficher/masquer détails DPS
+- **M** : milestones
+- **S** : sauvegarder
+- **Espace** : couper
+
+## Modules principaux (JS)
+
+- **`gameState.js`** : état global (joueur, inventaire, stats, settings).
+- **`persistenceManager.js`** : sauvegarde/chargement.
+- **`woodManagement.js`**, **`miningManager.js`**, **`agricultureManager.js`** : logique de récolte.
+- **`petManager.js`** : compagnons, bonus, slots.
+- **`progressionManager.js`** : objectifs globaux et prestige.
+- **`qolManager.js`** : ergonomie (raccourcis, options d’UI).
+
+## Roadmap suggérée
+
+- Équilibrage des coûts/bénéfices par zone.
+- Améliorations d’interface pour les sections secondaires.
+- Extension du contenu pets et prestige.
+
+## Maintien du README
+
+Ce README doit être **mis à jour à chaque changement notable** du gameplay, des contrôles, de la structure du projet ou des workflows (build, tests, lancement). L’objectif est de garder une documentation fiable pour les joueurs et contributeurs.
