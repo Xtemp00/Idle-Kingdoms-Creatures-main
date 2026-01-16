@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     woodManager,
     dpsCalculator,
     petManager,
-    persistenceManager
+    persistenceManager,
+    miningManager
   });
 
   initMainMenu({ gameState, persistenceManager });

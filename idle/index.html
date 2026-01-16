@@ -71,14 +71,22 @@
     </div>
   </div>
 
+  <div id="player-info-fixed" class="player-info-fixed" aria-live="polite">
+    <span class="player-tag" data-player-name>Joueur</span>
+    <span class="player-tag" data-player-level>Niveau : 1</span>
+    <span class="player-tag" data-player-xp>xp : 0</span>
+    <span class="player-tag" data-player-gold>Gold : 100</span>
+    <span class="player-tag" data-player-prestige>Prestige : 0 (x1.00)</span>
+  </div>
+
   <div id="page">
     <header id="hud">
       <div id="player-info" class="panel card">
-        <h2 id="player-name">Joueur</h2>
-        <p id="player-level">Niveau : 1</p>
-        <p id="player-xp">xp : 0</p>
-        <p id="player-gold">Gold : 100</p>
-        <p id="player-prestige">Prestige : 0 (x1.00)</p>
+        <h2 id="player-name" data-player-name>Joueur</h2>
+        <p id="player-level" data-player-level>Niveau : 1</p>
+        <p id="player-xp" data-player-xp>xp : 0</p>
+        <p id="player-gold" data-player-gold>Gold : 100</p>
+        <p id="player-prestige" data-player-prestige>Prestige : 0 (x1.00)</p>
         <div id="resource-summary">
           <div class="resource" data-tooltip="Bois disponible pour les futures constructions.">
             <span>Bois</span>
@@ -333,6 +341,15 @@
                     <div>
                       <h4>Affûtage</h4>
                       <p class="upgrade-desc">Augmente les chances de trouver un minerai.</p>
+                      <p class="upgrade-level" data-upgrade-level></p>
+                      <p class="upgrade-cost" data-upgrade-cost></p>
+                    </div>
+                    <button class="upgrade-button" data-upgrade-button>Acheter</button>
+                  </div>
+                  <div class="upgrade-card" data-upgrade="spaceDrill">
+                    <div>
+                      <h4>Foreuse rythmée</h4>
+                      <p class="upgrade-desc">Appuyez sur Espace pour miner automatiquement des cases. Améliorable pour accélérer la cadence.</p>
                       <p class="upgrade-level" data-upgrade-level></p>
                       <p class="upgrade-cost" data-upgrade-cost></p>
                     </div>

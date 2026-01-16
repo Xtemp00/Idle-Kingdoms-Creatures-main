@@ -72,7 +72,8 @@ export default class GameState {
           quarry: 0,
           randomStrike: 0,
           pickaxePower: 0,
-          pickaxePrecision: 0
+          pickaxePrecision: 0,
+          spaceDrill: 0
         }
       },
       agriculture: {

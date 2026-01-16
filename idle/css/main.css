@@ -55,6 +55,34 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-top: 58px;
+}
+
+.player-info-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 16000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background: rgba(6, 12, 20, 0.92);
+  border-bottom: 1px solid rgba(76, 248, 255, 0.2);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+  font-size: 0.9rem;
+}
+
+.player-info-fixed .player-tag {
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(15, 22, 32, 0.8);
+  border: 1px solid rgba(76, 248, 255, 0.12);
+  color: var(--text-bright);
+  font-variant-numeric: tabular-nums;
 }
 
 .screen {
@@ -1621,6 +1649,16 @@ body.reduced-motion * {
   border-radius: 12px;
   background: rgba(16, 20, 33, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.upgrade-card.is-locked {
+  opacity: 0.6;
+  border-color: rgba(76, 248, 255, 0.2);
+  background: rgba(10, 16, 26, 0.65);
+}
+
+.upgrade-card.is-locked .upgrade-desc {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .upgrade-card h4 {
