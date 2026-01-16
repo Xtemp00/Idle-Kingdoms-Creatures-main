@@ -41,7 +41,8 @@ export default class GameState {
       },
       settings: {
         reducedMotion: false,
-        compactUi: false
+        compactUi: false,
+        focusMode: false
       },
       stats: {
         treesChopped: 0,

@@ -29,6 +29,10 @@
             <input type="checkbox" id="menu-toggle-compact-ui">
             <span>Mode compact</span>
           </label>
+          <label class="toggle">
+            <input type="checkbox" id="menu-toggle-focus-mode">
+            <span>Mode focus</span>
+          </label>
         </div>
       </div>
       <p class="menu-footnote">Astuce : toutes les zones se débloquent depuis le hub plein écran.</p>
@@ -144,6 +148,10 @@
           <label class="toggle">
             <input type="checkbox" id="toggle-compact-ui">
             <span>Mode compact</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-focus-mode">
+            <span>Mode focus</span>
           </label>
         </div>
         <div class="shortcut-list">
@@ -437,6 +445,20 @@
         <div id="tree-menu"></div>
       </aside>
     </main>
+  </div>
+  <div id="focus-toolbar" class="focus-toolbar" aria-hidden="true">
+    <span class="focus-label">Mode focus</span>
+    <div class="focus-actions">
+      <button class="ghost-button" data-focus-target="player-info">Infos</button>
+      <button class="ghost-button" data-focus-target="dps-container">Combat</button>
+      <button class="ghost-button" data-focus-target="qol-panel">Contrôles</button>
+      <button class="ghost-button" data-focus-target="main-menu">Navigation</button>
+      <button class="ghost-button" data-focus-target="meta-progression">Objectifs</button>
+      <button class="ghost-button" data-focus-target="sidebar">Arbres</button>
+    </div>
+  </div>
+  <div id="focus-overlay" class="focus-overlay" aria-hidden="true">
+    <button id="focus-close" class="ghost-button focus-close" type="button">Fermer</button>
   </div>
   <!-- Panneau Modal pour afficher les détails d'un arbre -->
   <div id="tree-detail-modal">

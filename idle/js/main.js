@@ -56,12 +56,47 @@ const initMainMenu = ({ gameState, persistenceManager }) => {
   ].filter(Boolean);
   const reducedMotionToggle = document.getElementById('menu-toggle-reduced-motion');
   const compactUiToggle = document.getElementById('menu-toggle-compact-ui');
+  const focusModeToggle = document.getElementById('menu-toggle-focus-mode');
   const inGameReducedMotionToggle = document.getElementById('toggle-reduced-motion');
   const inGameCompactUiToggle = document.getElementById('toggle-compact-ui');
+  const inGameFocusModeToggle = document.getElementById('toggle-focus-mode');
+  const focusToolbar = document.getElementById('focus-toolbar');
+  const focusOverlay = document.getElementById('focus-overlay');
+  const focusCloseButton = document.getElementById('focus-close');
+  const focusButtons = document.querySelectorAll('[data-focus-target]');
+  const treeFocusButton = document.querySelector('[data-focus-target="sidebar"]');
+  let activeFocusPanel = null;
 
   if (!sections.length) {
     return;
   }
+
+  const closeFocusPanel = () => {
+    if (activeFocusPanel) {
+      activeFocusPanel.classList.remove('focus-panel-active');
+      activeFocusPanel = null;
+    }
+    document.body.classList.remove('focus-panel-open');
+    if (focusOverlay) {
+      focusOverlay.setAttribute('aria-hidden', 'true');
+    }
+  };
+
+  const openFocusPanel = (panelId) => {
+    const panel = document.getElementById(panelId);
+    if (!panel) {
+      return;
+    }
+    if (activeFocusPanel && activeFocusPanel !== panel) {
+      activeFocusPanel.classList.remove('focus-panel-active');
+    }
+    activeFocusPanel = panel;
+    panel.classList.add('focus-panel-active');
+    document.body.classList.add('focus-panel-open');
+    if (focusOverlay) {
+      focusOverlay.setAttribute('aria-hidden', 'false');
+    }
+  };
 
   const setActiveSection = (target) => {
     sections.forEach((section) => {
@@ -72,6 +107,9 @@ const initMainMenu = ({ gameState, persistenceManager }) => {
 
     if (sidebar) {
       sidebar.hidden = target !== 'wood';
+    }
+    if (treeFocusButton) {
+      treeFocusButton.disabled = target !== 'wood';
     }
   };
 
@@ -117,14 +155,27 @@ const initMainMenu = ({ gameState, persistenceManager }) => {
     if (compactUiToggle) {
       compactUiToggle.checked = gameState.player.settings.compactUi;
     }
+    if (focusModeToggle) {
+      focusModeToggle.checked = gameState.player.settings.focusMode;
+    }
     if (inGameReducedMotionToggle) {
       inGameReducedMotionToggle.checked = gameState.player.settings.reducedMotion;
     }
     if (inGameCompactUiToggle) {
       inGameCompactUiToggle.checked = gameState.player.settings.compactUi;
     }
+    if (inGameFocusModeToggle) {
+      inGameFocusModeToggle.checked = gameState.player.settings.focusMode;
+    }
     document.body.classList.toggle('reduced-motion', gameState.player.settings.reducedMotion);
     document.body.classList.toggle('compact-ui', gameState.player.settings.compactUi);
+    document.body.classList.toggle('focus-mode', gameState.player.settings.focusMode);
+    if (focusToolbar) {
+      focusToolbar.setAttribute('aria-hidden', String(!gameState.player.settings.focusMode));
+    }
+    if (!gameState.player.settings.focusMode) {
+      closeFocusPanel();
+    }
   };
 
   syncSettings();
@@ -147,6 +198,14 @@ const initMainMenu = ({ gameState, persistenceManager }) => {
   if (compactUiToggle) {
     compactUiToggle.addEventListener('change', () => {
       gameState.player.settings.compactUi = compactUiToggle.checked;
+      syncSettings();
+      gameState.emit('settings-updated', gameState.player.settings);
+    });
+  }
+
+  if (focusModeToggle) {
+    focusModeToggle.addEventListener('change', () => {
+      gameState.player.settings.focusMode = focusModeToggle.checked;
       syncSettings();
       gameState.emit('settings-updated', gameState.player.settings);
     });
@@ -195,6 +254,35 @@ const initMainMenu = ({ gameState, persistenceManager }) => {
       openHub();
     });
   });
+
+  if (inGameFocusModeToggle) {
+    inGameFocusModeToggle.addEventListener('change', () => {
+      gameState.player.settings.focusMode = inGameFocusModeToggle.checked;
+      syncSettings();
+      gameState.emit('settings-updated', gameState.player.settings);
+    });
+  }
+
+  focusButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = button.dataset.focusTarget;
+      openFocusPanel(target);
+    });
+  });
+
+  if (focusOverlay) {
+    focusOverlay.addEventListener('click', (event) => {
+      if (event.target === focusOverlay) {
+        closeFocusPanel();
+      }
+    });
+  }
+
+  if (focusCloseButton) {
+    focusCloseButton.addEventListener('click', () => {
+      closeFocusPanel();
+    });
+  }
 
   openMenu();
   setActiveSection('wood');
