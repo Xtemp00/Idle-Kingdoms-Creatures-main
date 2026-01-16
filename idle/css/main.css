@@ -240,6 +240,20 @@ body.hub-open #page {
   text-align: center;
 }
 
+#player-info p,
+#resource-summary strong,
+#dps-display,
+#combat-stats strong,
+#prestige-summary {
+  font-variant-numeric: tabular-nums;
+}
+
+#resource-summary strong {
+  display: inline-block;
+  min-width: 48px;
+  text-align: right;
+}
+
 .panel {
   background: var(--bg-panel);
   border-radius: 18px;
@@ -1267,6 +1281,89 @@ body.hub-open #page {
     margin: 0 auto;
     position: relative;
   }
+}
+
+.focus-toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(6, 12, 20, 0.9);
+  border: 1px solid rgba(76, 248, 255, 0.3);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  z-index: 14000;
+}
+
+.focus-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.focus-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.focus-toolbar .ghost-button {
+  padding: 6px 12px;
+}
+
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 12, 0.78);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 13000;
+}
+
+.focus-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.focus-panel-active {
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, 92vw);
+  max-height: 82vh;
+  overflow: auto;
+  z-index: 14050;
+  display: block !important;
+}
+
+body.focus-mode #player-info,
+body.focus-mode #dps-container,
+body.focus-mode #qol-panel,
+body.focus-mode #sidebar,
+body.focus-mode #main-menu,
+body.focus-mode #meta-progression {
+  display: none;
+}
+
+body.focus-mode #content {
+  grid-template-columns: 1fr;
+}
+
+body.focus-mode #focus-toolbar {
+  display: flex;
+}
+
+body.focus-panel-open #focus-overlay {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 body.compact-ui #hud {
